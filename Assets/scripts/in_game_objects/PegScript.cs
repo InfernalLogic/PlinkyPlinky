@@ -8,7 +8,7 @@ public class PegScript : MonoBehaviour
 
 	private AudioHandler audio_handler;
 
-	void Start()
+	void Awake()
 	{
 		audio_handler = GameObject.FindGameObjectWithTag("audio_handler").GetComponent<AudioHandler>();
 	}

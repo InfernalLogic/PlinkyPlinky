@@ -44,6 +44,7 @@ public class BackgroundObjectSpawner : MonoBehaviour
 	{
 		new_bg_object = GameObject.Instantiate (bg_object, spawn_point, transform.rotation) as GameObject;
 		new_bg_object.GetComponent<BackgroundObject>().SetMoveVector (move_vector);
+		new_bg_object.transform.parent = transform;
 	}
 
 	void FindNewSpawnPoint()
@@ -68,8 +69,8 @@ public class BackgroundObjectSpawner : MonoBehaviour
 
 		relative_vector.Normalize ();
 
-		Debug.Log ("BGobjectspawner move vector:<" + move_vector.x + ", " + 
-		           move_vector.y + ", " + move_vector.z + ">");
+		//Debug.Log ("BGobjectspawner move vector:<" + move_vector.x + ", " + 
+		//           move_vector.y + ", " + move_vector.z + ">");
 
 		return relative_vector;
 	}

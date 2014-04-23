@@ -32,7 +32,7 @@ public class BumperScript : MonoBehaviour
 			{
 				SetCooldownTimer ();			
 				bumper_animator.SetTrigger ("hit_trigger");
-				Debug.Log ("hit_trigger set");
+				//Debug.Log ("hit_trigger set");
 				AudioSource.PlayClipAtPoint(audio_handler.GetBumperHitSound(), gameObject.transform.position);
 			}
 

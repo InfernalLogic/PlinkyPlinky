@@ -46,7 +46,7 @@ public class BackgroundObject : MonoBehaviour
 	public void SetMoveVector(Vector3 input)
 	{
 		move_vector = input;
-		Debug.Log ("BGobject move vector: <" + move_vector.x + ", " + move_vector.y + ", " + move_vector.z + ">");
+		//Debug.Log ("BGobject move vector: <" + move_vector.x + ", " + move_vector.y + ", " + move_vector.z + ">");
 	}
 
 	void CalculateMoveVector()
@@ -65,7 +65,7 @@ public class BackgroundObject : MonoBehaviour
 	void CalculateCoefficient()
 	{
 		coefficient = Random.Range (0.0f, 1.0f);
-		Debug.Log ("BG Object Coefficient: " + coefficient);
+		//Debug.Log ("BG Object Coefficient: " + coefficient);
 	}
 
 	void CalculateRanges()

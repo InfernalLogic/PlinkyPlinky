@@ -7,28 +7,46 @@ public class LevelHandler : MonoBehaviour
 	private GameObject loader;
 	private int current_level;
 
-	void Start()
+	void Awake()
 	{
 		LoadRandomLevel ();
 	}
 
 	public void LoadRandomLevel()
 	{
-		DestroyAllBombs();
+		DestroyAllWithTag("bomb");
+		DestroyAllWithTag("level");
 		Destroy (loader);
-		current_level = Random.Range (0, levels.Length);
+
+		current_level = PickNewLevel();
+
 		loader = GameObject.Instantiate (levels[current_level], 
-		                                 levels[current_level].transform.position,
-		                                 levels[current_level].transform.rotation) as GameObject;
+			                                 levels[current_level].transform.position,
+			                                 levels[current_level].transform.rotation) as GameObject;
+		ScoreTracker.CountGoals();
 	}
 
-	public void DestroyAllBombs()
+	public int PickNewLevel()
 	{
-		GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+		int new_level = current_level;
+		new_level = Random.Range (0, levels.Length);
 
-		foreach (GameObject element in bombs)
+		if (new_level == current_level)
+		{
+			new_level = PickNewLevel();
+		}
+
+		return new_level;
+	}
+
+	public void DestroyAllWithTag(string target_tag)
+	{
+		GameObject[] objects = GameObject.FindGameObjectsWithTag(target_tag);
+
+		foreach (GameObject element in objects)
 		{
 			Destroy (element.gameObject);
 		}
 	}
+	
 }

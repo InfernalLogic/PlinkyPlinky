@@ -5,17 +5,22 @@ public class Cannon : MonoBehaviour
 {
 	public GameObject projectile;
 	public float launch_force;
-	
-	public int spawn_timer;
-	private int spawn_cooldown;
+	public float cooldown = 1f;
+	public float start_time_offset = 0f;
+
+	//public int spawn_timer;
+	//private int spawn_cooldown;
+
+	private float spawn_timer;
 	private GameObject new_object;
 	private Vector3 launch_vector;
 	private Vector3 spawn_point = Vector3.zero;
 
 	void Start()
 	{
-		spawn_cooldown = spawn_timer;
+		spawn_timer = Time.time + start_time_offset;
 	}
+	/*
 	void FixedUpdate()
 	{
 		if (spawn_cooldown <= 0) 
@@ -26,6 +31,15 @@ public class Cannon : MonoBehaviour
 		}
 		
 		--spawn_cooldown;
+	}*/
+
+	void Update()
+	{
+		if (spawn_timer <= Time.time)
+		{
+			SpawnNewObject ();
+			spawn_timer = Time.time + cooldown;
+		}
 	}
 
 	void SpawnNewObject()

@@ -8,13 +8,10 @@ public class GoalScript : MonoBehaviour
 	{
 		if (other_collider.gameObject.tag == "bomb")
 		{
-			AudioSource.PlayClipAtPoint (audio.clip, gameObject.transform.position);
+			//AudioSource.PlayClipAtPoint (audio.clip, gameObject.transform.position);
+			ScoreTracker.GoalHit();
 			Destroy (gameObject);
 		}
 	}
 
-	void OnDestroy()
-	{
-		ScoreTracker.GoalHit();
-	}
 }

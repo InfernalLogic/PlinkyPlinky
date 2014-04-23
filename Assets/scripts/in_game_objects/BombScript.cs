@@ -17,7 +17,7 @@ public class BombScript : MonoBehaviour
 		if (trigger.tag == "bomb_destroy_trigger")
 		{
 			Destroy(gameObject);
-			Debug.Log ("destroy trigger tripped");
+			//Debug.Log ("destroy trigger tripped");
 		}
 	}
 

@@ -47,19 +47,21 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\prefab\testing\GuiTest.cs" />
-     <Compile Include="Assets\scripts\AudioHandler.cs" />
-     <Compile Include="Assets\scripts\PegRow.cs" />
-     <Compile Include="Assets\scripts\PegWheel.cs" />
+     <Compile Include="Assets\scripts\PrefabLinker.cs" />
+     <Compile Include="Assets\scripts\SFX\BGWallpaper.cs" />
      <Compile Include="Assets\scripts\SFX\BackgroundObject.cs" />
      <Compile Include="Assets\scripts\SFX\BackgroundObjectSpawner.cs" />
+     <Compile Include="Assets\scripts\engine\AudioHandler.cs" />
      <Compile Include="Assets\scripts\engine\LevelHandler.cs" />
      <Compile Include="Assets\scripts\engine\ScoreTracker.cs" />
      <Compile Include="Assets\scripts\engine\UserInputScript.cs" />
-     <Compile Include="Assets\scripts\gui\LevelChangeButton.cs" />
+     <Compile Include="Assets\scripts\gui\MainMenu.cs" />
      <Compile Include="Assets\scripts\in_game_objects\BombScript.cs" />
      <Compile Include="Assets\scripts\in_game_objects\BumperScript.cs" />
      <Compile Include="Assets\scripts\in_game_objects\Cannon.cs" />
      <Compile Include="Assets\scripts\in_game_objects\GoalScript.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\ObjectWheel.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\PegRow.cs" />
      <Compile Include="Assets\scripts\in_game_objects\PegScript.cs" />
      <Compile Include="Assets\scripts\in_game_objects\PlinkerScript.cs" />
   </ItemGroup>
