@@ -27,9 +27,16 @@ public class ObjectWheel : MonoBehaviour
 				DestroyImmediate(child);
 			}
 		}
+
+		SpawnWheelObjects();
 	}
 
-	void Start()
+	void Update()
+	{
+		transform.Rotate(wheel_rotator * Time.deltaTime);
+	}
+
+	void SpawnWheelObjects()
 	{
 		float degrees_between_objects = 360 / object_count;
 		Vector3 rotator = Vector3.zero;
@@ -45,13 +52,7 @@ public class ObjectWheel : MonoBehaviour
 			new_object.transform.position = transform.TransformPoint(wheel_radius * new_object.transform.right);
 			rotator.z += degrees_between_objects;
 		}
-
+		
 		wheel_rotator.z = rotation_speed;
 	}
-
-	void FixedUpdate()
-	{
-		transform.Rotate (wheel_rotator);
-	}
-
 }

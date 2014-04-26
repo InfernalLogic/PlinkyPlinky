@@ -14,6 +14,7 @@ public class LevelHandler : MonoBehaviour
 
 	public void LoadRandomLevel()
 	{
+		ScoreTracker.ZeroGoals ();
 		DestroyAllWithTag("bomb");
 		DestroyAllWithTag("level");
 		Destroy (loader);

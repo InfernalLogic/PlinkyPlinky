@@ -28,10 +28,15 @@ public class PrefabLinker : MonoBehaviour
 			}
 		}
 
-			new_object = GameObject.Instantiate (prefab, 
-			                                     transform.position, 
-			                                     transform.rotation) as GameObject;
+		if (transform.childCount != 0)
+		{
+		Debug.Log (gameObject.name + "children failed to destroy. childcount: "  + transform.childCount);
+		}
 
-			new_object.transform.parent = gameObject.transform;
+		new_object = GameObject.Instantiate (prefab, 
+		                                     transform.position, 
+		                                     transform.rotation) as GameObject;
+
+		new_object.transform.parent = gameObject.transform;
 	}
 }

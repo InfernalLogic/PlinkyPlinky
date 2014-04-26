@@ -2,7 +2,7 @@
 using System.Collections;
 
 [ExecuteInEditMode]
-public class PegRow : MonoBehaviour 
+public class ObjectRow : MonoBehaviour 
 {
 	public int object_count = 1;
 	public float distance_between_objects = 1f;
