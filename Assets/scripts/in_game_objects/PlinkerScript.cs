@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class PlinkerScript : MonoBehaviour
+public class PlinkerScript : PlinkyObject
 {
 	public float movement_speed = 0f;
   public GameObject new_bomb;
 	public Vector2 drop_point_offset = Vector2.zero;
 	public GameObject selected_bomb;
 	
-	private Vector2 movement_vector = Vector2.zero;
+	private Vector3 movement_vector = Vector3.zero;
 	private BombScript selected_bomb_script;
 	private float bomb_cooldown_timer = 0f;
 	
@@ -20,10 +20,16 @@ public class PlinkerScript : MonoBehaviour
 		selected_bomb_script = selected_bomb.GetComponent<BombScript>();
   }
 
+	/*
   void FixedUpdate()
   {
 		rigidbody2D.velocity = movement_vector;
-  }
+  }*/
+
+	void Update()
+	{
+		transform.position += movement_vector * Time.deltaTime;
+	}
 
 	void OnTriggerEnter2D(Collider2D trigger)
 	{
@@ -37,6 +43,7 @@ public class PlinkerScript : MonoBehaviour
   void ReverseDirection()
   {
 		movement_vector *= -1.0f;
+
   }
 
   public void DropBomb()
@@ -49,7 +56,7 @@ public class PlinkerScript : MonoBehaviour
 	    Instantiate(new_bomb, drop_point, transform.rotation);
 			bomb_cooldown_timer = Time.time;
 
-			ScoreTracker.BombDropped();
+			engine.score_tracker.BombDropped();
 		}
   }
 

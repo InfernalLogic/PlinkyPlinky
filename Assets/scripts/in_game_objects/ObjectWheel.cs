@@ -4,6 +4,7 @@ using System.Collections;
 [ExecuteInEditMode]
 public class ObjectWheel : MonoBehaviour 
 {
+
 	public int object_count = 1;
 	public float wheel_radius = 1f;
 	public GameObject object_on_wheel;

@@ -1,24 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BombScript : MonoBehaviour 
+public class BombScript : PlinkyObject 
 {
 	public float cooldown = 0f;
 
 	// Use this for initialization
 	void Start () 
 	{
-
+		AudioSource.PlayClipAtPoint(engine.audio_handler.GetBombDropSound(), gameObject.transform.position);
     Destroy(gameObject, 25);
   }
-	
-	void OnTriggerEnter2D(Collider2D trigger)
+
+	void OnBecameInvisible()
 	{
-		if (trigger.tag == "bomb_destroy_trigger")
-		{
-			Destroy(gameObject);
-			//Debug.Log ("destroy trigger tripped");
-		}
+		//Debug.Log("bomb destroyed from going invisible");
+		Destroy (gameObject);
 	}
 
 }

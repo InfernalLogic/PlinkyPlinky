@@ -4,18 +4,17 @@ using System.Collections;
 public class BackgroundObject : MonoBehaviour 
 {
 
-	public float size_min,
-				 size_max,							 
-				 speed_min,
-				 speed_max,
-				 despawn_time;
+	public float despawn_time;
+	
+	public BG_Object_Property size;
+	public BG_Object_Property speed;
+	public BG_Object_Property rotation;
 
 	private float size_range,
 				  speed_range;
 
+	private bool has_been_visible = false;
 
-	SpriteRenderer sprite_renderer;
-	
 	Transform sprite_transform;
 
 	private float coefficient;
@@ -51,32 +50,45 @@ public class BackgroundObject : MonoBehaviour
 
 	void CalculateMoveVector()
 	{
-		move_vector.x *= (speed_min + (speed_range * coefficient));
-		move_vector.y *= (speed_min + (speed_range * coefficient));
-
+		move_vector.x *= (speed.minimum + (speed.range * coefficient));
+		move_vector.y *= (speed.minimum + (speed.range * coefficient));
 	}
 
 	void LoadTemporaryVariables()
 	{
-		sprite_renderer = GetComponent<SpriteRenderer>();
 		sprite_transform = GetComponent<Transform>();
 	}
 
 	void CalculateCoefficient()
 	{
 		coefficient = Random.Range (0.0f, 1.0f);
-		//Debug.Log ("BG Object Coefficient: " + coefficient);
 	}
 
 	void CalculateRanges()
 	{
-		size_range = size_max - size_min;
-		speed_range = speed_max - speed_min;
+		//size_range = size_max - size_min;
+		//speed_range = speed_max - speed_min;
+		size.CalculateRange();
+		speed.CalculateRange();
 	}
 
 	void CalculateScale()
 	{
-		sprite_transform.localScale *= (size_max - (size_range * coefficient));
+		sprite_transform.localScale *= size.maximum - (size.range * coefficient); //(size_max - (size_range * coefficient));
+	}
+
+	void OnBecameVisible()
+	{
+		has_been_visible = true;
+	}
+
+	void OnBecameInvisible()
+	{
+		if (has_been_visible)
+		{
+			Destroy (gameObject);
+		}
 	}
 
 }
+

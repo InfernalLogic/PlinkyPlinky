@@ -1,55 +1,72 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScoreTracker : MonoBehaviour 
+public class ScoreTracker : PlinkyObject 
 {
-	static int goals_left = 0;
-	static int bombs_dropped = 0;
-	static PlayerStats player;
+	public float load_new_level_delay = 0f;
 
-	// Use this for initialization
-	void Awake()
-	{
-		player = GameObject.FindGameObjectWithTag("player_stats").GetComponent<PlayerStats>();
-	}
+	int goals_left = 0;
+	int bombs_dropped = 0;
 
+	float load_new_level_countdown;
+	bool level_completed;
+	
 	void Start () 
 	{
 		CountGoals ();
+
 		Debug.Log (goals_left + " counted on initialization");
+
+		level_completed = false;
+		load_new_level_countdown = Time.time;
 	}
 
 	void Update()
 	{
 		if (goals_left <= 0)
 		{
+			if (level_completed == true && Time.time >= load_new_level_countdown)
+			{
+				Debug.Log ("boop");
+				engine.level_handler.LoadRandomLevel();
+			}
+
+			if (level_completed == false)
+			{
+			level_completed = true;
 			Debug.Log ("Game Won with " + bombs_dropped + " bombs dropped");
-			GameObject.FindGameObjectWithTag("level_handler").GetComponent<LevelHandler>().LoadRandomLevel();
+				bombs_dropped = 0;
+			load_new_level_countdown = Time.time + load_new_level_delay;
+			}
 		}
+		else if (goals_left >= 0 && level_completed)
+		{
+			level_completed = false;
+		}
+
+
 	}
 
-	static public void GoalHit()
+	public void GoalHit()
 	{
-		ScoreTracker.CountGoals();
-		player.CoinHit();
+		CountGoals();
+		engine.player_stats.CoinHit();
 		--goals_left;
-		Debug.Log ("Goals left: " + goals_left);
 	}
 
-	static public void BombDropped()
+	public void BombDropped()
 	{
 		++bombs_dropped;
-		//Debug.Log (bombs_dropped + " bombs dropped");
 	}
 
-	static public void CountGoals()
+	public void CountGoals()
 	{
 		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("goal");
 		goals_left = goal_counter.Length;
 		Debug.Log ("Goals counted: " + goals_left);
 	}
 	
-	static public void ZeroGoals()
+	public void ZeroGoals()
 	{
 		goals_left = 0;
 		Debug.Log ("Goals set to: " + goals_left);

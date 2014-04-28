@@ -5,6 +5,7 @@ public class AudioHandler : MonoBehaviour
 {
 	public AudioClip[] pop_sounds;
 	public AudioClip bumper_hit_sound;
+	public AudioClip bomb_drop_sound;
 
 	public AudioClip GetPopSound()
 	{
@@ -17,4 +18,8 @@ public class AudioHandler : MonoBehaviour
 		return bumper_hit_sound;
 	}
 
+	public AudioClip GetBombDropSound()
+	{
+		return bomb_drop_sound;
+	}
 }
