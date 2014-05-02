@@ -35,8 +35,9 @@ public class PrefabLinker : MonoBehaviour
 
 		new_object = GameObject.Instantiate (prefab, 
 		                                     transform.position, 
-		                                     transform.rotation) as GameObject;
+		                                     Quaternion.identity) as GameObject;
 
+		new_object.transform.Rotate(transform.eulerAngles / 2);
 		new_object.transform.parent = gameObject.transform;
 	}
 }

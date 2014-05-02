@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Cannon : MonoBehaviour 
+public class ObjectLauncher : MonoBehaviour 
 {
 	public GameObject projectile;
 	public float launch_force;
@@ -20,18 +20,6 @@ public class Cannon : MonoBehaviour
 	{
 		spawn_timer = Time.time + start_time_offset;
 	}
-	/*
-	void FixedUpdate()
-	{
-		if (spawn_cooldown <= 0) 
-		{
-			spawn_cooldown = spawn_timer;
-			SpawnNewObject ();
-
-		}
-		
-		--spawn_cooldown;
-	}*/
 
 	void Update()
 	{
@@ -49,9 +37,11 @@ public class Cannon : MonoBehaviour
 
 		Debug.Log ("Right x: " + transform.right.x + " y: " + transform.right.y + " z: " + transform.right.z);
 
-		spawn_point = transform.position + (transform.right * GetComponent<SpriteRenderer>().bounds.size.x);
+		//old version here, trying to remove the cannon sprite completely
+		//spawn_point = transform.position + (transform.right * GetComponent<SpriteRenderer>().bounds.size.x);
+		//new_object = GameObject.Instantiate (projectile, spawn_point, transform.rotation) as GameObject;
 
-		new_object = GameObject.Instantiate (projectile, spawn_point, transform.rotation) as GameObject;
+		new_object = GameObject.Instantiate (projectile, transform.position, transform.rotation) as GameObject;
 		new_object.GetComponent<Rigidbody2D>().AddForce (launch_vector);
 	}
 }

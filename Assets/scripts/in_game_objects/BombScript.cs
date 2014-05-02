@@ -5,7 +5,6 @@ public class BombScript : PlinkyObject
 {
 	public float cooldown = 0f;
 
-	// Use this for initialization
 	void Start () 
 	{
 		AudioSource.PlayClipAtPoint(engine.audio_handler.GetBombDropSound(), gameObject.transform.position);
@@ -14,7 +13,6 @@ public class BombScript : PlinkyObject
 
 	void OnBecameInvisible()
 	{
-		//Debug.Log("bomb destroyed from going invisible");
 		Destroy (gameObject);
 	}
 

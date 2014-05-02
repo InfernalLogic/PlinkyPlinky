@@ -14,7 +14,8 @@ public class LevelHandler : PlinkyObject
 
 	public void LoadRandomLevel()
 	{
-
+		if (!engine.disable_level_loading)
+		{
 		engine.score_tracker.ZeroGoals ();
 		DestroyAllWithTag("bomb");
 		DestroyAllWithTag("level");
@@ -26,6 +27,7 @@ public class LevelHandler : PlinkyObject
 			                                 levels[current_level].transform.position,
 			                                 levels[current_level].transform.rotation) as GameObject;
 		engine.score_tracker.CountGoals();
+		}
 	}
 
 	public int PickNewLevel()

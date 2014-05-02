@@ -6,9 +6,9 @@ public class BackgroundObject : MonoBehaviour
 
 	public float despawn_time;
 	
-	public BG_Object_Property size;
-	public BG_Object_Property speed;
-	public BG_Object_Property rotation;
+	public BGObjectProperty size;
+	public BGObjectProperty speed;
+	public BGObjectProperty rotation;
 
 	private float size_range,
 				  speed_range;
@@ -21,31 +21,42 @@ public class BackgroundObject : MonoBehaviour
 
 	private Vector3 move_vector = Vector3.zero;
 
+	private Vector3 rotation_vector = Vector3.zero;
+
 	void Start()
 	{
-		LoadTemporaryVariables ();
+		sprite_transform = GetComponent<Transform>();
+		coefficient = Random.Range (0.0f, 1.0f);
+		//transform.rotation = Quaternion.identity;
 
-		CalculateCoefficient ();
+		CalculateRanges();
 
-		CalculateRanges ();
+		CalculateScale();
 
-		CalculateScale ();
+		CalculateMoveVector();
 
-		CalculateMoveVector ();
+		CalculateRotationVector();
 
 		Destroy (gameObject, despawn_time);
 
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
-		sprite_transform.position += move_vector;
+		sprite_transform.position += (move_vector * Time.deltaTime);
+		//transform.RotateAround(transform.position, Vector3.back, (rotation_vector.z * Time.deltaTime));
 	}
 
 	public void SetMoveVector(Vector3 input)
 	{
 		move_vector = input;
-		//Debug.Log ("BGobject move vector: <" + move_vector.x + ", " + move_vector.y + ", " + move_vector.z + ">");
+	}
+
+	void CalculateRanges()
+	{
+		size.CalculateRange();
+		speed.CalculateRange();
+		rotation.CalculateRange();
 	}
 
 	void CalculateMoveVector()
@@ -54,41 +65,21 @@ public class BackgroundObject : MonoBehaviour
 		move_vector.y *= (speed.minimum + (speed.range * coefficient));
 	}
 
-	void LoadTemporaryVariables()
+	void CalculateRotationVector()
 	{
-		sprite_transform = GetComponent<Transform>();
-	}
-
-	void CalculateCoefficient()
-	{
-		coefficient = Random.Range (0.0f, 1.0f);
-	}
-
-	void CalculateRanges()
-	{
-		//size_range = size_max - size_min;
-		//speed_range = speed_max - speed_min;
-		size.CalculateRange();
-		speed.CalculateRange();
+		rotation_vector.z = rotation.minimum + (rotation.range * coefficient);
 	}
 
 	void CalculateScale()
 	{
-		sprite_transform.localScale *= size.maximum - (size.range * coefficient); //(size_max - (size_range * coefficient));
-	}
-
-	void OnBecameVisible()
-	{
-		has_been_visible = true;
+		sprite_transform.localScale *= size.maximum - (size.range * coefficient);
 	}
 
 	void OnBecameInvisible()
 	{
-		if (has_been_visible)
-		{
-			Destroy (gameObject);
-		}
+		Destroy (gameObject);
 	}
+
 
 }
 

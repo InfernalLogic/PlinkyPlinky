@@ -6,19 +6,10 @@ public class HUD : PlinkyObject
 {
 	public Texture hud_bg;
 	private Rect hud_bg_rect;
-
-	public Texture default_box;
+	
 	private Rect score_rect;
 	private string current_money = "";
 	private string career_money = "";
-	private string coin_upgrade_cost = "";
-
-	/*
-	void Awake()
-	{
-		LoadEngine();
-		UpdateMoney();
-	}*/
 
 	void OnGUI()
 	{
@@ -29,6 +20,7 @@ public class HUD : PlinkyObject
 		LoadResetButton();
 		LoadPegUpgradeButton();
 		LoadBumperUpgradeButton();
+
 	}
 
 	void LoadHUDBG()
@@ -45,7 +37,6 @@ public class HUD : PlinkyObject
 	{
 		GUI.Label(new Rect((Screen.width - 130), 0, 130, 50), "Current money: " + current_money);
 		GUI.Label(new Rect((Screen.width - 130), 30, 130, 50), "Career money: " + career_money);
-		GUI.Label(new Rect((Screen.width - 130), 60, 130, 50), "Coin Upgrade: " + coin_upgrade_cost);
 	}
 
 	void LoadRandomLevelButton()
@@ -60,30 +51,29 @@ public class HUD : PlinkyObject
 	{
 		current_money = engine.player_stats.GetCurrentMoney().ToString();
 		career_money = engine.player_stats.GetCareerMoney().ToString();
-		coin_upgrade_cost = engine.player_stats.GetCoinUpgradeCost().ToString();
 	}
 
 	public void LoadCoinUpgradeButton()
 	{
-		if (GUI.Button (new Rect(0, 0, 150, 50), "Coin up\n" + engine.player_stats.GetCoinUpgradeCost()))
+		if (GUI.Button (new Rect(0, 0, 150, 50), "Coin up\n" + engine.player_stats.coin_upgrader.GetUpgradeCost()))
 		{
-			engine.player_stats.UpgradeCoin();
+			engine.player_stats.coin_upgrader.Upgrade();
 		}
 	}
 
 	public void LoadPegUpgradeButton()
 	{
-		if (GUI.Button (new Rect(0, 50, 150, 50), "Peg upgrade\n" + engine.player_stats.GetPegUpgradeCost()))
+		if (GUI.Button (new Rect(0, 50, 150, 50), "Peg upgrade\n" + engine.player_stats.peg_upgrader.GetUpgradeCost()))
 		{
-			engine.player_stats.UpgradePeg();
+			engine.player_stats.peg_upgrader.Upgrade();
 		}
 	}
 
 	public void LoadBumperUpgradeButton()
 	{
-		if (GUI.Button (new Rect(0, 100, 150, 50), "Bumper upgrade\n" + engine.player_stats.GetBumperUpgradeCost()))
+		if (GUI.Button (new Rect(0, 100, 150, 50), "Bumper upgrade\n" + engine.player_stats.bumper_upgrader.GetUpgradeCost()))
 		{
-			engine.player_stats.UpgradeBumper();
+			engine.player_stats.bumper_upgrader.Upgrade();
 		}
 	}
 

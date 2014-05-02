@@ -9,11 +9,15 @@ public class PlinkyEngine : MonoBehaviour
 	public PlayerStats player_stats;
 	public HUD hud;
 
-	void Start()
+	public bool disable_level_loading = false;
+
+	void Awake()
 	{
+		Screen.SetResolution(960, 600, false, 60);
+
 		if (hud == null)
 		{
-			Debug.Log ("hud failed to load in engine");
+			Debug.Log ("hud not loaded");
 		}
 	}
 }

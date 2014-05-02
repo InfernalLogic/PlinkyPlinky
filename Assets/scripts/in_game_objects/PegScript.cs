@@ -5,10 +5,7 @@ public class PegScript : PlinkyObject
 {
 	public int hp = 1;
 	public bool is_destructible = true;
-
-	private AudioHandler audio_handler;
 	
-
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.tag == "bomb")

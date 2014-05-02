@@ -1,17 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UpgradeableObject : MonoBehaviour 
+abstract public class UpgradeableObject : PlinkyObject 
 {
-	virtual public void Upgrade()
+	protected int upgrades;
+	protected int upgrade_cost;
+
+	abstract public void Upgrade();
+	abstract public void CalculateUpgradeCost();
+	abstract public void Reset();
+	abstract protected void Initialize(); 
+
+	void Start()
 	{
+		upgrades = PlayerPrefs.GetInt(gameObject.name +"upgrades", 0);
+		CalculateUpgradeCost();
+		Initialize ();
 	}
 
-	virtual public void CalculateUpgradeCost()
+	void OnDestroy()
 	{
+		PlayerPrefs.SetInt(gameObject.name +"upgrades", upgrades);
 	}
 
-	virtual public void CalculateValue()
+	public int GetUpgrades()
 	{
+		return upgrades;
+	}
+
+	public int GetUpgradeCost()
+	{
+		return upgrade_cost;
 	}
 }
