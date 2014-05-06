@@ -5,8 +5,7 @@ public class BumperUpgrader : ScoringObject
 {
 	public override void CalculateUpgradeCost()
 	{
-		//upgrade_cost = upgrades * 400 + 200;
-		upgrade_cost = upgrades * 10;
+		upgrade_cost = (int)((Mathf.Pow((float)(upgrades+1), 1.5f) * 300));
 	}
 
 	public override void CalculatePointValue()

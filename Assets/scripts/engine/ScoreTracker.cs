@@ -43,8 +43,6 @@ public class ScoreTracker : PlinkyObject
 		{
 			level_completed = false;
 		}
-
-
 	}
 
 	public void GoalHit()

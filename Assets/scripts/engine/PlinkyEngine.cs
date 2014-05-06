@@ -14,10 +14,5 @@ public class PlinkyEngine : MonoBehaviour
 	void Awake()
 	{
 		Screen.SetResolution(960, 600, false, 60);
-
-		if (hud == null)
-		{
-			Debug.Log ("hud not loaded");
-		}
 	}
 }

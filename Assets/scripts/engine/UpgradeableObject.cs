@@ -5,6 +5,7 @@ abstract public class UpgradeableObject : PlinkyObject
 {
 	protected int upgrades;
 	protected int upgrade_cost;
+	protected int max_upgrades = 0;
 
 	abstract public void Upgrade();
 	abstract public void CalculateUpgradeCost();
