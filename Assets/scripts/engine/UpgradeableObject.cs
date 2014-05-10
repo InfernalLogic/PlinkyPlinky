@@ -6,6 +6,7 @@ abstract public class UpgradeableObject : PlinkyObject
 	protected int upgrades;
 	protected int upgrade_cost;
 	protected int max_upgrades = 0;
+	protected string upgrade_id;
 
 	abstract public void Upgrade();
 	abstract public void CalculateUpgradeCost();
@@ -14,14 +15,16 @@ abstract public class UpgradeableObject : PlinkyObject
 
 	void Start()
 	{
-		upgrades = PlayerPrefs.GetInt(gameObject.name +"upgrades", 0);
-		CalculateUpgradeCost();
 		Initialize ();
+		upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
+		Debug.Log (upgrade_id + " initialized to: " + upgrades);
+		CalculateUpgradeCost();
 	}
 
 	void OnDestroy()
 	{
-		PlayerPrefs.SetInt(gameObject.name +"upgrades", upgrades);
+		PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
+		Debug.Log (upgrade_id +" saved as: " + PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0));
 	}
 
 	public int GetUpgrades()

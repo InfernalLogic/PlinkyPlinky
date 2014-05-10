@@ -20,6 +20,7 @@ public class HUD : PlinkyObject
 		LoadResetButton();
 		LoadPegUpgradeButton();
 		LoadBumperUpgradeButton();
+		LoadCheatButton();
 
 	}
 
@@ -82,6 +83,14 @@ public class HUD : PlinkyObject
 		if (GUI.Button (new Rect(50, (Screen.height - 50), 50, 50), "Reset"))
 		{
 			engine.player_stats.ResetStats();
+		}
+	}
+
+	public void LoadCheatButton()
+	{
+		if (GUI.Button (new Rect(100, (Screen.height - 50), 50, 50), "Cheat"))
+		{
+			engine.player_stats.AddMoney(1000);
 		}
 	}
 }

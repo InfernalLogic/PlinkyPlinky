@@ -6,11 +6,6 @@ abstract public class ScoringObject : UpgradeableObject
 	protected int point_value= 0;
 	abstract public void CalculatePointValue();
 
-	protected override void Initialize()
-	{
-		CalculatePointValue();
-	}
-
 	public int GetPointValue()
 	{
 		return point_value;

@@ -19,6 +19,13 @@ public class PlayerStats : PlinkyObject
 		career_money = PlayerPrefs.GetInt ("career_money", 0);
 
 		engine.hud.UpdateMoney();
+
+		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
+
+		foreach (UpgradeableObject element in upgrades)
+		{
+			element.CalculateUpgradeCost();
+		}
 	}
 
 	void OnDestroy()
@@ -53,11 +60,14 @@ public class PlayerStats : PlinkyObject
 	{
 		current_money = 0;
 		career_money = 0;
-
-		peg_upgrader.Reset ();
-		bumper_upgrader.Reset ();
-		coin_upgrader.Reset ();
-
+		
+		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
+		
+		foreach (UpgradeableObject element in upgrades)
+		{
+			element.Reset();
+		}
+		
 		engine.hud.UpdateMoney();
 	}
 
