@@ -24,6 +24,8 @@ abstract public class UpgradeableObject : PlinkyObject
 		{
 			Debug.Log ("engine not loaded properly in " + gameObject.name);
 		}
+
+		//trying this to fix the NullReference issue in the LevelUpgrader
 	}
 
 	void OnDestroy()
