@@ -16,8 +16,7 @@ abstract public class UpgradeableObject : PlinkyObject
 	void Start()
 	{
 		Initialize ();
-		upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
-		Debug.Log (upgrade_id + " initialized to: " + upgrades);
+		Load ();
 		CalculateUpgradeCost();
 
 		if (engine == null)
@@ -25,13 +24,11 @@ abstract public class UpgradeableObject : PlinkyObject
 			Debug.Log ("engine not loaded properly in " + gameObject.name);
 		}
 
-		//trying this to fix the NullReference issue in the LevelUpgrader
 	}
 
 	void OnDestroy()
 	{
-		PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
-		Debug.Log (upgrade_id +" saved as: " + PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0));
+		Save ();
 	}
 
 	public int GetUpgrades()
@@ -54,5 +51,17 @@ abstract public class UpgradeableObject : PlinkyObject
 		{
 			return false;
 		}
+	}
+
+	public void Save()
+	{
+		PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
+		Debug.Log (upgrade_id +" saved as: " + PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0));
+	}
+
+	public void Load()
+	{
+		upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
+		Debug.Log (upgrade_id + " initialized to: " + upgrades);
 	}
 }

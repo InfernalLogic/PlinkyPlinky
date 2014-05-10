@@ -9,28 +9,40 @@ public class LevelUpgrader : UpgradeableObject
 	{
 		upgrade_id = gameObject.name;
 		//Debug.Log ("level upgrade_id: " + upgrade_id);
-		max_upgrades = 1;
+		SetMaxUpgrades();
 	} 
 
 	public override void Upgrade()
 	{
-		/*
+
 		if (HasEnoughMoney() && upgrades < max_upgrades)
 		{
 			upgrades = 1;
 			engine.player_stats.SpendMoney(upgrade_cost);
 			engine.hud.UpdateMoney();
+			engine.level_handler.LoadUnlockedLevels();
+			Debug.Log(gameObject.name + " Upgrade() called");
 		}
 		else
 		{
-			Debug.Log("Not enough moneys!");
+			if (!HasEnoughMoney())
+			{
+				Debug.Log("Not enough moneys! " + gameObject.name);
+			}
+
+			if (upgrades >= max_upgrades)
+			{
+				Debug.Log ("Max upgrades reached!" + gameObject.name);
+				Debug.Log ("upgrades: " + upgrades + " max_upgrades: " + max_upgrades);
+				Debug.Log (IsUnlocked());
+			}
 		}
-		*/
+
 	}
 
 	public override void CalculateUpgradeCost()	
 	{
-
+		upgrade_cost = 0;
 	}
 
 	public override void Reset()	
@@ -56,5 +68,17 @@ public class LevelUpgrader : UpgradeableObject
 		{
 			return false;
 		}
+	}
+
+	public void SetMaxUpgrades()
+	{
+		max_upgrades = 1;
+	}
+
+	public void Save()
+	{
+		upgrade_id = gameObject.name;
+		PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
+		Debug.Log (upgrade_id +" saved as: " + PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0));
 	}
 }

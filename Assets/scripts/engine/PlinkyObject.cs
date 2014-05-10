@@ -18,4 +18,14 @@ public class PlinkyObject : MonoBehaviour
 			Debug.Log ("engine failed to initialize for " + gameObject.name);
 		}
 	}
+
+	public PlinkyEngine GetEngine()
+	{
+		return engine;
+	}
+
+	public void SetEngine(PlinkyEngine new_engine)
+	{
+		engine = new_engine;
+	}
 }

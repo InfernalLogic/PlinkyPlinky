@@ -11,6 +11,14 @@ public class LevelHandler : PlinkyObject
 
 	void Start()
 	{
+		//for some reason the engine data member in the elements of the levels array needs to be reset here to prevent
+		//a NullReference exception when the LevelUpgraders try to reference it
+		foreach (GameObject element in levels)
+		{
+			element.GetComponent<PlinkyObject>().SetEngine(engine);
+			element.GetComponent<LevelUpgrader>().SetMaxUpgrades();
+		}
+
 		LoadUnlockedLevels();
 
 		LoadRandomLevel ();
@@ -76,5 +84,13 @@ public class LevelHandler : PlinkyObject
 	public int GetCurrentLevel()
 	{
 		return current_level;
+	}
+
+	void OnDestroy()
+	{
+		foreach (GameObject element in levels)
+		{
+			element.GetComponent<LevelUpgrader>().Save ();
+		}
 	}
 }
