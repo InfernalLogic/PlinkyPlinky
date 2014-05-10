@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{04189AD7-9912-AC8B-D2B4-3F205F3601D0}</ProjectGuid>
+	<ProjectGuid>{2C9BC8C2-3F8F-C2FB-F9DB-5D0623B058E8}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -62,6 +62,7 @@
      <Compile Include="Assets\scripts\engine\UpgradeableObject.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\BumperUpgrader.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\CoinUpgrader.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObjects\LevelUpgrader.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\PegUpgrader.cs" />
      <Compile Include="Assets\scripts\engine\UserInputScript.cs" />
      <Compile Include="Assets\scripts\gui\HUD.cs" />

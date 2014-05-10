@@ -67,6 +67,8 @@ public class PlayerStats : PlinkyObject
 		{
 			element.Reset();
 		}
+
+		engine.level_handler.LoadUnlockedLevels();
 		
 		engine.hud.UpdateMoney();
 	}

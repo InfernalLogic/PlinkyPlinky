@@ -13,8 +13,6 @@ public class BackgroundObject : MonoBehaviour
 	private float size_range,
 				  speed_range;
 
-	private bool has_been_visible = false;
-
 	Transform sprite_transform;
 
 	private float coefficient;

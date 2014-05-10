@@ -4,11 +4,15 @@ using System.Collections;
 public class LevelHandler : PlinkyObject 
 {
 	public GameObject[] levels;
+	public ArrayList unlocked_levels = new ArrayList();
+
 	private GameObject loader;
 	private int current_level;
 
 	void Start()
 	{
+		LoadUnlockedLevels();
+
 		LoadRandomLevel ();
 	}
 
@@ -32,14 +36,13 @@ public class LevelHandler : PlinkyObject
 
 	public int PickNewLevel()
 	{
-		int new_level = current_level;
-		new_level = Random.Range (0, levels.Length);
+		int new_level = (int)unlocked_levels[Random.Range (0, unlocked_levels.Count)];
 
-		if (new_level == current_level)
+		if (new_level == current_level && unlocked_levels.Count > 1)
 		{
 			new_level = PickNewLevel();
 		}
-
+		
 		return new_level;
 	}
 
@@ -52,5 +55,26 @@ public class LevelHandler : PlinkyObject
 			Destroy (element.gameObject);
 		}
 	}
-	
+
+	public void LoadUnlockedLevels()
+	{
+		unlocked_levels.Clear ();
+
+		int i = 0;
+
+		foreach (GameObject element in levels)
+		{
+			if (element.gameObject.GetComponent<LevelUpgrader>().IsUnlocked())
+			{
+				unlocked_levels.Add (i);
+			}
+			Debug.Log (element.gameObject.name + " unlocked set to " + element.gameObject.GetComponent<LevelUpgrader>().IsUnlocked());
+			++i;
+		}
+	}
+
+	public int GetCurrentLevel()
+	{
+		return current_level;
+	}
 }

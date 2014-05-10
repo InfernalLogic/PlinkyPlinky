@@ -21,6 +21,7 @@ public class HUD : PlinkyObject
 		LoadPegUpgradeButton();
 		LoadBumperUpgradeButton();
 		LoadCheatButton();
+		LoadUnlockLevel03Button();
 
 	}
 
@@ -38,6 +39,8 @@ public class HUD : PlinkyObject
 	{
 		GUI.Label(new Rect((Screen.width - 130), 0, 130, 50), "Current money: " + current_money);
 		GUI.Label(new Rect((Screen.width - 130), 30, 130, 50), "Career money: " + career_money);
+
+		GUI.Label(new Rect((Screen.width/2 - 130), 0, 130, 50), "Current level: " + engine.level_handler.GetCurrentLevel());
 	}
 
 	void LoadRandomLevelButton()
@@ -91,6 +94,14 @@ public class HUD : PlinkyObject
 		if (GUI.Button (new Rect(100, (Screen.height - 50), 50, 50), "Cheat"))
 		{
 			engine.player_stats.AddMoney(1000);
+		}
+	}
+
+	public void LoadUnlockLevel03Button()
+	{
+		if (GUI.Button (new Rect(0, (Screen.height - 100), 150, 50), "Unlock Level 3"))
+		{
+			engine.level_handler.levels[3].GetComponent<LevelUpgrader>().Upgrade ();
 		}
 	}
 }

@@ -25,7 +25,7 @@ abstract public class ScoringObject : UpgradeableObject
 
 	public override void Upgrade()
 	{
-		if (engine.player_stats.GetCurrentMoney() >= upgrade_cost)
+		if (HasEnoughMoney())
 		{
 			++upgrades;
 			engine.player_stats.SpendMoney(upgrade_cost);

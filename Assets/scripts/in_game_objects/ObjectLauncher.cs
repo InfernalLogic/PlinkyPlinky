@@ -14,7 +14,6 @@ public class ObjectLauncher : MonoBehaviour
 	private float spawn_timer;
 	private GameObject new_object;
 	private Vector3 launch_vector;
-	private Vector3 spawn_point = Vector3.zero;
 
 	void Start()
 	{

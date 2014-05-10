@@ -19,6 +19,11 @@ abstract public class UpgradeableObject : PlinkyObject
 		upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
 		Debug.Log (upgrade_id + " initialized to: " + upgrades);
 		CalculateUpgradeCost();
+
+		if (engine == null)
+		{
+			Debug.Log ("engine not loaded properly in " + gameObject.name);
+		}
 	}
 
 	void OnDestroy()
@@ -35,5 +40,17 @@ abstract public class UpgradeableObject : PlinkyObject
 	public int GetUpgradeCost()
 	{
 		return upgrade_cost;
+	}
+
+	protected bool HasEnoughMoney()
+	{
+		if (engine.player_stats.GetCurrentMoney() >= upgrade_cost)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
