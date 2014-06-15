@@ -12,14 +12,24 @@ public class UserInputScript : MonoBehaviour {
 		plinker = plinker_object.GetComponent<PlinkerScript>();
 	}
 
-	// Update is called once per frame
+	void OnGUI()
+	{
+		LoadInvisibleDropBombButton();
+	}
+
 	void Update () 
   {
     if (Input.GetButtonDown("Fire1"))
     {
-      plinker.DropBomb();
+				plinker.DropBomb();
     }
   }
 
-
+	public void LoadInvisibleDropBombButton()
+	{
+		if (GUI.Button (new Rect(260, 0, 540, 600), "", GUIStyle.none))
+		{
+			plinker.DropBomb();
+		}
+	}
 }

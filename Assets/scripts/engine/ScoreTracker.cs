@@ -27,7 +27,6 @@ public class ScoreTracker : PlinkyObject
 		{
 			if (level_completed == true && Time.time >= load_new_level_countdown)
 			{
-				Debug.Log ("boop");
 				engine.level_handler.LoadRandomLevel();
 			}
 

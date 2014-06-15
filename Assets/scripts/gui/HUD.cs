@@ -5,11 +5,17 @@ using System.Collections;
 public class HUD : PlinkyObject 
 {
 	public Texture hud_bg;
+
+	public Texture coin_upgrade_icon;
+	public Texture bumper_upgrade_icon;
+	public Texture peg_upgrade_icon;
+
 	private Rect hud_bg_rect;
 	
 	private Rect score_rect;
 	private string current_money = "";
 	private string career_money = "";
+
 
 	void OnGUI()
 	{
@@ -22,7 +28,6 @@ public class HUD : PlinkyObject
 		LoadBumperUpgradeButton();
 		LoadCheatButton();
 		LoadUnlockLevel03Button();
-
 	}
 
 	void LoadHUDBG()
@@ -59,7 +64,7 @@ public class HUD : PlinkyObject
 
 	public void LoadCoinUpgradeButton()
 	{
-		if (GUI.Button (new Rect(0, 0, 150, 50), "Coin up\n" + engine.player_stats.coin_upgrader.GetUpgradeCost()))
+		if (GUI.Button (new Rect(3, 5, 75, 75), coin_upgrade_icon, GUIStyle.none))
 		{
 			engine.player_stats.coin_upgrader.Upgrade();
 		}
@@ -67,7 +72,7 @@ public class HUD : PlinkyObject
 
 	public void LoadPegUpgradeButton()
 	{
-		if (GUI.Button (new Rect(0, 50, 150, 50), "Peg upgrade\n" + engine.player_stats.peg_upgrader.GetUpgradeCost()))
+		if (GUI.Button (new Rect(3, 75, 75, 75), peg_upgrade_icon, GUIStyle.none))
 		{
 			engine.player_stats.peg_upgrader.Upgrade();
 		}
@@ -75,7 +80,7 @@ public class HUD : PlinkyObject
 
 	public void LoadBumperUpgradeButton()
 	{
-		if (GUI.Button (new Rect(0, 100, 150, 50), "Bumper upgrade\n" + engine.player_stats.bumper_upgrader.GetUpgradeCost()))
+		if (GUI.Button (new Rect(3, 150, 75, 75), bumper_upgrade_icon, GUIStyle.none))
 		{
 			engine.player_stats.bumper_upgrader.Upgrade();
 		}
@@ -104,4 +109,6 @@ public class HUD : PlinkyObject
 			engine.level_handler.levels[3].GetComponent<LevelUpgrader>().Upgrade ();
 		}
 	}
+
+
 }

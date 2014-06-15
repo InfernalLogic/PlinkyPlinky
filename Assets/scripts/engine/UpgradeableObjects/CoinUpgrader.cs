@@ -6,6 +6,7 @@ public class CoinUpgrader : ScoringObject
 	protected override void Initialize()
 	{
 		upgrade_id = "coin";
+		CalculatePointValue();
 	}
 
 	public override void CalculateUpgradeCost()
@@ -13,9 +14,9 @@ public class CoinUpgrader : ScoringObject
 		upgrade_cost = (int)((Mathf.Pow((float)(upgrades+1), 1.5f) * 100)); 
 	}
 	
-	public override void CalculatePointValue()
+	public override int CalculatePointValue()
 	{
-		point_value = (upgrades * 5) + 10;
+		return (upgrades * 5) + 10;
 	}
 }
 

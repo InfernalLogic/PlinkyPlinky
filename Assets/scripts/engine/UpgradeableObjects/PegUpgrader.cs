@@ -6,6 +6,7 @@ public class PegUpgrader : ScoringObject
 	protected override void Initialize()
 	{
 		upgrade_id = "peg";
+		CalculatePointValue();
 	}
 
 	public override void CalculateUpgradeCost()
@@ -13,8 +14,8 @@ public class PegUpgrader : ScoringObject
 		upgrade_cost = (int)((Mathf.Pow((float)(upgrades+1), 1.5f) * 500));
 	}
 	
-	public override void CalculatePointValue()
+	public override int CalculatePointValue()
 	{
-		point_value = upgrades * 1;
+		return upgrades * 1;
 	}
 }

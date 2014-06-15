@@ -39,6 +39,29 @@ public class ObjectWheel : MonoBehaviour
 
 	void SpawnWheelObjects()
 	{
+		double degrees_between_objects = 360.0 / object_count;
+		double current_object_rotation = degrees_between_objects;
+		
+		Vector3 rotator = Vector3.zero;
+		rotator.z = (float)current_object_rotation;
+		
+		for (int i = object_count; i > 0; --i)
+		{
+			new_object = GameObject.Instantiate (object_on_wheel, 
+			                                     transform.TransformPoint(transform.position), 
+			                                     transform.rotation) as GameObject;
+			new_object.transform.parent = gameObject.transform;
+			new_object.transform.Rotate (rotator);
+			new_object.transform.position = transform.TransformPoint(wheel_radius * new_object.transform.right);
+			
+			current_object_rotation += degrees_between_objects;
+			
+			rotator.z = (float)current_object_rotation;
+		}
+		
+		wheel_rotator.z = rotation_speed;
+
+		/*
 		float degrees_between_objects = 360 / object_count;
 		Vector3 rotator = Vector3.zero;
 		rotator.z = degrees_between_objects;
@@ -55,5 +78,7 @@ public class ObjectWheel : MonoBehaviour
 		}
 		
 		wheel_rotator.z = rotation_speed;
+		*/
+
 	}
 }

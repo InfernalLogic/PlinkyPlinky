@@ -3,17 +3,11 @@ using System.Collections;
 
 abstract public class ScoringObject : UpgradeableObject 
 {
-	protected int point_value= 0;
-	abstract public void CalculatePointValue();
-
-	public int GetPointValue()
-	{
-		return point_value;
-	}
-
+	abstract public int CalculatePointValue();
+	
 	public void Scored()
 	{
-		engine.player_stats.AddMoney(point_value);
+		engine.player_stats.AddMoney(CalculatePointValue());
 	}
 
 	public override void Reset()

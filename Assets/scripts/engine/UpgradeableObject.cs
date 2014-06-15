@@ -15,7 +15,7 @@ abstract public class UpgradeableObject : PlinkyObject
 
 	void Start()
 	{
-		Initialize ();
+		Initialize();
 		Load ();
 		CalculateUpgradeCost();
 
@@ -23,7 +23,6 @@ abstract public class UpgradeableObject : PlinkyObject
 		{
 			Debug.Log ("engine not loaded properly in " + gameObject.name);
 		}
-
 	}
 
 	void OnDestroy()
@@ -55,13 +54,24 @@ abstract public class UpgradeableObject : PlinkyObject
 
 	public void Save()
 	{
-		PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
-		Debug.Log (upgrade_id +" saved as: " + PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0));
+		if (!IsClone())
+		{
+			PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
+			Debug.Log (upgrade_id +" saved as: " + PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0));
+		}
 	}
 
 	public void Load()
 	{
-		upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
-		Debug.Log (upgrade_id + " initialized to: " + upgrades);
+		if (!IsClone ())
+		{
+			upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
+			Debug.Log (upgrade_id + " initialized to: " + upgrades);
+		}
+	}
+
+	bool IsClone()
+	{
+		return upgrade_id.Contains("(Clone)");
 	}
 }
