@@ -58,13 +58,13 @@ public class ScoreTracker : PlinkyObject
 
 	public void CountGoals()
 	{
-		ZeroGoals();
+		SetGoalsLeftToZero();
 		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("goal");
 		goals_left = goal_counter.Length;
 		Debug.Log ("Goals counted: " + goals_left);
 	}
 	
-	public void ZeroGoals()
+	public void SetGoalsLeftToZero()
 	{
 		goals_left = 0;
 		Debug.Log ("Goals set to: " + goals_left);

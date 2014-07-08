@@ -23,6 +23,7 @@ public class OptionsMenu : HUDField
     {
       DisplayResetGameButton();
       DisplayCheatButton();
+      DisplayNewRandomLevelButton();
     }
     else
     {
@@ -97,6 +98,19 @@ public class OptionsMenu : HUDField
   private bool CheatButtonIsPressed()
   {
     return GUI.Button(new Rect(10, 110, 300, 100), "Press to cheat", button_style);
+  }
+
+  private void DisplayNewRandomLevelButton()
+  {
+    if (NewRandomLevelButtonIsPressed())
+    {
+      engine.level_handler.LoadRandomLevel();
+    }
+  }
+
+  private bool NewRandomLevelButtonIsPressed()
+  {
+    return GUI.Button(new Rect(10, 210, 300, 100), "Go to random new level", button_style);
   }
 
   private void InitializeResetConfirmationWindowRect()

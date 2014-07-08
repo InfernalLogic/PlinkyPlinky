@@ -5,17 +5,18 @@ public class LevelUpgrader : UpgradeableObject
 {
 	public bool is_unlocked_on_reset = false;
 
+  private Texture preview_image;
+
 	protected override void Initialize()	
 	{
 		upgrade_id = gameObject.name;
-		//Debug.Log ("level upgrade_id: " + upgrade_id);
 		SetMaxUpgrades();
 	} 
 
 	public override void Upgrade()
 	{
 
-		if (HasEnoughMoney() && upgrades < max_upgrades)
+		if (PlayerHasEnoughMoney() && upgrades < max_upgrades)
 		{
 			upgrades = 1;
 			engine.player_stats.SpendMoney(upgrade_cost);
@@ -24,7 +25,7 @@ public class LevelUpgrader : UpgradeableObject
 		}
 		else
 		{
-			if (!HasEnoughMoney())
+			if (!PlayerHasEnoughMoney())
 			{
 				Debug.Log("Not enough moneys! " + gameObject.name);
 			}

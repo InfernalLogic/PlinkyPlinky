@@ -11,7 +11,7 @@ abstract public class UpgradeableObject : PlinkyObject
 	abstract public void Upgrade();
 	abstract public void CalculateUpgradeCost();
 	abstract public void Reset();
-	abstract protected void Initialize(); 
+	abstract protected void Initialize();
 
 	void Start()
 	{
@@ -40,16 +40,9 @@ abstract public class UpgradeableObject : PlinkyObject
 		return upgrade_cost;
 	}
 
-	protected bool HasEnoughMoney()
+	public bool PlayerHasEnoughMoney()
 	{
-		if (engine.player_stats.GetCurrentMoney() >= upgrade_cost)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+    return (engine.player_stats.GetCurrentMoney() >= upgrade_cost);
 	}
 
 	public void Save()

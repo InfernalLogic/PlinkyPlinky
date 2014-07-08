@@ -14,6 +14,8 @@ public class PlinkyEngine : MonoBehaviour
 
 	static int player_prefs_found;
 
+  private Rect instruction_mask_rect;
+
 	void Awake()
 	{
 		Screen.SetResolution(960, 600, false, 60);
@@ -26,6 +28,21 @@ public class PlinkyEngine : MonoBehaviour
 			player_prefs_found = 1;
 			PlayerPrefs.SetInt("player_prefs_found", player_prefs_found);
 			Debug.Log ("reset on load");
+
+
 		}
 	}
+
+  private void DisplayInstructionMask()
+  {
+    
+  }
+
+  private void InitializeInstructionMaskRect()
+  {
+    instruction_mask_rect.x = 0;
+    instruction_mask_rect.y = 0;
+    instruction_mask_rect.width = Screen.width;
+    instruction_mask_rect.height = Screen.height;
+  }
 }

@@ -3,11 +3,15 @@ using System.Collections;
 
 public class UnlockablesMenu : HUDField
 {
+  [SerializeField]
+  private GUIStyle button_style;
+
   protected override void DisplayGUIElements()
   {
-    if (GUI.Button(new Rect(0, 0, 100, 100), "Unlockables"))
+    if (GUI.Button(new Rect(10, 10, 300, 100), "Unlock level 3", button_style))
     {
-      Debug.Log("Unlockables");
+      engine.level_handler.levels[3].GetComponent<LevelUpgrader>().Upgrade();
+      engine.level_handler.LoadLevel(3);
     }
   }
 }

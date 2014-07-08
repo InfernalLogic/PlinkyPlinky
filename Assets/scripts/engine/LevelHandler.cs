@@ -11,7 +11,7 @@ public class LevelHandler : PlinkyObject
 
 	void Start()
 	{
-		//for some reason the engine data member in the elements of the levels array needs to be reset here to prevent
+		//for some reason the engine variable in the elements of the levels array needs to be reset here to prevent
 		//a NullReference exception when the LevelUpgraders try to reference it
 		foreach (GameObject element in levels)
 		{
@@ -21,14 +21,14 @@ public class LevelHandler : PlinkyObject
 
 		LoadUnlockedLevels();
 
-		LoadRandomLevel ();
+		LoadRandomLevel();
 	}
 
 	public void LoadRandomLevel()
 	{
 		if (!engine.disable_level_loading)
 		{
-		engine.score_tracker.ZeroGoals ();
+		engine.score_tracker.SetGoalsLeftToZero();
 		DestroyAllWithTag("bomb");
 		DestroyAllWithTag("level");
 		Destroy (loader);
@@ -41,6 +41,19 @@ public class LevelHandler : PlinkyObject
 		engine.score_tracker.CountGoals();
 		}
 	}
+
+  public void LoadLevel(int target_level)
+  {
+    engine.score_tracker.SetGoalsLeftToZero();
+    DestroyAllWithTag("bomb");
+    DestroyAllWithTag("level");
+    Destroy(loader);
+
+    loader = GameObject.Instantiate(levels[target_level],
+                                       levels[target_level].transform.position,
+                                       levels[target_level].transform.rotation) as GameObject;
+    engine.score_tracker.CountGoals();
+  }
 
 	public int PickNewLevel()
 	{
