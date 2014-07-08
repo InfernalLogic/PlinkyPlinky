@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlinkyEngine : MonoBehaviour 
@@ -7,6 +7,7 @@ public class PlinkyEngine : MonoBehaviour
 	public LevelHandler level_handler;
 	public ScoreTracker score_tracker;
 	public PlayerStats player_stats;
+  public UserInputScript user_input;
 	public HUD hud;
 
 	public bool disable_level_loading = false;

@@ -19,7 +19,6 @@ public class LevelUpgrader : UpgradeableObject
 		{
 			upgrades = 1;
 			engine.player_stats.SpendMoney(upgrade_cost);
-			engine.hud.UpdateMoney();
 			engine.level_handler.LoadUnlockedLevels();
 			Debug.Log(gameObject.name + " Upgrade() called");
 		}

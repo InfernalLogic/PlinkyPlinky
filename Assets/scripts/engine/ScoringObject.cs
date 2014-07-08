@@ -25,7 +25,6 @@ abstract public class ScoringObject : UpgradeableObject
 			engine.player_stats.SpendMoney(upgrade_cost);
 			CalculatePointValue();
 			CalculateUpgradeCost();
-			engine.hud.UpdateMoney();
 		}
 		else
 		{

@@ -17,8 +17,7 @@ public class PlayerStats : PlinkyObject
 	{
 		current_money = PlayerPrefs.GetInt ("current_money", 0);
 		career_money = PlayerPrefs.GetInt ("career_money", 0);
-
-		engine.hud.UpdateMoney();
+	
 
 		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
 
@@ -38,7 +37,6 @@ public class PlayerStats : PlinkyObject
 	{
 		current_money += income;
 		career_money += income;
-		engine.hud.UpdateMoney();
 	}
 
 	public void CoinHit()
@@ -69,8 +67,7 @@ public class PlayerStats : PlinkyObject
 		}
 
 		engine.level_handler.LoadUnlockedLevels();
-		
-		engine.hud.UpdateMoney();
+	
 	}
 
 	public void SpendMoney(int price)
