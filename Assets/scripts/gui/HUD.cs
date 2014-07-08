@@ -1,45 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//[ExecuteInEditMode]
 public class HUD : PlinkyObject
 {
-
-  /*
-  public void LoadCoinUpgradeButton()
-  {
-    if (GUI.Button (new Rect(((MenuDisplayField.width / 2) - (coin_upgrade_icon.width / 2)), 
-                             0, upgrade_button_width, upgrade_button_height), 
-                             coin_upgrade_icon, GUIStyle.none))
-    {
-      engine.player_stats.coin_upgrader.Upgrade();
-    }
-
-    GUI.Label (new Rect(((MenuDisplayField.width / 2) - (coin_upgrade_icon.width / 2)) + (upgrade_button_width / 4), 
-                        0, upgrade_button_width, upgrade_button_height), "$/coin hit: ");
-  }
-	
-  public void LoadPegUpgradeButton()
-  {
-    if (GUI.Button (new Rect(((MenuDisplayField.width / 2) - (peg_upgrade_icon.width / 2)), 
-                             MenuDisplayField.height / 3, upgrade_button_width, upgrade_button_height), 
-                             peg_upgrade_icon, GUIStyle.none))
-    {
-      engine.player_stats.peg_upgrader.Upgrade();
-    }
-  }
-	
-  public void LoadBumperUpgradeButton()
-  {
-    if (GUI.Button (new Rect(((MenuDisplayField.width / 2) - (bumper_upgrade_icon.width / 2)), 
-                             (MenuDisplayField.height * 2 )/ 3, upgrade_button_width, upgrade_button_height), 
-                    peg_upgrade_icon, GUIStyle.none))
-    {
-      engine.player_stats.bumper_upgrader.Upgrade();
-    }
-  }
-*/
   public HUDField[] HUD_fields;
+
+  private float last_screen_width;
+
+  void Awake()
+  {
+    base.Awake();
+    last_screen_width = Screen.width;
+  }
 
   void OnGUI()
   {
@@ -47,5 +19,35 @@ public class HUD : PlinkyObject
     {
       field.Display();
     }
+
+    if (ScreenDimensionsHaveBeenChanged())
+    {
+      Debug.Log("screen dimensions changed");
+      ResetLastScreenWidth();
+
+      ScalingRect[] scaling_rects = GetAllScalingRects();
+
+      Debug.Log("Found " + scaling_rects.Length + " scaling rects.");
+
+      foreach (ScalingRect rect in scaling_rects)
+      {
+        rect.CalculateDimensions();
+      }
+    }
+  }
+
+  private bool ScreenDimensionsHaveBeenChanged()
+  {
+    return last_screen_width != Screen.width;
+  }
+
+  private void ResetLastScreenWidth()
+  {
+    last_screen_width = Screen.width;
+  }
+
+  private ScalingRect[] GetAllScalingRects()
+  {
+    return Object.FindObjectsOfType<ScalingRect>();
   }
 }

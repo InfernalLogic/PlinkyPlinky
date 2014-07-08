@@ -13,7 +13,6 @@ public class OptionsMenu : HUDField
 
   void Start()
   {
-    base.Start();
     InitializeResetConfirmationWindowRect();
   }
 

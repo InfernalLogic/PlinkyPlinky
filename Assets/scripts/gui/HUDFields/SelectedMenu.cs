@@ -23,7 +23,7 @@ public class SelectedMenu : HUDField
 
   private void DisplayMenuBackground()
   {
-    GUI.Box(new Rect(0, 0, display_rect.width, display_rect.height), "", background_style);
+    GUI.Box(new Rect(0, 0, display_rect.GetRect().width, display_rect.GetRect().height), "", background_style);
   }
 
   private void LoadSelectedMenu(int selection)

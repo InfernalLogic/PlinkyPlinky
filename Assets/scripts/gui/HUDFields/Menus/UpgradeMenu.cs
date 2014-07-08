@@ -114,19 +114,15 @@ public class UpgradeMenu : HUDField
     {
       case upgrades.COIN:
         return engine.player_stats.coin_upgrader.PlayerHasEnoughMoney();
-        break;
 
       case upgrades.PEG:
         return engine.player_stats.peg_upgrader.PlayerHasEnoughMoney();
-        break;
 
       case upgrades.BUMPER:
         return engine.player_stats.bumper_upgrader.PlayerHasEnoughMoney();
-        break;
 
       default:
         return false;
-        break;
     }
     return false;
   }
