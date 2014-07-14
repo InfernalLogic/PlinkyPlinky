@@ -1,91 +1,154 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2C9BC8C2-3F8F-C2FB-F9DB-5D0623B058E8}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>
-    </RootNamespace>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <BaseDirectory>Assets</BaseDirectory>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{2C9BC8C2-3F8F-C2FB-F9DB-5D0623B058E8}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_4_5_1;UNITY_4_5;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_1;UNITY_4_5;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>Temp\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+	<Reference Include="System" />
     <Reference Include="System.XML" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
-    </Reference>
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\scripts\SFX\BGObjectProperty.cs" />
-    <Compile Include="Assets\scripts\SFX\BGWallpaper.cs" />
-    <Compile Include="Assets\scripts\SFX\BackgroundObject.cs" />
-    <Compile Include="Assets\scripts\SFX\BackgroundObjectSpawner.cs" />
-    <Compile Include="Assets\scripts\engine\AudioHandler.cs" />
-    <Compile Include="Assets\scripts\engine\LevelHandler.cs" />
-    <Compile Include="Assets\scripts\engine\PlayerStats.cs" />
-    <Compile Include="Assets\scripts\engine\PlinkyEngine.cs" />
-    <Compile Include="Assets\scripts\engine\PlinkyObject.cs" />
-    <Compile Include="Assets\scripts\engine\PrefabLinker.cs" />
-    <Compile Include="Assets\scripts\engine\ScoreTracker.cs" />
-    <Compile Include="Assets\scripts\engine\ScoringObject.cs" />
-    <Compile Include="Assets\scripts\engine\UpgradeableObject.cs" />
-    <Compile Include="Assets\scripts\engine\UpgradeableObjects\BumperUpgrader.cs" />
-    <Compile Include="Assets\scripts\engine\UpgradeableObjects\CoinUpgrader.cs" />
-    <Compile Include="Assets\scripts\engine\UpgradeableObjects\LevelUpgrader.cs" />
-    <Compile Include="Assets\scripts\engine\UpgradeableObjects\PegUpgrader.cs" />
-    <Compile Include="Assets\scripts\engine\UserInputScript.cs" />
-    <Compile Include="Assets\scripts\gui\HUD.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\HUDField.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\MenuSelector.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\Menus\AchievementsMenu.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\Menus\OptionsMenu.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\Menus\UnlockablesMenu.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\Menus\UpgradeMenu.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\ScoreTicker.cs" />
-    <Compile Include="Assets\scripts\gui\HUDFields\SelectedMenu.cs" />
-    <Compile Include="Assets\scripts\gui\ScalingRect.cs" />
-    <Compile Include="Assets\scripts\gui\UpgradeButton.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\BombScript.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\BumperScript.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\GoalScript.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\ObjectLauncher.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\ObjectRow.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\ObjectWheel.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\PegProjectile.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\PegScript.cs" />
-    <Compile Include="Assets\scripts\in_game_objects\PlinkerScript.cs" />
-    <None Include="Assets\fonts\Liberation\Red Hat Liberation License.txt" />
+     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\CheckMethod.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ActionBase.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\BoolComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ColliderComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ComparerBase.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\FloatComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\GeneralComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IntComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IsRenderedByCamera.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\StringComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\TransformComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ValueDoesNotChange.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector2Comparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector3Comparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector4Comparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\VectorComparerBase.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\InvalidPathException.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\MemberResolver.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\ITestResult.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\ResultWriter\ResultSummarizer.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\ResultWriter\StackTraceFilter.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\ResultWriter\XmlResultWriter.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\TestResultState.cs" />
+     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\GameScore.cs" />
+     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CodeBasedAssertionExample.cs" />
+     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CustomComponent.cs" />
+     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\DynamicIntegrationTest.cs" />
+     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\ThrowCustomException.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ITestRunnerCallback.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTest.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestAttribute.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestsProvider.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestComponent.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResult.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResultRenderer.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunner.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerCallbackList.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
+     <Compile Include="Assets\scripts\SFX\BGObjectProperty.cs" />
+     <Compile Include="Assets\scripts\SFX\BGWallpaper.cs" />
+     <Compile Include="Assets\scripts\SFX\BackgroundObject.cs" />
+     <Compile Include="Assets\scripts\SFX\BackgroundObjectSpawner.cs" />
+     <Compile Include="Assets\scripts\engine\AudioHandler.cs" />
+     <Compile Include="Assets\scripts\engine\LevelHandler.cs" />
+     <Compile Include="Assets\scripts\engine\PlayerStats.cs" />
+     <Compile Include="Assets\scripts\engine\PlinkyEngine.cs" />
+     <Compile Include="Assets\scripts\engine\PlinkyObject.cs" />
+     <Compile Include="Assets\scripts\engine\PrefabLinker.cs" />
+     <Compile Include="Assets\scripts\engine\ScoreTracker.cs" />
+     <Compile Include="Assets\scripts\engine\ScoringObject.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObject.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObjects\BumperUpgrader.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObjects\CoinUpgrader.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObjects\LevelUnlocker.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObjects\PegUpgrader.cs" />
+     <Compile Include="Assets\scripts\engine\UserInputScript.cs" />
+     <Compile Include="Assets\scripts\gui\HUD.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\HUDField.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\MenuSelector.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\Menus\AchievementsMenu.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\Menus\OptionsMenu.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\Menus\UnlockablesMenu.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\Menus\UpgradeMenu.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\ScoreTicker.cs" />
+     <Compile Include="Assets\scripts\gui\HUDFields\SelectedMenu.cs" />
+     <Compile Include="Assets\scripts\gui\ScalingRect.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\Button.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\CheatButton.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\MuteButton.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\RandomLevelButton.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\UnlockLevelsButton.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\UpgradeButton.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\BombScript.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\BumperScript.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\GoalScript.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\ObjectLauncher.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\ObjectRow.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\ObjectWheel.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\PegProjectile.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\PegScript.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\Plinker.cs" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Cursor.shader" />
+     <None Include="Assets\UnityTestTools\LICENSE.txt" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditiveBlend.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Additive.shader" />
+     <None Include="Assets\thumbnails\fb_post.txt" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\Fallback.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Multiply.shader" />
+     <None Include="Assets\fonts\Liberation\Red Hat Liberation License.txt" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\CharacterSelfIlluminationReflective.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\PlanarRealtimeReflection.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\ReflectiveBackgroundPlanar.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\EnemySelfIlluminationReflective.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\AngryInclude.cginc" />
+     <None Include="Assets\thumbnails\htmlshit.txt" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditive.shader" />
+     <None Include="Assets\UnityTestTools\changelog.txt" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\LaserScope.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\SuperSimpleSelfIllumination.shader" />
+     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleBlend.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -95,4 +158,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>

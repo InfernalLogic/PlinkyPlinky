@@ -3,8 +3,8 @@ using System.Collections;
 
 public class BackgroundObject : MonoBehaviour 
 {
-
-	public float despawn_time;
+  [SerializeField]
+	private float despawn_time;
 	
 	public BGObjectProperty size;
 	public BGObjectProperty speed;
@@ -25,7 +25,6 @@ public class BackgroundObject : MonoBehaviour
 	{
 		sprite_transform = GetComponent<Transform>();
 		coefficient = Random.Range (0.0f, 1.0f);
-		//transform.rotation = Quaternion.identity;
 
 		CalculateRanges();
 
@@ -42,7 +41,6 @@ public class BackgroundObject : MonoBehaviour
 	void Update()
 	{
 		sprite_transform.position += (move_vector * Time.deltaTime);
-		//transform.RotateAround(transform.position, Vector3.back, (rotation_vector.z * Time.deltaTime));
 	}
 
 	public void SetMoveVector(Vector3 input)

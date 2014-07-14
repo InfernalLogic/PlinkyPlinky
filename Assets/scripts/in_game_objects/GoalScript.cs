@@ -8,7 +8,7 @@ public class GoalScript : PlinkyObject
 		if (other_collider.gameObject.tag == "bomb")
 		{
 			engine.score_tracker.GoalHit();
-			AudioSource.PlayClipAtPoint(engine.audio_handler.GetCoinHitSound(), gameObject.transform.position);
+      AudioSource.PlayClipAtPoint(engine.audio_handler.GetCoinHitSound(), Vector3.zero);
 			Destroy (gameObject);
 		}
 	}

@@ -9,6 +9,7 @@ public class PlayerStats : PlinkyObject
 	public BumperUpgrader bumper_upgrader;
 	public PegUpgrader peg_upgrader;
 	public CoinUpgrader coin_upgrader;
+  public LevelUnlocker level_unlocker;
 	
 	private int current_money,
 						  career_money;
@@ -23,7 +24,7 @@ public class PlayerStats : PlinkyObject
 
 		foreach (UpgradeableObject element in upgrades)
 		{
-			element.CalculateUpgradeCost();
+			element.RecalculateUpgradeCost();
 		}
 	}
 

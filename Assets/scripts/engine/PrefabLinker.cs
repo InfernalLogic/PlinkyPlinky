@@ -1,43 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class PrefabLinker : MonoBehaviour 
 {
-	public GameObject prefab;
+  [SerializeField]
+	private GameObject linked_prefab;
 
-	private GameObject new_object;
+  private GameObject new_object;
 
 	void Awake()
 	{
-		//var children = new List<GameObject>();
-		//foreach (Transform child in transform) children.Add(child.gameObject)
-		//children.ForEach(child => Destroy(child));
+    //if the object has children, they could be outdated instances of the prefab this links to.
+    if (ObjectHasChildren())
+      DestroyPreviousVersionsOfPrefab();
 
-		if(transform.childCount > 0)
-		{
-			ArrayList children = new ArrayList();
-			foreach (Transform child in transform)
-			{
-				children.Add (child.gameObject);
-			}
+    new_object = InstantiateUpdatedPrefab();
+    NormalizeObjectRotation(new_object);
+    AssignObjectToParent(new_object);
 
-			foreach (GameObject child in children)
-			{
-				DestroyImmediate(child);
-			}
-		}
-
-		if (transform.childCount != 0)
-		{
-		Debug.Log (gameObject.name + "children failed to destroy. childcount: "  + transform.childCount);
-		}
-
-		new_object = GameObject.Instantiate (prefab, 
-		                                     transform.position, 
-		                                     Quaternion.identity) as GameObject;
-
-		new_object.transform.Rotate(transform.eulerAngles / 2);
-		new_object.transform.parent = gameObject.transform;
 	}
+
+  private GameObject InstantiateUpdatedPrefab()
+  {
+    return GameObject.Instantiate(linked_prefab,
+                                           transform.position,
+                                           Quaternion.identity) as GameObject;
+  }
+
+  private void NormalizeObjectRotation(GameObject target_object)
+  {
+    target_object.transform.Rotate(transform.eulerAngles / 2);
+  }
+
+  private void AssignObjectToParent(GameObject target_object)
+  {
+    target_object.transform.parent = gameObject.transform;
+  }
+
+  private void DestroyPreviousVersionsOfPrefab()
+  {
+    ArrayList children = new ArrayList();
+    AddChildrenToBeDestroyed(children);
+    DestroyAllChildren(children);
+
+    if (ObjectHasChildren())
+      Debug.Log(gameObject.name + "children failed to destroy. childcount: " + transform.childCount);
+  }
+
+  private void AddChildrenToBeDestroyed(ArrayList children)
+  {
+    foreach (Transform child in transform)
+    {
+      children.Add(child.gameObject);
+    }
+  }
+
+  private static void DestroyAllChildren(ArrayList children)
+  {
+    foreach (GameObject child in children)
+    {
+      DestroyImmediate(child);
+    }
+  }
+
+  private bool ObjectHasChildren()
+  {
+    return transform.childCount > 0;
+  }
 }

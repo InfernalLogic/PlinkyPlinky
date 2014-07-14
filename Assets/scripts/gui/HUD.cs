@@ -22,16 +22,13 @@ public class HUD : PlinkyObject
 
     if (ScreenDimensionsHaveBeenChanged())
     {
-      Debug.Log("screen dimensions changed");
       ResetLastScreenWidth();
 
       ScalingRect[] scaling_rects = GetAllScalingRects();
 
-      Debug.Log("Found " + scaling_rects.Length + " scaling rects.");
-
       foreach (ScalingRect rect in scaling_rects)
       {
-        rect.CalculateDimensions();
+        rect.RecalculateDimensions();
       }
     }
   }

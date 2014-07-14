@@ -6,48 +6,41 @@ public class ScalingRect : MonoBehaviour
   [SerializeField]
   private string name;
   [SerializeField]
-  private float x_in_percent;
-  [SerializeField]
-  private float y_in_percent;
-  [SerializeField]
-  private float width_in_percent;
-  [SerializeField]
-  private float height_in_percent;
+  private Rect dimensions_in_percent_of_screen;
 
   private Rect scaled_rect;
 
   void Awake()
   {
-    CalculateDimensions();
+    RecalculateDimensions();
   }
 
-  public void CalculateDimensions()
+  public void RecalculateDimensions()
   {
     scaled_rect.width = CalculateWidth();
     scaled_rect.height = CalculateHeight();
-
     scaled_rect.x = CalculateXPosition();
     scaled_rect.y = CalculateYPosition();
   }
 
-  private float CalculateXPosition()
+  private float CalculateWidth()
   {
-    return Screen.width * (x_in_percent / 100.0f);
-  }
-
-  private float CalculateYPosition()
-  {
-    return Screen.height * (y_in_percent / 100.0f);
+    return Screen.width * (dimensions_in_percent_of_screen.width / 100.0f);
   }
 
   private float CalculateHeight()
   {
-    return Screen.height * (height_in_percent / 100.0f);
+    return Screen.height * (dimensions_in_percent_of_screen.height / 100.0f);
   }
 
-  private float CalculateWidth()
+  private float CalculateXPosition()
   {
-    return Screen.width * (width_in_percent / 100.0f);
+    return Screen.width * (dimensions_in_percent_of_screen.x / 100.0f);
+  }
+
+  private float CalculateYPosition()
+  {
+    return Screen.height * (dimensions_in_percent_of_screen.y / 100.0f);
   }
 
   public Rect GetRect()

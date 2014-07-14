@@ -5,11 +5,17 @@ public class OptionsMenu : HUDField
 {
   private Rect reset_confirmation_window_rect;
   private bool display_reset_confirmation_window= false;
+  private bool game_is_muted = false;
 
   [SerializeField]
   private GUIStyle button_style;
   [SerializeField]
   private GUIStyle label_style;
+
+  [SerializeField]
+  ScalingRect reset_button_rect;
+  [SerializeField]
+  ScalingRect mute_button_rect;
 
   void Start()
   {
@@ -21,8 +27,7 @@ public class OptionsMenu : HUDField
     if (!display_reset_confirmation_window)
     {
       DisplayResetGameButton();
-      DisplayCheatButton();
-      DisplayNewRandomLevelButton();
+      DisplayMuteButton();
     }
     else
     {
@@ -48,7 +53,7 @@ public class OptionsMenu : HUDField
 
   private bool ResetButtonIsPressed()
   {
-    return GUI.Button(new Rect(10, 10, 300, 100), "Reset game", button_style);
+    return GUI.Button(reset_button_rect.GetRect(), "Reset game", button_style);
   }
 
   private void LoadResetConfirmationWindow()
@@ -86,32 +91,6 @@ public class OptionsMenu : HUDField
                                "NO", button_style);
   }
 
-  private void DisplayCheatButton()
-  {
-    if (CheatButtonIsPressed())
-    {
-      engine.player_stats.AddMoney(1000);
-    }
-  }
-
-  private bool CheatButtonIsPressed()
-  {
-    return GUI.Button(new Rect(10, 110, 300, 100), "Press to cheat", button_style);
-  }
-
-  private void DisplayNewRandomLevelButton()
-  {
-    if (NewRandomLevelButtonIsPressed())
-    {
-      engine.level_handler.LoadRandomLevel();
-    }
-  }
-
-  private bool NewRandomLevelButtonIsPressed()
-  {
-    return GUI.Button(new Rect(10, 210, 300, 100), "Go to random new level", button_style);
-  }
-
   private void InitializeResetConfirmationWindowRect()
   {
     reset_confirmation_window_rect.width = Screen.width / 3;
@@ -120,5 +99,34 @@ public class OptionsMenu : HUDField
     reset_confirmation_window_rect.y = Screen.height / 4;
   }
 
-  
+  private void DisplayMuteButton()
+  {
+    if (MuteButtonIsPressed())
+    {
+      if (game_is_muted)
+        UnmuteGame();
+      else
+        MuteGame();
+    }
+  }
+
+  private void MuteGame()
+  {
+    AudioListener.volume = 0.0f;
+    game_is_muted = true;
+  }
+
+  private void UnmuteGame()
+  {
+    AudioListener.volume = 1.0f;
+    game_is_muted = false;
+  }
+
+  private bool MuteButtonIsPressed()
+  {
+    if (game_is_muted)
+      return GUI.Button(mute_button_rect.GetRect(), "Unmute game", button_style);
+    else
+      return GUI.Button(mute_button_rect.GetRect(), "Mute game", button_style);
+  }
 }

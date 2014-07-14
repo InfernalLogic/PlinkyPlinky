@@ -1,0 +1,2 @@
+		<title>PlinkyPlinky!</title>
+                <link rel="image_src" href ="http://infernallogic.net/wp-content/uploads/2014/07/thumbnail.png" />

@@ -3,14 +3,14 @@ using System.Collections;
 
 public class UserInputScript : MonoBehaviour {
 
-	private PlinkerScript plinker = null;
+	private Plinker plinker = null;
 	private GameObject plinker_object = null;
   private Rect play_field_rect;
 
 	void Start()
 	{
 		plinker_object = GameObject.FindGameObjectWithTag("plinker");
-		plinker = plinker_object.GetComponent<PlinkerScript>();
+		plinker = plinker_object.GetComponent<Plinker>();
     InitializePlayFieldRect();
 	}
 

@@ -11,27 +11,27 @@ public class LevelHandler : PlinkyObject
 
 	void Start()
 	{
-		//for some reason the engine variable in the elements of the levels array needs to be reset here to prevent
-		//a NullReference exception when the LevelUpgraders try to reference it
-		foreach (GameObject element in levels)
-		{
-			element.GetComponent<PlinkyObject>().SetEngine(engine);
-			element.GetComponent<LevelUpgrader>().SetMaxUpgrades();
-		}
+    engine.player_stats.level_unlocker.SetMaxUpgrades(levels.Length);
 
-		LoadUnlockedLevels();
-
+    LoadUnlockedLevels(PlayerPrefs.GetInt(LevelUnlockerPlayerPrefsKey(), 3));
 		LoadRandomLevel();
 	}
+
+  private int DefaultLevelsToUnlockOnReset()
+  {
+    return engine.player_stats.level_unlocker.GetLevelsToUnlockOnReset();
+  }
+
+  private string LevelUnlockerPlayerPrefsKey()
+  {
+    return engine.player_stats.level_unlocker.gameObject.name + "_upgrades";
+  }
 
 	public void LoadRandomLevel()
 	{
 		if (!engine.disable_level_loading)
 		{
-		engine.score_tracker.SetGoalsLeftToZero();
-		DestroyAllWithTag("bomb");
-		DestroyAllWithTag("level");
-		Destroy (loader);
+    ClearLevel();
 
 		current_level = PickNewLevel();
 
@@ -44,15 +44,23 @@ public class LevelHandler : PlinkyObject
 
   public void LoadLevel(int target_level)
   {
-    engine.score_tracker.SetGoalsLeftToZero();
-    DestroyAllWithTag("bomb");
-    DestroyAllWithTag("level");
-    Destroy(loader);
+    ClearLevel();
 
     loader = GameObject.Instantiate(levels[target_level],
                                        levels[target_level].transform.position,
                                        levels[target_level].transform.rotation) as GameObject;
+
     engine.score_tracker.CountGoals();
+  }
+
+  private void ClearLevel()
+  {
+    engine.score_tracker.SetGoalsLeftToZero();
+    DestroyAllWithTag("bomb");
+    DestroyAllWithTag("peg");
+    DestroyAllWithTag("level");
+    DestroyAllWithTag("goal");
+    Destroy(loader);
   }
 
 	public int PickNewLevel()
@@ -81,29 +89,28 @@ public class LevelHandler : PlinkyObject
 	{
 		unlocked_levels.Clear ();
 
-		int i = 0;
-
-		foreach (GameObject element in levels)
-		{
-			if (element.gameObject.GetComponent<LevelUpgrader>().IsUnlocked())
-			{
-				unlocked_levels.Add (i);
-			}
-			Debug.Log (element.gameObject.name + " unlocked set to " + element.gameObject.GetComponent<LevelUpgrader>().IsUnlocked());
-			++i;
-		}
+    for (int i = 0; i < engine.player_stats.level_unlocker.GetTotalUnlockedLevels(); ++i)
+    {
+      unlocked_levels.Add(i);
+      Debug.Log("added level: " + i);
+    }
 	}
 
-	public int GetCurrentLevel()
+  private void LoadUnlockedLevels(int total_unlocked_levels)
+  {
+
+
+    unlocked_levels.Clear();
+
+    for (int i = 0; i < total_unlocked_levels; ++i)
+    {
+      unlocked_levels.Add(i);
+      Debug.Log("added level: " + i);
+    }
+  }
+
+  public int GetCurrentLevel()
 	{
 		return current_level;
-	}
-
-	void OnDestroy()
-	{
-		foreach (GameObject element in levels)
-		{
-			element.GetComponent<LevelUpgrader>().Save ();
-		}
 	}
 }
