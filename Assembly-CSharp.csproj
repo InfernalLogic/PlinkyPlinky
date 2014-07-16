@@ -93,6 +93,7 @@
      <Compile Include="Assets\scripts\engine\PlinkyEngine.cs" />
      <Compile Include="Assets\scripts\engine\PlinkyObject.cs" />
      <Compile Include="Assets\scripts\engine\PrefabLinker.cs" />
+     <Compile Include="Assets\scripts\engine\SavedStat.cs" />
      <Compile Include="Assets\scripts\engine\ScoreTracker.cs" />
      <Compile Include="Assets\scripts\engine\ScoringObject.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObject.cs" />

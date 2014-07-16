@@ -10,10 +10,9 @@ abstract public class ScoringObject : UpgradeableObject
 		engine.player_stats.AddMoney(GetPointValue());
 	}
 
-	public override void Reset()
+	public virtual void Reset()
 	{
-		upgrades = 0;
-		GetPointValue();
+    base.Reset();
 		RecalculateUpgradeCost();
 	}
 
@@ -21,7 +20,7 @@ abstract public class ScoringObject : UpgradeableObject
 	{
 		if (PlayerHasEnoughMoney())
 		{
-			++upgrades;
+			++value;
 			engine.player_stats.SpendMoney(upgrade_cost);
 			GetPointValue();
 			RecalculateUpgradeCost();
