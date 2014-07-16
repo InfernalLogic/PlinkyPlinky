@@ -13,7 +13,6 @@ public class BackgroundObjectSpawner : MonoBehaviour
 	private GameObject new_bg_object;
 
 	private Vector3 spawn_point = Vector3.zero;
-	private Vector3 move_vector = Vector3.one;
 
   [SerializeField]
 	private int spawn_timer_min = 0,

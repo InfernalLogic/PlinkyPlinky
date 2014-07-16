@@ -61,7 +61,7 @@ public class UpgradeButton : Button
   private void DisplayTextLabel()
   {
     GUI.Label(indented_label_display_rect.GetRect(), button_text + "\nCost: " + target_upgrade.GetUpgradeCost() +
-      "\n$/hit: " + target_scoring_object.GetPointValue(), label_style);
+      "\nincome/hit: " + target_scoring_object.GetPointValue(), label_style);
   }
 
   private bool PlayerHasEnoughMoneyToUpgrade()

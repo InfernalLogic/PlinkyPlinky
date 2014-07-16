@@ -5,13 +5,13 @@ public class UserInputScript : MonoBehaviour {
 
 	private Plinker plinker = null;
 	private GameObject plinker_object = null;
-  private Rect play_field_rect;
+  [SerializeField]
+  private ScalingRect play_field_rect;
 
 	void Start()
 	{
 		plinker_object = GameObject.FindGameObjectWithTag("plinker");
 		plinker = plinker_object.GetComponent<Plinker>();
-    InitializePlayFieldRect();
 	}
 
 	void OnGUI()
@@ -29,21 +29,13 @@ public class UserInputScript : MonoBehaviour {
 
 	public void LoadInvisibleDropBombButton()
 	{
-		if (GUI.Button (play_field_rect, "", GUIStyle.none))
+		if (GUI.Button (play_field_rect.GetRect(), "", GUIStyle.none))
 		{
 			plinker.DropBomb();
 		}
 	}
 
-  private void InitializePlayFieldRect()
-  {
-    play_field_rect.x = 0;
-    play_field_rect.y = 0;
-    play_field_rect.width = (Screen.width - Screen.width / 3);
-    play_field_rect.height = Screen.height;
-  }
-
-  public Rect GetPlayFieldRect()
+  public ScalingRect GetPlayFieldRect()
   {
     return play_field_rect;
   }

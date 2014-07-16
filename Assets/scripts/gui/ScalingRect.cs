@@ -4,7 +4,7 @@ using System.Collections;
 public class ScalingRect : MonoBehaviour 
 {
   [SerializeField]
-  private string name;
+  private string rect_name;
   [SerializeField]
   private Rect dimensions_in_percent_of_screen;
 

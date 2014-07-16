@@ -29,7 +29,8 @@ public class PrefabLinker : MonoBehaviour
 
   private void NormalizeObjectRotation(GameObject target_object)
   {
-    target_object.transform.Rotate(transform.eulerAngles / 2);
+    //target_object.transform.Rotate(transform.eulerAngles / 2);
+    target_object.transform.Rotate(transform.eulerAngles);
   }
 
   private void MakeObjectAChild(GameObject target_object)

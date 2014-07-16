@@ -36,8 +36,8 @@ public class LevelHandler : PlinkyObject
 		current_level = PickNewLevel();
 
 		loader = GameObject.Instantiate (levels[current_level], 
-			                                 levels[current_level].transform.position,
-			                                 levels[current_level].transform.rotation) as GameObject;
+			                               levels[current_level].transform.position,
+			                               levels[current_level].transform.rotation) as GameObject;
 		engine.score_tracker.CountGoals();
 		}
 	}

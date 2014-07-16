@@ -4,8 +4,8 @@ using System.Collections;
 public class MenuSelector : HUDField 
 {
   private int selected_menu = 0;
-  private string[] selected_menu_text = new string[] {"Upgrades", "Unlockables",
-																											"Achievements", "Options"};
+  [SerializeField]
+  private string[] selected_menu_text;
   [SerializeField]
   private GUIStyle button_style;
 
