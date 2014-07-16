@@ -5,8 +5,6 @@ Project("{6643FDD6-1A9F-24DA-EA73-5FE489B99145}") = "Plinko", "Assembly-CSharp.c
 EndProject
 Project("{6643FDD6-1A9F-24DA-EA73-5FE489B99145}") = "Plinko", "Assembly-CSharp-Editor.csproj", "{036990E0-02EB-157F-7B22-5A485A5B8C31}"
 EndProject
-Project("{6643FDD6-1A9F-24DA-EA73-5FE489B99145}") = "Plinko", "Assembly-UnityScript.unityproj", "{F9A40854-3CB2-A0C6-6914-E7703ED0A8A3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,15 +19,11 @@ Global
 		{036990E0-02EB-157F-7B22-5A485A5B8C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{036990E0-02EB-157F-7B22-5A485A5B8C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{036990E0-02EB-157F-7B22-5A485A5B8C31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9A40854-3CB2-A0C6-6914-E7703ED0A8A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9A40854-3CB2-A0C6-6914-E7703ED0A8A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9A40854-3CB2-A0C6-6914-E7703ED0A8A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9A40854-3CB2-A0C6-6914-E7703ED0A8A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																																																																																																																																																																																		GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																																																																																																																																																																											GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

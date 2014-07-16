@@ -3,15 +3,21 @@ using System.Collections;
 
 public class PegScript : PlinkyObject 
 {
-	public int hp = 1;
-	public bool is_destructible = true;
-	
+  [SerializeField]
+	private int hp = 1;
+  [SerializeField]
+  private bool is_destructible = true;
+  [SerializeField]
+  private ParticleSystem collision_emitter;
+
+  private ParticleSystem emitter;
+
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.tag == "bomb")
 		{
-			//AudioSource.PlayClipAtPoint (audio.clip, gameObject.transform.position);
 			AudioSource.PlayClipAtPoint(engine.audio_handler.GetPopSound(), gameObject.transform.position);
+      emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
 
 			if (is_destructible)
 			{

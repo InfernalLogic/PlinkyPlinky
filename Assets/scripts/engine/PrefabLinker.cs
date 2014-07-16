@@ -16,7 +16,7 @@ public class PrefabLinker : MonoBehaviour
 
     new_object = InstantiateUpdatedPrefab();
     NormalizeObjectRotation(new_object);
-    AssignObjectToParent(new_object);
+    MakeObjectAChild(new_object);
 
 	}
 
@@ -32,7 +32,7 @@ public class PrefabLinker : MonoBehaviour
     target_object.transform.Rotate(transform.eulerAngles / 2);
   }
 
-  private void AssignObjectToParent(GameObject target_object)
+  private void MakeObjectAChild(GameObject target_object)
   {
     target_object.transform.parent = gameObject.transform;
   }
