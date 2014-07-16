@@ -4,19 +4,18 @@ using System.Collections;
 public class AudioHandler : MonoBehaviour 
 {
 	public AudioClip[] pop_sounds;
-	public AudioClip bumper_hit_sound;
+	public AudioClip[] bumper_hit_sounds;
 	public AudioClip bomb_drop_sound;
 	public AudioClip coin_hit_sound;
 
 	public AudioClip GetPopSound()
 	{
-		int sound = Random.Range(0, (pop_sounds.Length));
-		return pop_sounds[sound];
+    return RandomSoundFrom(pop_sounds);
 	}
 
 	public AudioClip GetBumperHitSound()
 	{
-		return bumper_hit_sound;
+    return RandomSoundFrom(bumper_hit_sounds);
 	}
 
 	public AudioClip GetBombDropSound()
@@ -28,4 +27,10 @@ public class AudioHandler : MonoBehaviour
 	{
 		return coin_hit_sound;
 	}
+
+  private AudioClip RandomSoundFrom(AudioClip[] clips)
+  {
+    int sound = Random.Range(0, (clips.Length));
+    return clips[sound];
+  }
 }

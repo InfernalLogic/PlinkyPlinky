@@ -3,26 +3,24 @@ using System.Collections;
 
 abstract public class UpgradeableObject : PlinkyObject 
 {
+  [SerializeField]
+  private int upgrades_on_reset = 0;
+
 	protected int upgrades;
 	protected int upgrade_cost;
 	protected int max_upgrades = 0;
 	protected string upgrade_id;
 
 	abstract public void Upgrade();
-	abstract public void CalculateUpgradeCost();
+	abstract public void RecalculateUpgradeCost();
 	abstract public void Reset();
-	abstract protected void Initialize(); 
+	abstract protected void Initialize();
 
 	void Start()
 	{
 		Initialize();
 		Load ();
-		CalculateUpgradeCost();
-
-		if (engine == null)
-		{
-			Debug.Log ("engine not loaded properly in " + gameObject.name);
-		}
+		RecalculateUpgradeCost();
 	}
 
 	void OnDestroy()
@@ -40,16 +38,9 @@ abstract public class UpgradeableObject : PlinkyObject
 		return upgrade_cost;
 	}
 
-	protected bool HasEnoughMoney()
+	public bool PlayerHasEnoughMoney()
 	{
-		if (engine.player_stats.GetCurrentMoney() >= upgrade_cost)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+    return (engine.player_stats.GetCurrentMoney() >= upgrade_cost);
 	}
 
 	public void Save()
@@ -61,17 +52,22 @@ abstract public class UpgradeableObject : PlinkyObject
 		}
 	}
 
-	public void Load()
+	public virtual void Load()
 	{
 		if (!IsClone ())
 		{
-			upgrades = PlayerPrefs.GetInt(upgrade_id +"_upgrades", 0);
+      upgrades = PlayerPrefs.GetInt(upgrade_id + "_upgrades", upgrades_on_reset);
 			Debug.Log (upgrade_id + " initialized to: " + upgrades);
 		}
 	}
 
-	bool IsClone()
+	private bool IsClone()
 	{
 		return upgrade_id.Contains("(Clone)");
 	}
+
+  public int GetUpgradesOnReset()
+  {
+    return upgrades_on_reset;
+  }
 }

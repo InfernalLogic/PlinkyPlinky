@@ -3,13 +3,15 @@ using System.Collections;
 
 public class UserInputScript : MonoBehaviour {
 
-	private PlinkerScript plinker = null;
+	private Plinker plinker = null;
 	private GameObject plinker_object = null;
+  [SerializeField]
+  private ScalingRect play_field_rect;
 
 	void Start()
 	{
 		plinker_object = GameObject.FindGameObjectWithTag("plinker");
-		plinker = plinker_object.GetComponent<PlinkerScript>();
+		plinker = plinker_object.GetComponent<Plinker>();
 	}
 
 	void OnGUI()
@@ -27,9 +29,14 @@ public class UserInputScript : MonoBehaviour {
 
 	public void LoadInvisibleDropBombButton()
 	{
-		if (GUI.Button (new Rect(260, 0, 540, 600), "", GUIStyle.none))
+		if (GUI.Button (play_field_rect.GetRect(), "", GUIStyle.none))
 		{
 			plinker.DropBomb();
 		}
 	}
+
+  public ScalingRect GetPlayFieldRect()
+  {
+    return play_field_rect;
+  }
 }

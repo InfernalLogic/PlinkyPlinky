@@ -3,29 +3,28 @@ using System.Collections;
 
 abstract public class ScoringObject : UpgradeableObject 
 {
-	abstract public int CalculatePointValue();
+	abstract public int GetPointValue();
 	
 	public void Scored()
 	{
-		engine.player_stats.AddMoney(CalculatePointValue());
+		engine.player_stats.AddMoney(GetPointValue());
 	}
 
 	public override void Reset()
 	{
 		upgrades = 0;
-		CalculatePointValue();
-		CalculateUpgradeCost();
+		GetPointValue();
+		RecalculateUpgradeCost();
 	}
 
 	public override void Upgrade()
 	{
-		if (HasEnoughMoney())
+		if (PlayerHasEnoughMoney())
 		{
 			++upgrades;
 			engine.player_stats.SpendMoney(upgrade_cost);
-			CalculatePointValue();
-			CalculateUpgradeCost();
-			engine.hud.UpdateMoney();
+			GetPointValue();
+			RecalculateUpgradeCost();
 		}
 		else
 		{

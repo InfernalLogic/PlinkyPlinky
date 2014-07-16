@@ -49,6 +49,7 @@ public class ScoreTracker : PlinkyObject
 		CountGoals();
 		engine.player_stats.CoinHit();
 		--goals_left;
+    Debug.Log("Coins left: " + goals_left);
 	}
 
 	public void BombDropped()
@@ -58,15 +59,15 @@ public class ScoreTracker : PlinkyObject
 
 	public void CountGoals()
 	{
-		ZeroGoals();
+		SetGoalsLeftToZero();
 		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("goal");
 		goals_left = goal_counter.Length;
-		Debug.Log ("Goals counted: " + goals_left);
+
+    Debug.Log("Counted " + goals_left + " goals");
 	}
 	
-	public void ZeroGoals()
+	public void SetGoalsLeftToZero()
 	{
 		goals_left = 0;
-		Debug.Log ("Goals set to: " + goals_left);
 	}
 }

@@ -7,7 +7,7 @@ public class BombScript : PlinkyObject
 
 	void Start () 
 	{
-		AudioSource.PlayClipAtPoint(engine.audio_handler.GetBombDropSound(), gameObject.transform.position);
+		AudioSource.PlayClipAtPoint(engine.audio_handler.GetBombDropSound(), Vector3.zero);  
     Destroy(gameObject, 25);
   }
 

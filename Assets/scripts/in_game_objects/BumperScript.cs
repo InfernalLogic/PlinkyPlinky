@@ -15,15 +15,13 @@ public class BumperScript : PlinkyObject
 
 	void OnCollisionEnter2D (Collision2D collision)
 	{
-		//bamp
 		if (collision.gameObject.tag == "bomb")
 		{
 			if (IsCooledDown())
 			{
 				SetCooldownTimer ();			
 				bumper_animator.SetTrigger ("hit_trigger");
-				//Debug.Log ("hit_trigger set");
-				AudioSource.PlayClipAtPoint(engine.audio_handler.GetBumperHitSound(), gameObject.transform.position);
+        AudioSource.PlayClipAtPoint(engine.audio_handler.GetBumperHitSound(), Vector3.zero);
 			
 				ContactPoint2D[] contacts = collision.contacts;
 				Vector2 bump_vector;

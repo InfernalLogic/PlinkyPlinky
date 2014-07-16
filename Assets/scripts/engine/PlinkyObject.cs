@@ -5,7 +5,7 @@ public class PlinkyObject : MonoBehaviour
 {
 	protected PlinkyEngine engine;
 
-	void Awake()
+	protected void Awake()
 	{
 		LoadEngine ();
 	}
