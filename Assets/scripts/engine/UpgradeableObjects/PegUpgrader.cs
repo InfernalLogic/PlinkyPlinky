@@ -7,9 +7,14 @@ public class PegUpgrader : ScoringObject
 	{
 		upgrade_cost = (int)((Mathf.Pow((float)(value + 1), 1.2f) * 200));
 	}
-	
-	public override int GetPointValue()
-	{
-    return value;
-	}
+
+  public override int GetPointValue()
+  {
+    return point_value;
+  }
+
+  protected override void RecalculatePointValue()
+  {
+    point_value = value;
+  }
 }

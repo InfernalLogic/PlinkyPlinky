@@ -65,7 +65,9 @@ public class Plinker : PlinkyObject
 	    Instantiate(new_bomb, drop_point, transform.rotation);
 			bomb_cooldown_timer = Time.time;
 
-			engine.score_tracker.BombDropped();
+			engine.level_complete_checker.BombDropped();
+
+      engine.player_stats.BombDropped();
 		}
   }
 

@@ -10,6 +10,11 @@ public class BumperUpgrader : ScoringObject
 
 	public override int GetPointValue()
 	{
-    return value;
+    return point_value;
 	}
+
+  protected override void RecalculatePointValue()
+  {
+    point_value = value;
+  }
 }

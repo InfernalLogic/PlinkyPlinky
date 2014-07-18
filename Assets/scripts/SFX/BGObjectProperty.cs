@@ -11,6 +11,5 @@ public class BGObjectProperty
 	public void CalculateRange()
 	{
 		range = maximum - minimum;
-		//Debug.Log (range);
 	}
 }

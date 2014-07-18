@@ -12,7 +12,7 @@ public class GoalScript : PlinkyObject
 	{
 		if (other_collider.gameObject.tag == "bomb")
 		{
-			engine.score_tracker.GoalHit();
+			engine.level_complete_checker.CoinHit();
       AudioSource.PlayClipAtPoint(engine.audio_handler.GetCoinHitSound(), Vector3.zero);
       emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
 			Destroy (gameObject);

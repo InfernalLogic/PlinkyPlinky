@@ -3,12 +3,14 @@ using System.Collections;
 
 public class SavedStat : PlinkyObject 
 {
+  protected int value;
+
   [SerializeField]
   protected string stat_name;
   [SerializeField]
   protected int default_value_on_reset;
 
-  protected int value;
+  private int loaded_value;
   
   new void Awake()
   {
@@ -21,7 +23,8 @@ public class SavedStat : PlinkyObject
   {
     if (!IsClone())
     {
-      value = PlayerPrefs.GetInt(stat_name, default_value_on_reset);
+      loaded_value = PlayerPrefs.GetInt(stat_name, default_value_on_reset);
+      value = loaded_value;
       Debug.Log(stat_name + " initialized to: " + value);
     }
   }
@@ -35,14 +38,25 @@ public class SavedStat : PlinkyObject
     }
   }
 
+  public void SetName(string name)
+  {
+    this.name = name;
+  }
+
   public virtual void Reset()
   {
     value = default_value_on_reset;
+    Debug.Log(name + " reset");
   }
 
   public int GetValue()
   {
     return value;
+  }
+
+  public void AddValue(int value)
+  {
+    this.value += value;
   }
 
   public int GetDefaultValueOnReset()
@@ -53,5 +67,10 @@ public class SavedStat : PlinkyObject
   private bool IsClone()
   {
     return gameObject.name.Contains("(Clone)");
+  }
+
+  void OnDestroy()
+  {
+    Save();
   }
 }

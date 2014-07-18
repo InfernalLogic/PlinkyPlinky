@@ -31,14 +31,8 @@ public class LevelHandler : PlinkyObject
 	{
 		if (!engine.disable_level_loading)
 		{
-    ClearLevel();
-
-		current_level = PickNewLevel();
-
-		loader = GameObject.Instantiate (levels[current_level], 
-			                               levels[current_level].transform.position,
-			                               levels[current_level].transform.rotation) as GameObject;
-		engine.score_tracker.CountGoals();
+      current_level = PickNewLevel();
+      LoadLevel(current_level);
 		}
 	}
 
@@ -46,21 +40,24 @@ public class LevelHandler : PlinkyObject
   {
     ClearLevel();
 
-    loader = GameObject.Instantiate(levels[target_level],
-                                       levels[target_level].transform.position,
-                                       levels[target_level].transform.rotation) as GameObject;
+    current_level = target_level;
 
-    engine.score_tracker.CountGoals();
+    loader = GameObject.Instantiate(levels[current_level],
+                                    levels[current_level].transform.position,
+                                    levels[current_level].transform.rotation) as GameObject;
+    engine.level_complete_checker.CountCoins();
   }
 
   private void ClearLevel()
   {
-    engine.score_tracker.SetGoalsLeftToZero();
+    engine.level_complete_checker.SetCoinsLeftToZero();
     DestroyAllWithTag("bomb");
+    DestroyAllWithTag("bumper");
     DestroyAllWithTag("peg");
     DestroyAllWithTag("level");
     DestroyAllWithTag("goal");
     Destroy(loader);
+    
   }
 
 	public int PickNewLevel()

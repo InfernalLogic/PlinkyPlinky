@@ -18,7 +18,6 @@ public class PlayerStats : PlinkyObject
 	{
 		current_money = PlayerPrefs.GetInt ("current_money", 0);
 		career_money = PlayerPrefs.GetInt ("career_money", 0);
-	
 
 		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
 
@@ -40,19 +39,27 @@ public class PlayerStats : PlinkyObject
 		career_money += income;
 	}
 
+  public void BombDropped()
+  {
+    engine.achievement_tracker.IncrementAchievementStat("total_bombs_dropped");
+  }
+
 	public void CoinHit()
 	{
-		coin_upgrader.Scored();
+		AddMoney(coin_upgrader.GetPointValue());
+    engine.achievement_tracker.IncrementAchievementStat("total_coins_hit");
 	}
 
 	public void PegHit()
 	{
-		peg_upgrader.Scored();
+    AddMoney(peg_upgrader.GetPointValue());
+    engine.achievement_tracker.IncrementAchievementStat("total_pegs_hit");
 	}
 
 	public void BumperHit()
 	{
-		bumper_upgrader.Scored();
+    AddMoney(bumper_upgrader.GetPointValue());
+    engine.achievement_tracker.IncrementAchievementStat("total_bumpers_hit");
 	}
 
 	public void ResetStats()
@@ -60,9 +67,9 @@ public class PlayerStats : PlinkyObject
 		current_money = 0;
 		career_money = 0;
 		
-		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
-		
-		foreach (UpgradeableObject element in upgrades)
+		SavedStat[] stats = Resources.FindObjectsOfTypeAll<SavedStat>();
+
+    foreach (SavedStat element in stats)
 		{
 			element.Reset();
 		}
@@ -73,8 +80,7 @@ public class PlayerStats : PlinkyObject
 
 	public void SpendMoney(int price)
 	{
-			current_money -= price;
-
+		current_money -= price;
 	}
 
 	public int GetCurrentMoney()

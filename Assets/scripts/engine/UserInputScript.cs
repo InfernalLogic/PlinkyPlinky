@@ -19,14 +19,6 @@ public class UserInputScript : MonoBehaviour {
 		LoadInvisibleDropBombButton();
 	}
 
-	void Update () 
-  {
-    if (Input.GetButtonDown("Fire1"))
-    {
-				plinker.DropBomb();
-    }
-  }
-
 	public void LoadInvisibleDropBombButton()
 	{
 		if (GUI.Button (play_field_rect.GetRect(), "", GUIStyle.none))

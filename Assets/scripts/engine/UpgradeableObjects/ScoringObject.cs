@@ -4,11 +4,17 @@ using System.Collections;
 abstract public class ScoringObject : UpgradeableObject 
 {
 	abstract public int GetPointValue();
-	
-	public void Scored()
-	{
-		engine.player_stats.AddMoney(GetPointValue());
-	}
+  abstract protected void RecalculatePointValue();
+
+  protected int point_value;
+
+  new void Awake()
+  {
+    LoadEngine();
+    Load();
+    RecalculateUpgradeCost();
+    RecalculatePointValue();
+  }
 
 	public virtual void Reset()
 	{
@@ -20,9 +26,9 @@ abstract public class ScoringObject : UpgradeableObject
 	{
 		if (PlayerHasEnoughMoney())
 		{
-			++value;
+      ++value;
 			engine.player_stats.SpendMoney(upgrade_cost);
-			GetPointValue();
+      RecalculatePointValue();
 			RecalculateUpgradeCost();
 		}
 		else
