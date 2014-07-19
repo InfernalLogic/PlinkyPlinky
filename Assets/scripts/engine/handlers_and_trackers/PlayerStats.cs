@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerStats : PlinkyObject 
+public class PlayerStats : Singleton<PlayerStats> 
 {
+  [SerializeField]
+  private bool reset_on_load_enabled = false;
+
 	const int LOCKED = 0;
 	const int UNLOCKED = 1;
 
@@ -13,6 +16,15 @@ public class PlayerStats : PlinkyObject
 	
 	private int current_money,
 						  career_money;
+
+  void Awake()
+  {
+    if (reset_on_load_enabled)
+    {
+      PlayerPrefs.DeleteAll();
+      ResetStats();
+    }
+  }
 
 	void Start()
 	{
@@ -41,25 +53,25 @@ public class PlayerStats : PlinkyObject
 
   public void BombDropped()
   {
-    engine.achievement_tracker.IncrementAchievementStat("total_bombs_dropped");
+    AchievementTracker.Instance().IncrementAchievementStat("total_bombs_dropped");
   }
 
 	public void CoinHit()
 	{
 		AddMoney(coin_upgrader.GetPointValue());
-    engine.achievement_tracker.IncrementAchievementStat("total_coins_hit");
+    AchievementTracker.Instance().IncrementAchievementStat("total_coins_hit");
 	}
 
 	public void PegHit()
 	{
     AddMoney(peg_upgrader.GetPointValue());
-    engine.achievement_tracker.IncrementAchievementStat("total_pegs_hit");
+    AchievementTracker.Instance().IncrementAchievementStat("total_pegs_hit");
 	}
 
 	public void BumperHit()
 	{
     AddMoney(bumper_upgrader.GetPointValue());
-    engine.achievement_tracker.IncrementAchievementStat("total_bumpers_hit");
+    AchievementTracker.Instance().IncrementAchievementStat("total_bumpers_hit");
 	}
 
 	public void ResetStats()
@@ -74,7 +86,7 @@ public class PlayerStats : PlinkyObject
 			element.Reset();
 		}
 
-		engine.level_handler.LoadUnlockedLevels();
+    LevelHandler.Instance().LoadUnlockedLevels();
 	
 	}
 

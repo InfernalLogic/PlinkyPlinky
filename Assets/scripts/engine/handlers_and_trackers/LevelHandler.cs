@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelHandler : PlinkyObject 
+public class LevelHandler : Singleton<LevelHandler> 
 {
+  [SerializeField]
+  private bool disable_level_loading = false;
+
 	public GameObject[] levels;
 	public ArrayList unlocked_levels = new ArrayList();
 
@@ -11,7 +14,7 @@ public class LevelHandler : PlinkyObject
 
 	void Start()
 	{
-    engine.player_stats.level_unlocker.SetMaxUpgrades(levels.Length);
+    PlayerStats.Instance().level_unlocker.SetMaxUpgrades(levels.Length);
 
     LoadUnlockedLevels(PlayerPrefs.GetInt(LevelUnlockerPlayerPrefsKey(), 3));
 		LoadRandomLevel();
@@ -19,17 +22,17 @@ public class LevelHandler : PlinkyObject
 
   private int DefaultLevelsToUnlockOnReset()
   {
-    return engine.player_stats.level_unlocker.GetLevelsToUnlockOnReset();
+    return PlayerStats.Instance().level_unlocker.GetLevelsToUnlockOnReset();
   }
 
   private string LevelUnlockerPlayerPrefsKey()
   {
-    return engine.player_stats.level_unlocker.gameObject.name + "_upgrades";
+    return PlayerStats.Instance().level_unlocker.gameObject.name + "_upgrades";
   }
 
 	public void LoadRandomLevel()
 	{
-		if (!engine.disable_level_loading)
+		if (!disable_level_loading)
 		{
       current_level = PickNewLevel();
       LoadLevel(current_level);
@@ -45,12 +48,12 @@ public class LevelHandler : PlinkyObject
     loader = GameObject.Instantiate(levels[current_level],
                                     levels[current_level].transform.position,
                                     levels[current_level].transform.rotation) as GameObject;
-    engine.level_complete_checker.CountCoins();
+    LevelCompleteChecker.Instance().CountCoins();
   }
 
   private void ClearLevel()
   {
-    engine.level_complete_checker.SetCoinsLeftToZero();
+    LevelCompleteChecker.Instance().SetCoinsLeftToZero();
     DestroyAllWithTag("bomb");
     DestroyAllWithTag("bumper");
     DestroyAllWithTag("peg");
@@ -86,7 +89,7 @@ public class LevelHandler : PlinkyObject
 	{
 		unlocked_levels.Clear ();
 
-    for (int i = 0; i < engine.player_stats.level_unlocker.GetTotalUnlockedLevels(); ++i)
+    for (int i = 0; i < PlayerStats.Instance().level_unlocker.GetTotalUnlockedLevels(); ++i)
     {
       unlocked_levels.Add(i);
       Debug.Log("added level: " + i);

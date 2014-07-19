@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelCompleteChecker : PlinkyObject 
+public class LevelCompleteChecker : Singleton<LevelCompleteChecker> 
 {
   [SerializeField]
 	private float load_new_level_delay = 0f;
@@ -40,7 +40,7 @@ public class LevelCompleteChecker : PlinkyObject
 
   private void LoadNewLevel()
   {
-    engine.level_handler.LoadRandomLevel();
+    LevelHandler.Instance().LoadRandomLevel();
   }
 
   private bool NewLevelCountdownCooledDown()
@@ -58,7 +58,7 @@ public class LevelCompleteChecker : PlinkyObject
     //the coins must be counted, then decremented here for anything to behave properly. There's what I believe is called
     //a "race hazard" having to do with how objects are destroyed and when update() is called, causing a call to CountCoins()
     //performed after a new level load to include any coins that had not been previously destroyed.
-		engine.player_stats.CoinHit();
+    PlayerStats.Instance().CoinHit();
     CountCoins();
     --coins_left;
 	}

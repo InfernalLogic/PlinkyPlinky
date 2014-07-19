@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CheatButton : PlinkyObject
+public class CheatButton : MonoBehaviour
 {
   [SerializeField]
   private int amount_to_cheat = 1000;
@@ -15,7 +15,7 @@ public class CheatButton : PlinkyObject
   {
     if (CheatButtonIsPressed())
     {
-      engine.player_stats.AddMoney(amount_to_cheat);
+      PlayerStats.Instance().AddMoney(amount_to_cheat);
     }
   }
 

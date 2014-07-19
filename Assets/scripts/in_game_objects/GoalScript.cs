@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GoalScript : PlinkyObject 
+public class GoalScript : MonoBehaviour 
 {
   [SerializeField]
   private ParticleSystem collision_emitter;
@@ -12,8 +12,8 @@ public class GoalScript : PlinkyObject
 	{
 		if (other_collider.gameObject.tag == "bomb")
 		{
-			engine.level_complete_checker.CoinHit();
-      AudioSource.PlayClipAtPoint(engine.audio_handler.GetCoinHitSound(), Vector3.zero);
+      LevelCompleteChecker.Instance().CoinHit();
+      AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetCoinHitSound(), Vector3.zero);
       emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
 			Destroy (gameObject);
 		}

@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BombScript : PlinkyObject 
+public class BombScript : MonoBehaviour 
 {
 	public float cooldown = 0f;
 
 	void Start () 
 	{
-		AudioSource.PlayClipAtPoint(engine.audio_handler.GetBombDropSound(), Vector3.zero);  
+		AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetBombDropSound(), Vector3.zero);  
     Destroy(gameObject, 25);
   }
 

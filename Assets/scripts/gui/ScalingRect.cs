@@ -47,4 +47,9 @@ public class ScalingRect : MonoBehaviour
   {
     return scaled_rect;
   }
+
+  public void SetRect(Rect rect)
+  {
+    scaled_rect = rect;
+  }
 }

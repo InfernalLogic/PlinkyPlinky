@@ -10,7 +10,7 @@ public class UnlockLevelsButton : Button
 
   public override void Display()
   {
-    if (engine.player_stats.level_unlocker.UpgradesNotMaxedOut())
+    if (PlayerStats.Instance().level_unlocker.UpgradesNotMaxedOut())
     {
       if (target_upgrade.PlayerHasEnoughMoney())
       {

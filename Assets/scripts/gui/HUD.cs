@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HUD : PlinkyObject
+public class HUD : Singleton<HUD>
 {
   public HUDField[] HUD_fields;
 
@@ -9,8 +9,8 @@ public class HUD : PlinkyObject
 
   void Awake()
   {
-    base.Awake();
     last_screen_width = Screen.width;
+    Screen.SetResolution(960, 600, false, 60);
   }
 
   void OnGUI()

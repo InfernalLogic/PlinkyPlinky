@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AchievementTracker : PlinkyObject 
+public class AchievementTracker : Singleton<AchievementTracker>
 {
   private IDictionary<string, AchievementChain> achievement_chains;
 
@@ -30,4 +30,8 @@ public class AchievementTracker : PlinkyObject
     }
   }
 
+  public void EnqueueAchievementPopup(string message)
+  {
+    FindObjectOfType<AchievementUnlockedPopups>().EnqueueAchievementPopup(message);
+  }
 }

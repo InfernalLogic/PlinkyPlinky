@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Plinker : PlinkyObject
+public class Plinker : MonoBehaviour
 {
 	public float movement_speed = 0f;
   private GameObject new_bomb;
@@ -15,7 +15,6 @@ public class Plinker : PlinkyObject
   private float bomb_cooling_down_alpha = 0.0f;
   private Color bomb_cooling_down_color;
   private Color bomb_ready_color;
-
 	
   void Start()
   {
@@ -65,9 +64,9 @@ public class Plinker : PlinkyObject
 	    Instantiate(new_bomb, drop_point, transform.rotation);
 			bomb_cooldown_timer = Time.time;
 
-			engine.level_complete_checker.BombDropped();
+      LevelCompleteChecker.Instance().BombDropped();
 
-      engine.player_stats.BombDropped();
+      PlayerStats.Instance().BombDropped();
 		}
   }
 

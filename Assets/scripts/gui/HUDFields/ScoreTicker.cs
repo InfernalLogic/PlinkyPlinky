@@ -12,7 +12,7 @@ public class ScoreTicker : HUDField
 		
 		DisplayCurrentMoney ();
 
-		DisplayCurrentLevel ();
+    DisplayCurrentLevel();
 	}
 
 	void DisplayBackgroundBox ()
@@ -23,12 +23,12 @@ public class ScoreTicker : HUDField
 	void DisplayCurrentMoney ()
 	{
     GUI.Label(new Rect(0, 10, display_rect.GetRect().width, display_rect.GetRect().height / 2), 
-		           "$: " + engine.player_stats.GetCurrentMoney (), label_style);
+		           "$: " + PlayerStats.Instance().GetCurrentMoney (), label_style);
 	}
 
-	void DisplayCurrentLevel ()
-	{
+  void DisplayCurrentLevel()
+  {
     GUI.Label(new Rect(0, display_rect.GetRect().height / 2 - 5, display_rect.GetRect().width, display_rect.GetRect().height / 2),
-               "Playing stage: " + engine.level_handler.GetCurrentLevel(), label_style);
-	}
+               "Playing stage: " + LevelHandler.Instance().GetCurrentLevel(), label_style);
+  }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BumperScript : PlinkyObject 
+public class BumperScript : MonoBehaviour 
 {
 	public float bump_strength = 0f;
 	public float bump_cooldown = 0f;
@@ -21,7 +21,7 @@ public class BumperScript : PlinkyObject
 			{
 				SetCooldownTimer ();			
 				bumper_animator.SetTrigger ("hit_trigger");
-        AudioSource.PlayClipAtPoint(engine.audio_handler.GetBumperHitSound(), Vector3.zero);
+        AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetBumperHitSound(), Vector3.zero);
 			
 				ContactPoint2D[] contacts = collision.contacts;
 				Vector2 bump_vector;
@@ -31,7 +31,7 @@ public class BumperScript : PlinkyObject
 					element.collider.attachedRigidbody.AddForce(bump_vector);
 				}
 
-				engine.player_stats.BumperHit();
+        PlayerStats.Instance().BumperHit();
 			}
 
 		}

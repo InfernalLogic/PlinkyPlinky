@@ -10,7 +10,6 @@ abstract public class ScoringObject : UpgradeableObject
 
   new void Awake()
   {
-    LoadEngine();
     Load();
     RecalculateUpgradeCost();
     RecalculatePointValue();
@@ -27,7 +26,7 @@ abstract public class ScoringObject : UpgradeableObject
 		if (PlayerHasEnoughMoney())
 		{
       ++value;
-			engine.player_stats.SpendMoney(upgrade_cost);
+			PlayerStats.Instance().SpendMoney(upgrade_cost);
       RecalculatePointValue();
 			RecalculateUpgradeCost();
 		}

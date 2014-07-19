@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SavedStat : PlinkyObject 
+public class SavedStat : MonoBehaviour 
 {
   protected int value;
 
@@ -14,7 +14,9 @@ public class SavedStat : PlinkyObject
   
   new void Awake()
   {
-    LoadEngine();
+    if (stat_name == null)
+      stat_name = gameObject.name;
+
     Load();
     Debug.Log("SavedStat Awake() called for: " + gameObject.name);
   }

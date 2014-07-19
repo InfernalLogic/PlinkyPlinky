@@ -3,9 +3,10 @@ using System.Collections;
 
 public class OptionsMenu : HUDField
 {
-  private Rect reset_confirmation_window_rect;
+
   private bool display_reset_confirmation_window= false;
   private bool game_is_muted = false;
+  private bool hide_level_number = false;
 
   [SerializeField]
   private GUIStyle button_style;
@@ -16,11 +17,8 @@ public class OptionsMenu : HUDField
   ScalingRect reset_button_rect;
   [SerializeField]
   ScalingRect mute_button_rect;
-
-  void Start()
-  {
-    InitializeResetConfirmationWindowRect();
-  }
+  [SerializeField]
+  private ScalingRect reset_confirmation_window_rect;
 
   protected override void DisplayGUIElements()
   {
@@ -46,8 +44,8 @@ public class OptionsMenu : HUDField
 
   private void ResetGame()
   {
-    engine.player_stats.ResetStats();
-    engine.level_handler.LoadRandomLevel();
+    PlayerStats.Instance().ResetStats();
+    LevelHandler.Instance().LoadRandomLevel();
     Debug.Log("Game reset");
   }
 
@@ -56,12 +54,14 @@ public class OptionsMenu : HUDField
     return GUI.Button(reset_button_rect.GetRect(), "Reset game", button_style);
   }
 
+
+
   private void LoadResetConfirmationWindow()
   {
-    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.width, reset_confirmation_window_rect.height), 
+    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height), 
               "Are you sure you want to reset? All your progress will be lost.", label_style);
 
-    reset_confirmation_window_rect = GUI.ModalWindow(0, reset_confirmation_window_rect, LoadResetConfirmationButtons, "", GUIStyle.none);
+    reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadResetConfirmationButtons, "", GUIStyle.none));
   }
 
   private void LoadResetConfirmationButtons(int window_id)
@@ -80,23 +80,15 @@ public class OptionsMenu : HUDField
   private bool YesButtonIsPressed()
   {
     return GUI.Button(new Rect(10, 10,
-                               ((reset_confirmation_window_rect.width / 2) - 20), ((reset_confirmation_window_rect.height / 2) - 20)), 
+                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)), 
                                "YES", button_style);
   }
 
   private bool NoButtonIsPressed()
   {
-    return GUI.Button(new Rect((reset_confirmation_window_rect.width / 2) + 10, 10,
-                               ((reset_confirmation_window_rect.width / 2) - 20), ((reset_confirmation_window_rect.height / 2) - 20)), 
+    return GUI.Button(new Rect((reset_confirmation_window_rect.GetRect().width / 2) + 10, 10,
+                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)), 
                                "NO", button_style);
-  }
-
-  private void InitializeResetConfirmationWindowRect()
-  {
-    reset_confirmation_window_rect.width = Screen.width / 3;
-    reset_confirmation_window_rect.height = Screen.height / 4;
-    reset_confirmation_window_rect.x = Screen.width * (2f / 3f);
-    reset_confirmation_window_rect.y = Screen.height / 4;
   }
 
   private void DisplayMuteButton()

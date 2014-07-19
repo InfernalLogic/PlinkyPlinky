@@ -12,7 +12,7 @@ public class RandomLevelButton : Button
   {
     if (NewRandomLevelButtonIsPressed())
     {
-      engine.level_handler.LoadRandomLevel();
+      LevelHandler.Instance().LoadRandomLevel();
     }
   }
 

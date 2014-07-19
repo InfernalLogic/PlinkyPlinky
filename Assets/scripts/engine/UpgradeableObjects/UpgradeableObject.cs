@@ -12,7 +12,6 @@ abstract public class UpgradeableObject : SavedStat
 
   new void Awake()
 	{
-    LoadEngine();
     Load();
 		RecalculateUpgradeCost();
 	}
@@ -39,7 +38,7 @@ abstract public class UpgradeableObject : SavedStat
 
 	public bool PlayerHasEnoughMoney()
 	{
-    return (engine.player_stats.GetCurrentMoney() >= upgrade_cost);
+    return (PlayerStats.Instance().GetCurrentMoney() >= upgrade_cost);
 	}
 
   public int GetUpgradesOnReset()

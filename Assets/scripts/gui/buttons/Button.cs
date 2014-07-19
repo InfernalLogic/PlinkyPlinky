@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-abstract public class Button : PlinkyObject 
+abstract public class Button : MonoBehaviour 
 {
   [SerializeField]
   protected string button_text;

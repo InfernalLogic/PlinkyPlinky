@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AudioHandler : MonoBehaviour 
+public class AudioHandler : Singleton<AudioHandler> 
 {
 	public AudioClip[] pop_sounds;
 	public AudioClip[] bumper_hit_sounds;

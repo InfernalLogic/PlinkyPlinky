@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PegScript : PlinkyObject 
+public class PegScript : MonoBehaviour 
 {
   [SerializeField]
 	private int hp = 1;
@@ -16,12 +16,12 @@ public class PegScript : PlinkyObject
 	{
 		if (collision.gameObject.tag == "bomb")
 		{
-			AudioSource.PlayClipAtPoint(engine.audio_handler.GetPopSound(), gameObject.transform.position);
+      AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetPopSound(), gameObject.transform.position);
       emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
 
 			if (is_destructible)
 			{
-				engine.player_stats.PegHit();
+        PlayerStats.Instance().PegHit();
 				--hp;
 				if (hp <= 0)
 				{

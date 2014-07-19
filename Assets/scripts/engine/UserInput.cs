@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UserInputScript : MonoBehaviour {
-
+public class UserInput : Singleton<UserInput> 
+{
 	private Plinker plinker = null;
 	private GameObject plinker_object = null;
   [SerializeField]

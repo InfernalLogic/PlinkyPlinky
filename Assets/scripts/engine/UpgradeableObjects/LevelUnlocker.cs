@@ -8,8 +8,8 @@ public class LevelUnlocker : UpgradeableObject
     if (PlayerHasEnoughMoney() && UpgradesNotMaxedOut())
     {
       ++value;
-      engine.player_stats.SpendMoney(upgrade_cost);
-      engine.level_handler.LoadUnlockedLevels();
+      PlayerStats.Instance().SpendMoney(upgrade_cost);
+      LevelHandler.Instance().LoadUnlockedLevels();
       RecalculateUpgradeCost();
       LoadNewlyUnlockedLevel();
     }
@@ -30,7 +30,7 @@ public class LevelUnlocker : UpgradeableObject
 
   private void LoadNewlyUnlockedLevel()
   {
-    engine.level_handler.LoadLevel(value - 1);
+    LevelHandler.Instance().LoadLevel(value - 1);
   }
 
   public override void Reset()
