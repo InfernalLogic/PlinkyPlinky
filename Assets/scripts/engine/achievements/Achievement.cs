@@ -6,17 +6,15 @@ public class Achievement : MonoBehaviour
   [SerializeField]
   private int unlock_at = 0;
   [SerializeField]
-  private string unlock_message;
+  private Texture unlock_popup_texture;
 
   private SavedStat is_unlocked;
   private SavedStat tracked_stat;
-
 
   void Awake()
   {
     tracked_stat = transform.parent.GetComponent<SavedStat>();
     is_unlocked = GetComponent<SavedStat>();
-    Debug.Log(tracked_stat.name + " tracked by " + name);
   }
   
   public void CheckForCompletedAchievement()
@@ -24,7 +22,7 @@ public class Achievement : MonoBehaviour
     if (tracked_stat.GetValue() >= unlock_at && !IsUnlocked())
     {
       is_unlocked.AddValue(1);
-      GetComponentInParent<AchievementTracker>().EnqueueAchievementPopup(unlock_message);
+      GetComponentInParent<AchievementTracker>().EnqueueAchievementPopup(unlock_popup_texture);
       Debug.Log(name + " unlocked");
     }
   }

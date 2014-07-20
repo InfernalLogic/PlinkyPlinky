@@ -8,7 +8,6 @@ public class MenuSelector : HUDField
   private string[] selected_menu_text;
   [SerializeField]
   private GUIStyle button_style;
-
   [SerializeField]
   private ScalingRect selection_grid_rect;
 

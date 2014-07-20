@@ -3,8 +3,10 @@ using System.Collections;
 
 public class PegScript : MonoBehaviour 
 {
+  public static Publisher<GameEvent> peg_hit_publisher = new Publisher<GameEvent>();
+
   [SerializeField]
-	private int hp = 1;
+	private int hit_points = 1;
   [SerializeField]
   private bool is_destructible = true;
   [SerializeField]
@@ -14,23 +16,37 @@ public class PegScript : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "bomb")
+    if (CollidedWithABomb(collision))
 		{
-      AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetPopSound(), gameObject.transform.position);
-      emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
-
+      PlayPegHitSound();
 			if (is_destructible)
 			{
-        PlayerStats.Instance().PegHit();
-				--hp;
-				if (hp <= 0)
+				--hit_points;
+				if (hit_points <= 0)
 				{
+          SpawnParticleEmitter();
+          peg_hit_publisher.PublishMessage(peg_hit_event);
+          PlayerStats.Instance().PegHit();
 					Destroy (gameObject);
 				}
 			}
-
 		}
 	}
+
+  private void SpawnParticleEmitter()
+  {
+    emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
+  }
+
+  private void PlayPegHitSound()
+  {
+    AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetPopSound(), gameObject.transform.position);
+  }
+
+  private static bool CollidedWithABomb(Collision2D collision)
+  {
+    return collision.gameObject.tag == "bomb";
+  }
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{

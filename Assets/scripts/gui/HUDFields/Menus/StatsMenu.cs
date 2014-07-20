@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AchievementsMenu : HUDField
+public class StatsMenu : HUDField
 {
   protected override void DisplayGUIElements()
   {

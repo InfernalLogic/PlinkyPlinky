@@ -15,21 +15,25 @@ public class HUD : Singleton<HUD>
 
   void OnGUI()
   {
+    if (ScreenDimensionsHaveBeenChanged())
+    {
+      ResetLastScreenWidth();
+      ResizeAllScalingRects();
+    }
+
     foreach (HUDField field in HUD_fields)
     {
       field.Display();
     }
+  }
 
-    if (ScreenDimensionsHaveBeenChanged())
+  private void ResizeAllScalingRects()
+  {
+    ScalingRect[] scaling_rects = GetAllScalingRects();
+
+    foreach (ScalingRect rect in scaling_rects)
     {
-      ResetLastScreenWidth();
-
-      ScalingRect[] scaling_rects = GetAllScalingRects();
-
-      foreach (ScalingRect rect in scaling_rects)
-      {
-        rect.RecalculateDimensions();
-      }
+      rect.RecalculateDimensions();
     }
   }
 

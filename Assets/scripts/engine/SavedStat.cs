@@ -18,7 +18,6 @@ public class SavedStat : MonoBehaviour
       stat_name = gameObject.name;
 
     Load();
-    Debug.Log("SavedStat Awake() called for: " + gameObject.name);
   }
 
   public virtual void Load()

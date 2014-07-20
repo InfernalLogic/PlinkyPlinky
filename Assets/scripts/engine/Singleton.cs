@@ -14,7 +14,6 @@ public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
     if (instance == null)
     {
       instance = FindObjectOfType<T>();
-
       if (instance == null)
       {
         Debug.LogError("No instance of " + typeof(T).ToString() + " was found. Instantiating a new singleton.");

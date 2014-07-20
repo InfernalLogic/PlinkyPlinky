@@ -1,36 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerStats : Singleton<PlayerStats> 
 {
   [SerializeField]
   private bool reset_on_load_enabled = false;
-
-	const int LOCKED = 0;
-	const int UNLOCKED = 1;
+  [SerializeField]
+  private SavedStat current_money;
+  [SerializeField]
+  private SavedStat career_money;
 
 	public BumperUpgrader bumper_upgrader;
 	public PegUpgrader peg_upgrader;
 	public CoinUpgrader coin_upgrader;
   public LevelUnlocker level_unlocker;
-	
-	private int current_money,
-						  career_money;
 
-  void Awake()
+  private IDictionary<string, ScoringObject> scoring_objects;
+
+  new void Awake()
   {
+    base.Awake();
+
     if (reset_on_load_enabled)
     {
       PlayerPrefs.DeleteAll();
       ResetStats();
     }
+
+    scoring_objects = new Dictionary<string, ScoringObject>();
+    ScoringObject[] scoring_objects_in_children = GetComponentsInChildren<ScoringObject>();
+
+    foreach (ScoringObject scoring_object in scoring_objects_in_children)
+    {
+      scoring_objects.Add(scoring_object.name, scoring_object);
+    }
+
+    Debug.Log("Added " + scoring_objects.Count + " scoring_objects to player_stats");
   }
 
 	void Start()
 	{
-		current_money = PlayerPrefs.GetInt ("current_money", 0);
-		career_money = PlayerPrefs.GetInt ("career_money", 0);
-
 		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
 
 		foreach (UpgradeableObject element in upgrades)
@@ -39,16 +49,10 @@ public class PlayerStats : Singleton<PlayerStats>
 		}
 	}
 
-	void OnDestroy()
-	{
-		PlayerPrefs.SetInt ("current_money", current_money);
-		PlayerPrefs.SetInt ("career_money", career_money);
-	}
-
 	public void AddMoney(int income)
 	{
-		current_money += income;
-		career_money += income;
+		current_money.AddValue(income);
+		career_money.AddValue(income);
 	}
 
   public void BombDropped()
@@ -58,7 +62,7 @@ public class PlayerStats : Singleton<PlayerStats>
 
 	public void CoinHit()
 	{
-		AddMoney(coin_upgrader.GetPointValue());
+		AddMoney(GetScoringObjectByName("coin_upgrader").GetPointValue());
     AchievementTracker.Instance().IncrementAchievementStat("total_coins_hit");
 	}
 
@@ -75,10 +79,7 @@ public class PlayerStats : Singleton<PlayerStats>
 	}
 
 	public void ResetStats()
-	{
-		current_money = 0;
-		career_money = 0;
-		
+	{	
 		SavedStat[] stats = Resources.FindObjectsOfTypeAll<SavedStat>();
 
     foreach (SavedStat element in stats)
@@ -92,17 +93,30 @@ public class PlayerStats : Singleton<PlayerStats>
 
 	public void SpendMoney(int price)
 	{
-		current_money -= price;
+		current_money.AddValue(-price);
 	}
 
 	public int GetCurrentMoney()
 	{
-		return current_money;
+    if (current_money != null)
+      return current_money.GetValue();
+    else
+      return -1;
 	}
 	
 	public int GetCareerMoney()
 	{
-		return career_money;
+    return career_money.GetValue();
 	}
 
+  private ScoringObject GetScoringObjectByName(string name)
+  {
+    if (scoring_objects.ContainsKey(name))
+      return scoring_objects[name];
+    else
+    {
+      Debug.LogException(new System.Exception(name + " tried to access a scoring object by name and failed."));
+      return null;
+    }
+  }
 }

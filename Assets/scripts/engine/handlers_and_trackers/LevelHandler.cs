@@ -14,6 +14,7 @@ public class LevelHandler : Singleton<LevelHandler>
 
 	void Start()
 	{
+    CheckForDuplicates();
     PlayerStats.Instance().level_unlocker.SetMaxUpgrades(levels.Length);
 
     LoadUnlockedLevels(PlayerPrefs.GetInt(LevelUnlockerPlayerPrefsKey(), 3));
@@ -98,8 +99,6 @@ public class LevelHandler : Singleton<LevelHandler>
 
   private void LoadUnlockedLevels(int total_unlocked_levels)
   {
-
-
     unlocked_levels.Clear();
 
     for (int i = 0; i < total_unlocked_levels; ++i)

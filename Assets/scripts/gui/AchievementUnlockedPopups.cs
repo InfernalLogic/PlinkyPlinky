@@ -9,20 +9,20 @@ public class AchievementUnlockedPopups : HUDField
 
   private float expiration_timer = 0.0f;
 
-  private Queue<string> message_queue = new Queue<string>();
-  private string current_message = null;
+  private Queue<Texture> message_queue = new Queue<Texture>();
+  private Texture current_message = null;
 
-  public void EnqueueAchievementPopup(string message)
+  public void EnqueueAchievementPopup(Texture popup_texture)
   {
-    message_queue.Enqueue(message);
+    message_queue.Enqueue(popup_texture);
   }
 
   protected override void DisplayGUIElements()
   {
     if (current_message != null)
     {
-      GUI.Label(new Rect(0, 0, display_rect.GetRect().width, display_rect.GetRect().height), 
-                "Achievement unlocked!\n" + current_message, background_style);
+      GUI.DrawTexture(new Rect(0, 0, display_rect.GetRect().width, display_rect.GetRect().height), 
+                current_message);
     }
   }
 

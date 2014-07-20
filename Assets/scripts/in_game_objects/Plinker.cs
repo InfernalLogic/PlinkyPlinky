@@ -4,7 +4,6 @@ public class Plinker : MonoBehaviour
 {
 	public float movement_speed = 0f;
   private GameObject new_bomb;
-	public Vector2 drop_point_offset = Vector2.zero;
 	public GameObject selected_bomb;
 	
 	private Vector3 movement_vector = Vector3.zero;
@@ -24,21 +23,30 @@ public class Plinker : MonoBehaviour
 		selected_bomb_script = selected_bomb.GetComponent<BombScript>();
     new_bomb = selected_bomb;
 
-    bomb_ready_color = renderer.material.color;
-    bomb_cooling_down_color = renderer.material.color;
-    bomb_cooling_down_color.a = bomb_cooling_down_alpha;
+    InitializeCooldownColors();
   }
 
 	void Update()
 	{
-		transform.position += movement_vector * Time.deltaTime;
+    MovePlinker();
 
     if (BombIsReady())
       renderer.material.color = bomb_ready_color;
     else
       renderer.material.color = bomb_cooling_down_color;
-
 	}
+
+  private void InitializeCooldownColors()
+  {
+    bomb_ready_color = renderer.material.color;
+    bomb_cooling_down_color = renderer.material.color;
+    bomb_cooling_down_color.a = bomb_cooling_down_alpha;
+  }
+
+  private void MovePlinker()
+  {
+    transform.position += movement_vector * Time.deltaTime;
+  }
 
 	void OnTriggerEnter2D(Collider2D trigger)
 	{
@@ -56,13 +64,10 @@ public class Plinker : MonoBehaviour
 
   public void DropBomb()
   {
-		if (BombIsReady())
+		if (BombIsReady() && MaxBombsNotExceeded())
 		{
-			Vector2 drop_point = transform.position;
-	    drop_point += drop_point_offset;
-
-	    Instantiate(new_bomb, drop_point, transform.rotation);
-			bomb_cooldown_timer = Time.time;
+	    Instantiate(new_bomb, transform.position, transform.rotation);
+      ResetBombCooldownTimer();
 
       LevelCompleteChecker.Instance().BombDropped();
 
@@ -70,9 +75,19 @@ public class Plinker : MonoBehaviour
 		}
   }
 
+  private void ResetBombCooldownTimer()
+  {
+    bomb_cooldown_timer = Time.time + BombScript.GetCooldown();
+  }
+
 	private bool BombIsReady()
 	{
-    return (bomb_cooldown_timer + selected_bomb_script.cooldown < Time.time);
+    return (bomb_cooldown_timer < Time.time);
 	}
+
+  private bool MaxBombsNotExceeded()
+  {
+    return BombScript.GetBombCount() < 3;
+  }
 	
 }

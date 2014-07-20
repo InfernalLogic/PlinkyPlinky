@@ -10,7 +10,7 @@ abstract public class UpgradeableObject : SavedStat
 	abstract public void Upgrade();
 	abstract public void RecalculateUpgradeCost();
 
-  new void Awake()
+  void Awake()
 	{
     Load();
 		RecalculateUpgradeCost();

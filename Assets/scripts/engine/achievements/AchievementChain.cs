@@ -3,8 +3,12 @@ using System.Collections;
 
 public class AchievementChain : MonoBehaviour 
 {
+  [SerializeField]
+  private GameObject relevant_event_source;
+
   private Achievement[] achievements;
   private SavedStat tracked_stat;
+  private GameEvent relevant_event;
 
   void Awake()
   {
