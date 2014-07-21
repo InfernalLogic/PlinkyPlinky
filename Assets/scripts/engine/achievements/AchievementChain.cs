@@ -4,11 +4,10 @@ using System.Collections;
 public class AchievementChain : MonoBehaviour 
 {
   [SerializeField]
-  private GameObject relevant_event_source;
+  private GameEvent relevant_event;
 
   private Achievement[] achievements;
   private SavedStat tracked_stat;
-  private GameEvent relevant_event;
 
   void Awake()
   {
@@ -36,5 +35,10 @@ public class AchievementChain : MonoBehaviour
     {
       achieve.CheckForCompletedAchievement();
     }
+  }
+
+  public GameEvent GetRelevantEvent()
+  {
+    return relevant_event;
   }
 }

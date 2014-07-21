@@ -70,8 +70,6 @@ public class Plinker : MonoBehaviour
       ResetBombCooldownTimer();
 
       LevelCompleteChecker.Instance().BombDropped();
-
-      PlayerStats.Instance().BombDropped();
 		}
   }
 

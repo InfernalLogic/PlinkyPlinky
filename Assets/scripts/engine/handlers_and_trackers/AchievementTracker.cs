@@ -6,30 +6,32 @@ public class AchievementTracker : Singleton<AchievementTracker>
 {
   public Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
 
-  private IDictionary<string, AchievementChain> achievement_chains;
+  private IDictionary<GameEvent, AchievementChain> achievement_chains = new Dictionary<GameEvent, AchievementChain>();
 
-  void Awake()
+  new void Awake()
   {
-    CheckForDuplicates();
+    base.Awake();
 
-    achievement_chains = new Dictionary<string, AchievementChain>();
+    InitializeAchievementChainsDictionary();
+    SubscribeToBombDroppedEvents();
+    SubscribeToObjectHitEvents();
+  }
 
+  private void InitializeAchievementChainsDictionary()
+  {
     AchievementChain[] achievement_chains_found = GetComponentsInChildren<AchievementChain>();
 
     foreach (AchievementChain chain in achievement_chains_found)
     {
-      achievement_chains.Add(chain.name, chain);
+      achievement_chains.Add(chain.GetRelevantEvent(), chain);
     }
-
-    SubscribeToBombDroppedEvents();
-    SubscribeToObjectHitEvents();
   }
 
   void Update()
   {
     while (!game_event_listener.IsEmpty())
     {
-      Debug.Log(game_event_listener.ReadNewestMessage().name + " dequeued");
+      IncrementAchievementStat(game_event_listener.ReadNewestMessage());
       game_event_listener.DeleteNewestMessage();
     }
   }
@@ -46,15 +48,15 @@ public class AchievementTracker : Singleton<AchievementTracker>
     CoinScript.coin_hit_publisher.AddSubscriber(game_event_listener);
   }
 
-  public void IncrementAchievementStat(string stat_name)
+  public void IncrementAchievementStat(GameEvent relevant_event)
   {
-    if (achievement_chains.ContainsKey(stat_name))
+    if (achievement_chains.ContainsKey(relevant_event))
     {
-      achievement_chains[stat_name].Increment();
+      achievement_chains[relevant_event].Increment();
     }
     else
     {
-      Debug.Log("IncrementAchievementStat could not find: " + stat_name);
+      Debug.Log("IncrementAchievementStat could not find: " + relevant_event.name);
     }
   }
 

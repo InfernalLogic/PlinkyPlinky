@@ -3,6 +3,7 @@
 public class BumperScript : MonoBehaviour 
 {
   public static Publisher<GameEvent> bumper_hit_publisher = new Publisher<GameEvent>();
+  public static GameEvent bumper_hit_event;
 
   [SerializeField]
 	private float bump_strength = 0.0f;
@@ -31,8 +32,7 @@ public class BumperScript : MonoBehaviour
         PlayBumperHitSound();
         ApplyBumperForceToBomb(collision);
 
-        PlayerStats.Instance().BumperHit();
-        bumper_hit_publisher.PublishMessage(bumper_hit_event);
+        bumper_hit_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("bumper_hit_event"));
 			}
 		}
 	}

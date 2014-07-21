@@ -3,10 +3,13 @@ using System.Collections;
 
 abstract public class ScoringObject : UpgradeableObject 
 {
-	abstract public int GetPointValue();
-  abstract protected void RecalculatePointValue();
+  [SerializeField]
+  private GameEvent relevant_event;
 
   protected int point_value;
+
+	abstract public int GetPointValue();
+  abstract protected void RecalculatePointValue();
 
   new void Awake()
   {
@@ -15,7 +18,7 @@ abstract public class ScoringObject : UpgradeableObject
     RecalculatePointValue();
   }
 
-	public virtual void Reset()
+	new public virtual void Reset()
 	{
     base.Reset();
 		RecalculateUpgradeCost();
@@ -35,4 +38,9 @@ abstract public class ScoringObject : UpgradeableObject
 			Debug.Log("Not enough moneys!");
 		}
 	}
+
+  public GameEvent GetRelevantEvent()
+  {
+    return relevant_event;
+  }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class PegScript : MonoBehaviour 
 {
   public static Publisher<GameEvent> peg_hit_publisher = new Publisher<GameEvent>();
+  public static GameEvent peg_hit_event;
 
   [SerializeField]
 	private int hit_points = 1;
@@ -25,13 +26,17 @@ public class PegScript : MonoBehaviour
 				if (hit_points <= 0)
 				{
           SpawnParticleEmitter();
-          peg_hit_publisher.PublishMessage(peg_hit_event);
-          PlayerStats.Instance().PegHit();
+          PublishPegHitEvent();
 					Destroy (gameObject);
 				}
 			}
 		}
 	}
+
+  private static void PublishPegHitEvent()
+  {
+    peg_hit_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("peg_hit_event"));
+  }
 
   private void SpawnParticleEmitter()
   {

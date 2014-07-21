@@ -4,6 +4,7 @@ using System.Collections;
 public class BombScript : MonoBehaviour 
 {
   public static Publisher<GameEvent> bomb_dropped_publisher = new Publisher<GameEvent>();
+  public static GameEvent bomb_dropped_event;
 
   [SerializeField]
 	private static float cooldown = 0f;
@@ -40,6 +41,6 @@ public class BombScript : MonoBehaviour
 
   private static void PublishBombDroppedEvent()
   {
-    bomb_dropped_publisher.PublishMessage(bomb_dropped_event);
+    bomb_dropped_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("bomb_dropped_event"));
   }
 }

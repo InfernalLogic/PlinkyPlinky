@@ -13,8 +13,12 @@ abstract public class UpgradeableObject : SavedStat
   void Awake()
 	{
     Load();
-		RecalculateUpgradeCost();
 	}
+
+  void Start()
+  {
+    RecalculateUpgradeCost();
+  }
 
 	void OnDestroy()
 	{

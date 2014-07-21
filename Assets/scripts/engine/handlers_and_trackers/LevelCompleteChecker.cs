@@ -12,8 +12,21 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 	private float load_new_level_countdown;
 	private bool level_completed = false;
 
+  private Subscriber<GameEvent> coin_hit_subscriber = new Subscriber<GameEvent>();
+
+  void Awake()
+  {
+    CoinScript.coin_hit_publisher.AddSubscriber(coin_hit_subscriber);
+  }
+
 	void Update()
 	{
+    if (!coin_hit_subscriber.IsEmpty())
+    {
+      CoinHit();
+      coin_hit_subscriber.DeleteNewestMessage();
+    }
+
     if (AllCoinsHit())
 		{
       if (!level_completed)
@@ -58,7 +71,6 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     //the coins must be counted, then decremented here for anything to behave properly. There's what I believe is called
     //a "race hazard" having to do with how objects are destroyed and when update() is called, causing a call to CountCoins()
     //performed after a new level load to include any coins that had not been previously destroyed.
-    PlayerStats.Instance().CoinHit();
     CountCoins();
     --coins_left;
 	}

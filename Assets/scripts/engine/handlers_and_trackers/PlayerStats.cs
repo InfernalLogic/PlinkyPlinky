@@ -16,11 +16,14 @@ public class PlayerStats : Singleton<PlayerStats>
 	public CoinUpgrader coin_upgrader;
   public LevelUnlocker level_unlocker;
 
-  private IDictionary<string, ScoringObject> scoring_objects;
+  private IDictionary<GameEvent, ScoringObject> scoring_objects = new Dictionary<GameEvent, ScoringObject>();
+
+  private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
 
   new void Awake()
   {
     base.Awake();
+    SubscribeToObjectHitEvents();
 
     if (reset_on_load_enabled)
     {
@@ -28,54 +31,41 @@ public class PlayerStats : Singleton<PlayerStats>
       ResetStats();
     }
 
-    scoring_objects = new Dictionary<string, ScoringObject>();
+    InitializeScoringObjectsDictionary();
+  }
+
+  void Update()
+  {
+    while (!game_event_listener.IsEmpty())
+    {
+      AddMoney(scoring_objects[game_event_listener.ReadNewestMessage()].GetPointValue());
+      game_event_listener.DeleteNewestMessage();
+    }
+  }
+
+  private void InitializeScoringObjectsDictionary()
+  {
     ScoringObject[] scoring_objects_in_children = GetComponentsInChildren<ScoringObject>();
 
     foreach (ScoringObject scoring_object in scoring_objects_in_children)
     {
-      scoring_objects.Add(scoring_object.name, scoring_object);
+      scoring_objects.Add(scoring_object.GetRelevantEvent(), scoring_object);
     }
 
     Debug.Log("Added " + scoring_objects.Count + " scoring_objects to player_stats");
   }
 
-	void Start()
-	{
-		UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
-
-		foreach (UpgradeableObject element in upgrades)
-		{
-			element.RecalculateUpgradeCost();
-		}
-	}
+  private void SubscribeToObjectHitEvents()
+  {
+    BumperScript.bumper_hit_publisher.AddSubscriber(game_event_listener);
+    PegScript.peg_hit_publisher.AddSubscriber(game_event_listener);
+    CoinScript.coin_hit_publisher.AddSubscriber(game_event_listener);
+  }
 
 	public void AddMoney(int income)
 	{
 		current_money.AddValue(income);
 		career_money.AddValue(income);
-	}
-
-  public void BombDropped()
-  {
-    AchievementTracker.Instance().IncrementAchievementStat("total_bombs_dropped");
-  }
-
-	public void CoinHit()
-	{
-		AddMoney(GetScoringObjectByName("coin_upgrader").GetPointValue());
-    AchievementTracker.Instance().IncrementAchievementStat("total_coins_hit");
-	}
-
-	public void PegHit()
-	{
-    AddMoney(peg_upgrader.GetPointValue());
-    AchievementTracker.Instance().IncrementAchievementStat("total_pegs_hit");
-	}
-
-	public void BumperHit()
-	{
-    AddMoney(bumper_upgrader.GetPointValue());
-    AchievementTracker.Instance().IncrementAchievementStat("total_bumpers_hit");
 	}
 
 	public void ResetStats()
@@ -108,15 +98,4 @@ public class PlayerStats : Singleton<PlayerStats>
 	{
     return career_money.GetValue();
 	}
-
-  private ScoringObject GetScoringObjectByName(string name)
-  {
-    if (scoring_objects.ContainsKey(name))
-      return scoring_objects[name];
-    else
-    {
-      Debug.LogException(new System.Exception(name + " tried to access a scoring object by name and failed."));
-      return null;
-    }
-  }
 }
