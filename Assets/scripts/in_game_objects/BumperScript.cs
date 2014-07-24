@@ -2,9 +2,8 @@
 
 public class BumperScript : MonoBehaviour 
 {
-  public static Publisher<GameEvent> bumper_hit_publisher = new Publisher<GameEvent>();
-  public static GameEvent bumper_hit_event;
-
+  [SerializeField]
+  private GameEvent bumper_hit_event;
   [SerializeField]
 	private float bump_strength = 0.0f;
   [SerializeField]
@@ -29,10 +28,9 @@ public class BumperScript : MonoBehaviour
 			{
 				ResetCooldownTimer ();
         PlayBumperHitAnimation();
-        PlayBumperHitSound();
         ApplyBumperForceToBomb(collision);
 
-        bumper_hit_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("bumper_hit_event"));
+        GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().bumper_hit_event);
 			}
 		}
 	}
@@ -40,11 +38,6 @@ public class BumperScript : MonoBehaviour
   private void PlayBumperHitAnimation()
   {
     bumper_animator.SetTrigger("hit_trigger");
-  }
-
-  private static void PlayBumperHitSound()
-  {
-    AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetBumperHitSound(), Vector3.zero);
   }
 
   private void ApplyBumperForceToBomb(Collision2D collision)

@@ -9,8 +9,12 @@ public class UpgradeMenu : HUDField
   [SerializeField]
   private GUIStyle button_disabled_mask;
 
-  [SerializeField]
   private Button[] upgrade_buttons;
+
+  void Start()
+  {
+    upgrade_buttons = GetComponentsInChildren<Button>();
+  }
 
   protected override void DisplayGUIElements()
   {

@@ -2,13 +2,13 @@
 
 public class Plinker : MonoBehaviour
 {
-	public float movement_speed = 0f;
+  [SerializeField]
+	private float movement_speed = 0f;
   private GameObject new_bomb;
 	public GameObject selected_bomb;
 	
 	private Vector3 movement_vector = Vector3.zero;
 	private BombScript selected_bomb_script;
-	private float bomb_cooldown_timer = 0f;
 
   [SerializeField]
   private float bomb_cooling_down_alpha = 0.0f;
@@ -18,7 +18,6 @@ public class Plinker : MonoBehaviour
   void Start()
   {
 		movement_vector.x = movement_speed;
-    bomb_cooldown_timer = Time.time - bomb_cooldown_timer;
 
 		selected_bomb_script = selected_bomb.GetComponent<BombScript>();
     new_bomb = selected_bomb;
@@ -30,7 +29,7 @@ public class Plinker : MonoBehaviour
 	{
     MovePlinker();
 
-    if (BombIsReady())
+    if (BombIsReadyChecker.Instance().BombIsReady())
       renderer.material.color = bomb_ready_color;
     else
       renderer.material.color = bomb_cooling_down_color;
@@ -54,7 +53,6 @@ public class Plinker : MonoBehaviour
 		{
 			ReverseDirection ();
 		}
-
 	}
 
   void ReverseDirection()
@@ -64,28 +62,15 @@ public class Plinker : MonoBehaviour
 
   public void DropBomb()
   {
-		if (BombIsReady() && MaxBombsNotExceeded())
+    if (BombIsReady())
 		{
 	    Instantiate(new_bomb, transform.position, transform.rotation);
-      ResetBombCooldownTimer();
-
-      LevelCompleteChecker.Instance().BombDropped();
 		}
   }
 
-  private void ResetBombCooldownTimer()
+  private bool BombIsReady()
   {
-    bomb_cooldown_timer = Time.time + BombScript.GetCooldown();
-  }
-
-	private bool BombIsReady()
-	{
-    return (bomb_cooldown_timer < Time.time);
-	}
-
-  private bool MaxBombsNotExceeded()
-  {
-    return BombScript.GetBombCount() < 3;
+    return BombIsReadyChecker.Instance().BombIsReady();
   }
 	
 }

@@ -15,7 +15,7 @@ public class LevelHandler : Singleton<LevelHandler>
 	void Start()
 	{
     CheckForDuplicates();
-    PlayerStats.Instance().level_unlocker.SetMaxUpgrades(levels.Length);
+    FindObjectOfType<LevelUnlocker>().SetMaxUpgrades(levels.Length);
 
     LoadUnlockedLevels(PlayerPrefs.GetInt(LevelUnlockerPlayerPrefsKey(), 3));
 		LoadRandomLevel();
@@ -23,12 +23,12 @@ public class LevelHandler : Singleton<LevelHandler>
 
   private int DefaultLevelsToUnlockOnReset()
   {
-    return PlayerStats.Instance().level_unlocker.GetLevelsToUnlockOnReset();
+    return FindObjectOfType<LevelUnlocker>().GetLevelsToUnlockOnReset();
   }
 
   private string LevelUnlockerPlayerPrefsKey()
   {
-    return PlayerStats.Instance().level_unlocker.gameObject.name + "_upgrades";
+    return FindObjectOfType<LevelUnlocker>().GetKey();
   }
 
 	public void LoadRandomLevel()
@@ -37,6 +37,7 @@ public class LevelHandler : Singleton<LevelHandler>
 		{
       current_level = PickNewLevel();
       LoadLevel(current_level);
+      PublishLevelLoadedMessage();
 		}
 	}
 
@@ -49,7 +50,13 @@ public class LevelHandler : Singleton<LevelHandler>
     loader = GameObject.Instantiate(levels[current_level],
                                     levels[current_level].transform.position,
                                     levels[current_level].transform.rotation) as GameObject;
+
     LevelCompleteChecker.Instance().CountCoins();
+  }
+
+  private static void PublishLevelLoadedMessage()
+  {
+    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().level_loaded_event);
   }
 
   private void ClearLevel()
@@ -90,7 +97,7 @@ public class LevelHandler : Singleton<LevelHandler>
 	{
 		unlocked_levels.Clear ();
 
-    for (int i = 0; i < PlayerStats.Instance().level_unlocker.GetTotalUnlockedLevels(); ++i)
+    for (int i = 0; i < FindObjectOfType<LevelUnlocker>().GetTotalUnlockedLevels(); ++i)
     {
       unlocked_levels.Add(i);
       Debug.Log("added level: " + i);

@@ -3,9 +3,9 @@ using System.Collections;
 
 abstract public class UpgradeableObject : SavedStat 
 {
-	protected int upgrade_cost;
   [SerializeField]
-	protected int max_upgrades = 0;
+  protected int max_upgrades = 0;
+	protected int upgrade_cost;
 
 	abstract public void Upgrade();
 	abstract public void RecalculateUpgradeCost();
@@ -24,11 +24,6 @@ abstract public class UpgradeableObject : SavedStat
 	{
 		Save ();
 	}
-
-  public virtual void Reset()
-  {
-    base.Reset();
-  }
 
 	public int GetUpgrades()
 	{
@@ -53,5 +48,10 @@ abstract public class UpgradeableObject : SavedStat
   public void SetMaxUpgrades(int max_upgrades)
   {
     this.max_upgrades = max_upgrades;
+  }
+
+  public bool UpgradesNotMaxedOut()
+  {
+    return value < (max_upgrades) || max_upgrades == 0;
   }
 }

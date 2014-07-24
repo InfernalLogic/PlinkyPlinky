@@ -11,19 +11,14 @@ public class PlayerStats : Singleton<PlayerStats>
   [SerializeField]
   private SavedStat career_money;
 
-	public BumperUpgrader bumper_upgrader;
-	public PegUpgrader peg_upgrader;
-	public CoinUpgrader coin_upgrader;
-  public LevelUnlocker level_unlocker;
-
-  private IDictionary<GameEvent, ScoringObject> scoring_objects = new Dictionary<GameEvent, ScoringObject>();
+  private IDictionary<string, ScoringObject> scoring_objects = new Dictionary<string, ScoringObject>();
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
 
   new void Awake()
   {
     base.Awake();
-    SubscribeToObjectHitEvents();
+    GameEventPublisher.Instance().AddSubscriber(game_event_listener);
 
     if (reset_on_load_enabled)
     {
@@ -38,8 +33,15 @@ public class PlayerStats : Singleton<PlayerStats>
   {
     while (!game_event_listener.IsEmpty())
     {
-      AddMoney(scoring_objects[game_event_listener.ReadNewestMessage()].GetPointValue());
-      game_event_listener.DeleteNewestMessage();
+      if (scoring_objects.ContainsKey(game_event_listener.ReadNewestMessage().name))
+      {
+        AddMoney(scoring_objects[game_event_listener.ReadNewestMessage().name].GetPointValue());
+        game_event_listener.DeleteNewestMessage();
+      }
+      else
+      {
+        game_event_listener.DeleteNewestMessage();
+      }
     }
   }
 
@@ -49,17 +51,10 @@ public class PlayerStats : Singleton<PlayerStats>
 
     foreach (ScoringObject scoring_object in scoring_objects_in_children)
     {
-      scoring_objects.Add(scoring_object.GetRelevantEvent(), scoring_object);
+      scoring_objects.Add(scoring_object.GetRelevantEventName(), scoring_object);
     }
 
     Debug.Log("Added " + scoring_objects.Count + " scoring_objects to player_stats");
-  }
-
-  private void SubscribeToObjectHitEvents()
-  {
-    BumperScript.bumper_hit_publisher.AddSubscriber(game_event_listener);
-    PegScript.peg_hit_publisher.AddSubscriber(game_event_listener);
-    CoinScript.coin_hit_publisher.AddSubscriber(game_event_listener);
   }
 
 	public void AddMoney(int income)
@@ -76,6 +71,20 @@ public class PlayerStats : Singleton<PlayerStats>
 		{
 			element.Reset();
 		}
+
+    UpgradeableObject[] upgrades = Resources.FindObjectsOfTypeAll<UpgradeableObject>();
+
+    foreach (UpgradeableObject upgrade in upgrades)
+    {
+      upgrade.RecalculateUpgradeCost();
+    }
+
+    ScoringObject[] scoring_objects = Resources.FindObjectsOfTypeAll<ScoringObject>();
+
+    foreach (ScoringObject scoring_object in scoring_objects)
+    {
+      scoring_object.RecalculatePointValue();
+    }
 
     LevelHandler.Instance().LoadUnlockedLevels();
 	

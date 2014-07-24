@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelUnlocker : UpgradeableObject 
+public class LevelUnlocker : UpgradeableObject
 {
   public override void Upgrade()
   {
@@ -33,20 +33,9 @@ public class LevelUnlocker : UpgradeableObject
     LevelHandler.Instance().LoadLevel(value - 1);
   }
 
-  public override void Reset()
-  {
-    value = GetLevelsToUnlockOnReset();
-    RecalculateUpgradeCost();
-  }
-
-  public bool UpgradesNotMaxedOut()
-  {
-    return value < (max_upgrades);
-  }
-
   public override void RecalculateUpgradeCost()
   {
-    upgrade_cost = (int)(500.0f * Mathf.Pow((float)(value - GetLevelsToUnlockOnReset() + 1), 1.2f));
+    upgrade_cost = (int)(300.0f * Mathf.Pow((float)(value - GetLevelsToUnlockOnReset()), 1.2f)) + 200;
   }
 
   public int GetTotalUnlockedLevels()

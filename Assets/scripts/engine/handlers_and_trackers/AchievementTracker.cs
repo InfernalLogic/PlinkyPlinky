@@ -6,15 +6,14 @@ public class AchievementTracker : Singleton<AchievementTracker>
 {
   public Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
 
-  private IDictionary<GameEvent, AchievementChain> achievement_chains = new Dictionary<GameEvent, AchievementChain>();
+  private IDictionary<string, AchievementChain> achievement_chains = new Dictionary<string, AchievementChain>();
 
   new void Awake()
   {
     base.Awake();
 
     InitializeAchievementChainsDictionary();
-    SubscribeToBombDroppedEvents();
-    SubscribeToObjectHitEvents();
+    GameEventPublisher.Instance().AddSubscriber(game_event_listener);
   }
 
   private void InitializeAchievementChainsDictionary()
@@ -23,7 +22,7 @@ public class AchievementTracker : Singleton<AchievementTracker>
 
     foreach (AchievementChain chain in achievement_chains_found)
     {
-      achievement_chains.Add(chain.GetRelevantEvent(), chain);
+      achievement_chains.Add(chain.GetRelevantEventName(), chain);
     }
   }
 
@@ -36,27 +35,11 @@ public class AchievementTracker : Singleton<AchievementTracker>
     }
   }
 
-  private void SubscribeToBombDroppedEvents()
-  {
-    BombScript.bomb_dropped_publisher.AddSubscriber(game_event_listener);
-  }
-
-  private void SubscribeToObjectHitEvents()
-  {
-    BumperScript.bumper_hit_publisher.AddSubscriber(game_event_listener);
-    PegScript.peg_hit_publisher.AddSubscriber(game_event_listener);
-    CoinScript.coin_hit_publisher.AddSubscriber(game_event_listener);
-  }
-
   public void IncrementAchievementStat(GameEvent relevant_event)
   {
-    if (achievement_chains.ContainsKey(relevant_event))
+    if (achievement_chains.ContainsKey(relevant_event.name))
     {
-      achievement_chains[relevant_event].Increment();
-    }
-    else
-    {
-      Debug.Log("IncrementAchievementStat could not find: " + relevant_event.name);
+      achievement_chains[relevant_event.name].Increment();
     }
   }
 

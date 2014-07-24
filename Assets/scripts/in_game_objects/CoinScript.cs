@@ -3,8 +3,8 @@ using System.Collections;
 
 public class CoinScript : MonoBehaviour 
 {
-  public static Publisher<GameEvent> coin_hit_publisher = new Publisher<GameEvent>();
-
+  [SerializeField]
+  private GameEvent coin_hit_event;
   [SerializeField]
   private ParticleSystem collision_emitter;
 
@@ -14,17 +14,15 @@ public class CoinScript : MonoBehaviour
 	{
     if (CollidedWithABomb(other_collider))
 		{
-      LevelCompleteChecker.Instance().CoinHit();
       PublishCoinHitEvent();
-      AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetCoinHitSound(), Vector3.zero);
       emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
 			Destroy (gameObject);
 		}
 	}
 
-  private static void PublishCoinHitEvent()
+  private void PublishCoinHitEvent()
   {
-    coin_hit_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("coin_hit_event"));
+    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().coin_hit_event);
   }
 
   private static bool CollidedWithABomb(Collider2D other_collider)

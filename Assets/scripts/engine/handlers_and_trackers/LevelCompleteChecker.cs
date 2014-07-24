@@ -6,25 +6,25 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
   [SerializeField]
 	private float load_new_level_delay = 0f;
 
-	private int coins_left = 0;
+	private int coins_left = 1;
 	private int bombs_dropped = 0;
 
 	private float load_new_level_countdown;
 	private bool level_completed = false;
 
-  private Subscriber<GameEvent> coin_hit_subscriber = new Subscriber<GameEvent>();
-
+  private Subscriber<GameEvent> game_event_subscriber = new Subscriber<GameEvent>();
+  
   void Awake()
   {
-    CoinScript.coin_hit_publisher.AddSubscriber(coin_hit_subscriber);
+    GameEventPublisher.Instance().AddSubscriber(game_event_subscriber);
   }
 
 	void Update()
 	{
-    if (!coin_hit_subscriber.IsEmpty())
+    if (!game_event_subscriber.IsEmpty())
     {
-      CoinHit();
-      coin_hit_subscriber.DeleteNewestMessage();
+      HandleMessage(game_event_subscriber.ReadNewestMessage());
+      game_event_subscriber.DeleteNewestMessage();
     }
 
     if (AllCoinsHit())
@@ -36,7 +36,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
         ResetNewLevelCountdown();
       } 
-      else if (level_completed && NewLevelCountdownCooledDown())
+      else if (level_completed && NewLevelCountdownCooledDown() && BombScript.GetBombCount() <= 0)
 			{
         LoadNewLevel();
         level_completed = false;
@@ -45,6 +45,14 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 			}
 		}
 	}
+
+  private void HandleMessage(GameEvent message)
+  {
+    if (message == GameEventPublisher.Instance().bomb_dropped_event)
+      ++bombs_dropped;
+    else if (message == GameEventPublisher.Instance().coin_hit_event)
+      RegisterCoinHit();
+  }
 
   private void ResetNewLevelCountdown()
   {
@@ -66,28 +74,30 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     return coins_left <= 0;
   }
 
-	public void CoinHit()
+	public void RegisterCoinHit()
 	{
-    //the coins must be counted, then decremented here for anything to behave properly. There's what I believe is called
+    //the coins must be counted, here for anything to behave properly. There's what I believe is called
     //a "race hazard" having to do with how objects are destroyed and when update() is called, causing a call to CountCoins()
     //performed after a new level load to include any coins that had not been previously destroyed.
     CountCoins();
-    --coins_left;
-	}
-
-	public void BombDropped()
-	{
-		++bombs_dropped;
+    if (coins_left == 0 && bombs_dropped > 0)
+      GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().level_completed_event);
 	}
 
 	public void CountCoins()
 	{
 		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("goal");
 		coins_left = goal_counter.Length;
+    Debug.Log("Counted: " + coins_left);
 	}
 	
 	public void SetCoinsLeftToZero()
 	{
 		coins_left = 0;
 	}
+
+  public bool IsLevelCompleted()
+  {
+    return level_completed;
+  }
 }

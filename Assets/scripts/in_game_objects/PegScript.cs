@@ -3,9 +3,8 @@ using System.Collections;
 
 public class PegScript : MonoBehaviour 
 {
-  public static Publisher<GameEvent> peg_hit_publisher = new Publisher<GameEvent>();
-  public static GameEvent peg_hit_event;
-
+  [SerializeField]
+  private GameEvent peg_hit_event;
   [SerializeField]
 	private int hit_points = 1;
   [SerializeField]
@@ -19,7 +18,6 @@ public class PegScript : MonoBehaviour
 	{
     if (CollidedWithABomb(collision))
 		{
-      PlayPegHitSound();
 			if (is_destructible)
 			{
 				--hit_points;
@@ -33,19 +31,14 @@ public class PegScript : MonoBehaviour
 		}
 	}
 
-  private static void PublishPegHitEvent()
+  private void PublishPegHitEvent()
   {
-    peg_hit_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("peg_hit_event"));
+    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().peg_hit_event);
   }
 
   private void SpawnParticleEmitter()
   {
     emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
-  }
-
-  private void PlayPegHitSound()
-  {
-    AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetPopSound(), gameObject.transform.position);
   }
 
   private static bool CollidedWithABomb(Collision2D collision)

@@ -3,29 +3,34 @@ using System.Collections;
 
 public class BombScript : MonoBehaviour 
 {
-  public static Publisher<GameEvent> bomb_dropped_publisher = new Publisher<GameEvent>();
-  public static GameEvent bomb_dropped_event;
-
   [SerializeField]
-	private static float cooldown = 0f;
+  private GameEvent bomb_dropped_event;
+  [SerializeField]
+  private float bomb_cooldown = 0.0f;
+
+	private static float cooldown = 1.0f;
 
   private static int bomb_count = 0;
 
   void Awake()
   {
+    cooldown = bomb_cooldown;
     ++bomb_count;
     PublishBombDroppedEvent();
   }
 
 	void Start () 
 	{
-		AudioSource.PlayClipAtPoint(AudioHandler.Instance().GetBombDropSound(), Vector3.zero);  
-    Destroy(gameObject, 25);
+    Destroy(gameObject, 30.0f);
+  }
+
+  void OnDestroy()
+  {
+    --bomb_count;
   }
 
 	void OnBecameInvisible()
 	{
-    --bomb_count;
 		Destroy (gameObject);
 	}
 
@@ -34,13 +39,13 @@ public class BombScript : MonoBehaviour
     return bomb_count;
   }
 
-  public static float GetCooldown()
+  public static float GetBaseCooldown()
   {
     return cooldown;
   }
 
-  private static void PublishBombDroppedEvent()
+  private void PublishBombDroppedEvent()
   {
-    bomb_dropped_publisher.PublishMessage(GameEventRegistry.Instance().FindEventByName("bomb_dropped_event"));
+    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().bomb_dropped_event);
   }
 }

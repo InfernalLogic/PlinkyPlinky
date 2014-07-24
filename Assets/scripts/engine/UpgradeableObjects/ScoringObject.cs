@@ -4,12 +4,12 @@ using System.Collections;
 abstract public class ScoringObject : UpgradeableObject 
 {
   [SerializeField]
-  private GameEvent relevant_event;
+  private string relevant_event_name;
 
   protected int point_value;
 
 	abstract public int GetPointValue();
-  abstract protected void RecalculatePointValue();
+  abstract public void RecalculatePointValue();
 
   new void Awake()
   {
@@ -39,8 +39,8 @@ abstract public class ScoringObject : UpgradeableObject
 		}
 	}
 
-  public GameEvent GetRelevantEvent()
+  public string GetRelevantEventName()
   {
-    return relevant_event;
+    return relevant_event_name;
   }
 }

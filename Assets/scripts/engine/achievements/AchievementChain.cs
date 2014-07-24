@@ -4,7 +4,7 @@ using System.Collections;
 public class AchievementChain : MonoBehaviour 
 {
   [SerializeField]
-  private GameEvent relevant_event;
+  private string relevant_event_name;
 
   private Achievement[] achievements;
   private SavedStat tracked_stat;
@@ -15,12 +15,10 @@ public class AchievementChain : MonoBehaviour
 
     if (!tracked_stat)
     {
-      Debug.Log("tracked stat not loaded for" + name);
+      Debug.LogError("tracked stat not loaded for" + name);
     }
 
     achievements = GetComponentsInChildren<Achievement>();
-
-    Debug.Log(achievements.Length + " achievements found in " + name);
   }
 
   public void Increment()
@@ -37,8 +35,8 @@ public class AchievementChain : MonoBehaviour
     }
   }
 
-  public GameEvent GetRelevantEvent()
+  public string GetRelevantEventName()
   {
-    return relevant_event;
+    return relevant_event_name;
   }
 }

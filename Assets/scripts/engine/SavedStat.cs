@@ -26,7 +26,6 @@ public class SavedStat : MonoBehaviour
     {
       loaded_value = PlayerPrefs.GetInt(stat_name, default_value_on_reset);
       value = loaded_value;
-      Debug.Log(stat_name + " initialized to: " + value);
     }
   }
 
@@ -35,7 +34,6 @@ public class SavedStat : MonoBehaviour
     if (!IsClone())
     {
       PlayerPrefs.SetInt(stat_name, value);
-      Debug.Log(stat_name + " saved as: " + PlayerPrefs.GetInt(stat_name, 0));
     }
   }
 
@@ -53,6 +51,14 @@ public class SavedStat : MonoBehaviour
   public int GetValue()
   {
     return value;
+  }
+
+  public string GetKey()
+  {
+    if (stat_name != null)
+      return stat_name;
+    else
+      return gameObject.name;
   }
 
   public void AddValue(int value)
