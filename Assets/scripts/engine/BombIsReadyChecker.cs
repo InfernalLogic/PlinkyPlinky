@@ -42,12 +42,12 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
 
   public bool BombIsReady()
   {
-    return BombIsCooledDown() && MaxBombsNotExceeded() && !LevelCompleteChecker.Instance().IsLevelCompleted();
+    return BombIsCooledDown() && MaxBombsNotExceeded() && LevelNotCompleted();
   }
 
-  private void ResetBombCooldownTimer()
+  private static bool LevelNotCompleted()
   {
-    bomb_cooldown_timer = Time.time + (BombScript.GetBaseCooldown() - ((float)bomb_cooldown_upgrader.GetValue() * 0.1f));
+    return !LevelCompleteChecker.Instance().IsLevelCompleted();
   }
 
 	private bool BombIsCooledDown()
@@ -59,4 +59,10 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
   {
     return BombScript.GetBombCount() < max_bombs_upgrader.GetValue();
   }
+
+  private void ResetBombCooldownTimer()
+  {
+    bomb_cooldown_timer = Time.time + (BombScript.GetBaseCooldown() - ((float)bomb_cooldown_upgrader.GetValue() * 0.1f));
+  }
+
 }

@@ -15,6 +15,6 @@ public class BumperUpgrader : ScoringObject
 
   public override void RecalculatePointValue()
   {
-    point_value = value;
+    point_value = value * 2;
   }
 }

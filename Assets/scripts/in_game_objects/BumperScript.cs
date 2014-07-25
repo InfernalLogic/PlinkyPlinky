@@ -71,4 +71,18 @@ public class BumperScript : MonoBehaviour
 			return false;
 		}
 	}
+
+  void OnBecameInvisible()
+  {
+    Destroy(gameObject);
+  }
+
+  void OnTriggerEnter2D(Collider2D collider)
+  {
+    if (collider.gameObject.tag == "bumper_destroy_trigger")
+    {
+      Destroy(gameObject);
+    }
+  }
+
 }

@@ -8,7 +8,7 @@ public class PrefabLinker : MonoBehaviour
 
   private GameObject new_object;
 
-	protected void Awake()
+	protected virtual void Awake()
 	{
     //if the object has children, they could be outdated instances of the prefab this links to.
     if (ObjectHasChildren())
@@ -28,8 +28,7 @@ public class PrefabLinker : MonoBehaviour
 
   private void NormalizeObjectRotation(GameObject target_object)
   {
-    //target_object.transform.Rotate(transform.eulerAngles / 2);
-    target_object.transform.Rotate(transform.eulerAngles);
+    target_object.transform.Rotate(transform.rotation.eulerAngles);
   }
 
   private void MakeObjectAChild(GameObject target_object)

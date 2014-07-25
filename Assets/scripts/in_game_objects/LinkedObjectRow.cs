@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LinkedObjectRow : PrefabLinker 
+public class LinkedObjectRow : PrefabLinker
 {
   [SerializeField]
-  private ObjectRow dummy_object_row;
+  private ObjectRow dummy_object_row_prefab;
   [SerializeField]
   private int object_count = 1;
   [SerializeField]
@@ -14,17 +14,12 @@ public class LinkedObjectRow : PrefabLinker
   [SerializeField]
   private Vector3 slope = Vector3.right;
 
-  private GameObject instantiator;
-
-  protected void Awake()
+  protected override void Awake()
   {
-    dummy_object_row.SetObjectCount(object_count);
-    dummy_object_row.SetDistanceBetweenObjects(distance_between_objects);
-    dummy_object_row.SetObjectInRow(object_in_row);
-    dummy_object_row.SetSlope(slope);
-
-    instantiator = Instantiate(dummy_object_row, transform.position, transform.rotation) as GameObject;
-    linked_prefab = instantiator;
+    dummy_object_row_prefab.SetObjectCount(object_count);
+    dummy_object_row_prefab.SetDistanceBetweenObjects(distance_between_objects);
+    dummy_object_row_prefab.SetObjectInRow(object_in_row);
+    dummy_object_row_prefab.SetSlope(slope);
 
     base.Awake();
   }

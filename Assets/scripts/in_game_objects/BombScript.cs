@@ -21,7 +21,7 @@ public class BombScript : MonoBehaviour
 
 	void Start () 
 	{
-    Destroy(gameObject, 30.0f);
+    Destroy(gameObject, 45.0f);
   }
 
   void OnDestroy()

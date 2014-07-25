@@ -33,7 +33,7 @@ public class HUD : Singleton<HUD>
 
     foreach (ScalingRect rect in scaling_rects)
     {
-      rect.RecalculateDimensions();
+      rect.RecalculateRect();
     }
   }
 

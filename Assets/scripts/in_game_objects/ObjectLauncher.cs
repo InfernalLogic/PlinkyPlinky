@@ -11,6 +11,8 @@ public class ObjectLauncher : MonoBehaviour
   private float cooldown = 1.0f;
   [SerializeField]
   private float start_time_offset = 0.0f;
+  [SerializeField]
+  private bool spawn_object_as_child = true;
 
 	private float spawn_timer;
 	private GameObject new_object;
@@ -46,7 +48,8 @@ public class ObjectLauncher : MonoBehaviour
 	{
     new_object = InstantiateNewProjectile();
     ApplyLaunchForce(new_object);
-    MakeObjectAChild(new_object);
+    if (spawn_object_as_child)
+      MakeObjectAChild(new_object);
 	}
 
   private void ApplyLaunchForce(GameObject target_object)

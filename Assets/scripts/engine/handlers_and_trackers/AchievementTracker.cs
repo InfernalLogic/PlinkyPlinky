@@ -38,13 +38,19 @@ public class AchievementTracker : Singleton<AchievementTracker>
   public void IncrementAchievementStat(GameEvent relevant_event)
   {
     if (achievement_chains.ContainsKey(relevant_event.name))
-    {
       achievement_chains[relevant_event.name].Increment();
-    }
   }
 
   public void EnqueueAchievementPopup(Texture popup_texture)
   {
     FindObjectOfType<AchievementUnlockedPopups>().EnqueueAchievementPopup(popup_texture);
+  }
+
+  public AchievementChain FindAchievementChainFor(GameEvent game_event)
+  {
+    if (achievement_chains.ContainsKey(game_event.name))
+      return achievement_chains[game_event.name];
+    else
+      return null;
   }
 }

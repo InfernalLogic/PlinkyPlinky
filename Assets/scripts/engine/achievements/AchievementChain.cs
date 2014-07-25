@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(SavedStat))]
 public class AchievementChain : MonoBehaviour 
 {
   [SerializeField]
@@ -13,20 +14,15 @@ public class AchievementChain : MonoBehaviour
   {
     tracked_stat = GetComponent<SavedStat>();
 
-    if (!tracked_stat)
-    {
-      Debug.LogError("tracked stat not loaded for" + name);
-    }
-
     achievements = GetComponentsInChildren<Achievement>();
   }
 
   public void Increment()
   {
-    Add(1);
+    AddValue(1);
   }
 
-  public void Add(int value)
+  public void AddValue(int value)
   {
     tracked_stat.AddValue(value);
     foreach (Achievement achieve in achievements)
@@ -38,5 +34,10 @@ public class AchievementChain : MonoBehaviour
   public string GetRelevantEventName()
   {
     return relevant_event_name;
+  }
+
+  public int GetTrackedStatValue()
+  {
+    return tracked_stat.GetValue();
   }
 }

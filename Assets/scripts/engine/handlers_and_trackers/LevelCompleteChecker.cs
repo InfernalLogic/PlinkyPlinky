@@ -31,6 +31,9 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 		{
       if (!level_completed)
       {
+        if (coins_left == 0 && bombs_dropped > 0)
+          GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().level_completed_event);
+
         level_completed = true;
         Debug.Log("Level completed with " + bombs_dropped + " bombs dropped");
 
@@ -61,6 +64,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
   private void LoadNewLevel()
   {
+    level_completed = false;
     LevelHandler.Instance().LoadRandomLevel();
   }
 
@@ -80,8 +84,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     //a "race hazard" having to do with how objects are destroyed and when update() is called, causing a call to CountCoins()
     //performed after a new level load to include any coins that had not been previously destroyed.
     CountCoins();
-    if (coins_left == 0 && bombs_dropped > 0)
-      GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().level_completed_event);
+
 	}
 
 	public void CountCoins()

@@ -5,6 +5,8 @@ public class BackgroundObject : MonoBehaviour
 {
   [SerializeField]
 	private float despawn_time;
+  [SerializeField]
+  private string target_layer = "";
 	
 	public BGObjectProperty size;
 	public BGObjectProperty speed;
@@ -21,21 +23,21 @@ public class BackgroundObject : MonoBehaviour
 
 	private Vector3 rotation_vector = Vector3.zero;
 
+  void Awake()
+  {
+    gameObject.renderer.sortingLayerName = target_layer;
+    sprite_transform = GetComponent<Transform>();
+    coefficient = Random.Range(0.0f, 1.0f);
+
+    CalculateRanges();
+    CalculateScale();
+  }
+
 	void Start()
 	{
-		sprite_transform = GetComponent<Transform>();
-		coefficient = Random.Range (0.0f, 1.0f);
-
-		CalculateRanges();
-
-		CalculateScale();
-
-		CalculateMoveVector();
-
-		CalculateRotationVector();
-
 		Destroy (gameObject, despawn_time);
-
+    CalculateMoveVector();
+    CalculateRotationVector();
 	}
 
 	void Update()
