@@ -86,7 +86,7 @@ public class PlayerStats : Singleton<PlayerStats>
       scoring_object.RecalculatePointValue();
     }
 
-    LevelHandler.Instance().LoadUnlockedLevels();
+    LevelHandler.Instance().UpdateUnlockedLevels();
 	
 	}
 

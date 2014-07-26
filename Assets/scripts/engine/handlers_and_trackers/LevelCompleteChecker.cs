@@ -32,7 +32,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
       if (!level_completed)
       {
         if (coins_left == 0 && bombs_dropped > 0)
-          GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().level_completed_event);
+          PublishLevelCompletedEvent();
 
         level_completed = true;
         Debug.Log("Level completed with " + bombs_dropped + " bombs dropped");
@@ -42,19 +42,26 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
       else if (level_completed && NewLevelCountdownCooledDown() && BombScript.GetBombCount() <= 0)
 			{
         LoadNewLevel();
-        level_completed = false;
         CountCoins();
         bombs_dropped = 0;
 			}
 		}
 	}
 
+  private static void PublishLevelCompletedEvent()
+  {
+    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().level_completed_event);
+  }
+
   private void HandleMessage(GameEvent message)
   {
     if (message == GameEventPublisher.Instance().bomb_dropped_event)
       ++bombs_dropped;
     else if (message == GameEventPublisher.Instance().coin_hit_event)
-      RegisterCoinHit();
+    {
+      Debug.Log("coin_hit_event received by LevelCompleteChecker");
+      CountCoins();
+    }
   }
 
   private void ResetNewLevelCountdown()
@@ -77,15 +84,6 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
   {
     return coins_left <= 0;
   }
-
-	public void RegisterCoinHit()
-	{
-    //the coins must be counted, here for anything to behave properly. There's what I believe is called
-    //a "race hazard" having to do with how objects are destroyed and when update() is called, causing a call to CountCoins()
-    //performed after a new level load to include any coins that had not been previously destroyed.
-    CountCoins();
-
-	}
 
 	public void CountCoins()
 	{

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class LevelHandler : Singleton<LevelHandler> 
 {
+  [HideInInspector]
+  public bool load_newest_level_next = false;
   [SerializeField]
   private bool disable_level_loading = false;
 
@@ -73,14 +75,22 @@ public class LevelHandler : Singleton<LevelHandler>
 
 	public int PickNewLevel()
 	{
-		int new_level = (int)unlocked_levels[Random.Range (0, unlocked_levels.Count)];
+    if (!load_newest_level_next)
+    {
+      int new_level = (int)unlocked_levels[Random.Range(0, unlocked_levels.Count)];
 
-		if (new_level == current_level && unlocked_levels.Count > 1)
-		{
-			new_level = PickNewLevel();
-		}
-		
-		return new_level;
+      if (new_level == current_level && unlocked_levels.Count > 1)
+      {
+        new_level = PickNewLevel();
+      }
+
+      return new_level;
+    }
+    else
+    {
+      load_newest_level_next = false;
+      return FindObjectOfType<LevelUnlocker>().GetNewestLevelNumber();
+    }
 	}
 
 	public void DestroyAllWithTag(string target_tag)
@@ -93,9 +103,9 @@ public class LevelHandler : Singleton<LevelHandler>
 		}
 	}
 
-	public void LoadUnlockedLevels()
+	public void UpdateUnlockedLevels()
 	{
-		unlocked_levels.Clear ();
+		unlocked_levels.Clear();
 
     for (int i = 0; i < FindObjectOfType<LevelUnlocker>().GetTotalUnlockedLevels(); ++i)
     {

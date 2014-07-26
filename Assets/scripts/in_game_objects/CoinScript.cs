@@ -14,14 +14,20 @@ public class CoinScript : MonoBehaviour
 	{
     if (CollidedWithABomb(other_collider))
 		{
-      PublishCoinHitEvent();
-      emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
-			Destroy (gameObject);
+      HitCoin();
 		}
 	}
 
+  public void HitCoin()
+  {
+    PublishCoinHitEvent();
+    emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
+    Destroy(gameObject);
+  }
+
   private void PublishCoinHitEvent()
   {
+    Debug.Log("coin_hit_event published");
     GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().coin_hit_event);
   }
 
