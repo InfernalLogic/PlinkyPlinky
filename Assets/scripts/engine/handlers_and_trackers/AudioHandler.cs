@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class AudioHandler : Singleton<AudioHandler> 
 {
+  public bool mute_sound_effects = false;
+  public bool mute_music = false;
+  public float default_music_volume = 0.75f;
+
   [SerializeField]
 	private AudioClip[] peg_hit_sounds;
   [SerializeField]
@@ -20,6 +24,13 @@ public class AudioHandler : Singleton<AudioHandler>
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
   private Dictionary<GameEvent, AudioClip[]> audio_clips = new Dictionary<GameEvent, AudioClip[]>();
 
+  private GameEvent current_event = null;
+
+  void Awake()
+  {
+    GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().volume = default_music_volume;
+  }
+
   void Start()
   {
     SubscribeToRelevantEvents();
@@ -30,22 +41,34 @@ public class AudioHandler : Singleton<AudioHandler>
   {
     while (!game_event_listener.IsEmpty())
     {
-      if (audio_clips.ContainsKey(game_event_listener.ReadNewestMessage()))
+      if (CurrentEventHasNotBeenPlayedThisUpdate())
       {
-        PlayEventSound(game_event_listener.ReadNewestMessage());
-        game_event_listener.DeleteNewestMessage();
+        current_event = game_event_listener.ReadNewestMessage();
+
+        if (CurrentEventIsFound())
+        {
+          PlayEventSound(game_event_listener.ReadNewestMessage());
+        }
       }
-      else
-      {
-        Debug.LogError("Could not find " + game_event_listener.ReadNewestMessage().name);
-        game_event_listener.DeleteNewestMessage();
-      }
+      game_event_listener.DeleteNewestMessage();
     }
+    current_event = null;
+  }
+
+  private bool CurrentEventIsFound()
+  {
+    return audio_clips.ContainsKey(current_event);
+  }
+
+  private bool CurrentEventHasNotBeenPlayedThisUpdate()
+  {
+    return current_event != game_event_listener.ReadNewestMessage();
   }
 
   private void PlayEventSound(GameEvent game_event)
   {
-    AudioSource.PlayClipAtPoint(GetRandomSoundFrom(audio_clips[game_event]), Vector3.zero);
+    if (!mute_sound_effects)
+      AudioSource.PlayClipAtPoint(GetRandomSoundFrom(audio_clips[game_event]), Vector3.zero);
   }
 
   private void LoadAudioClipDictionary()
@@ -67,5 +90,19 @@ public class AudioHandler : Singleton<AudioHandler>
   {
     int sound = Random.Range(0, (clips.Length - 1));
     return clips[sound];
+  }
+
+  public void MuteMusic()
+  {
+    GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().volume = 0.0f;
+
+    mute_music = true;
+  }
+
+  public void UnmuteMusic()
+  {
+    GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().volume = default_music_volume;
+
+    mute_music = false;
   }
 }

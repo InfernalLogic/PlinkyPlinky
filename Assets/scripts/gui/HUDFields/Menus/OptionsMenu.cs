@@ -5,7 +5,6 @@ public class OptionsMenu : HUDField
 {
 
   private bool display_reset_confirmation_window= false;
-  private bool game_is_muted = false;
   private bool hide_level_number = false;
 
   [SerializeField]
@@ -16,7 +15,9 @@ public class OptionsMenu : HUDField
   [SerializeField]
   ScalingRect reset_button_rect;
   [SerializeField]
-  ScalingRect mute_button_rect;
+  ScalingRect mute_sound_effects_button_rect;
+  [SerializeField]
+  ScalingRect mute_music_button_rect;
   [SerializeField]
   private ScalingRect reset_confirmation_window_rect;
 
@@ -25,7 +26,8 @@ public class OptionsMenu : HUDField
     if (!display_reset_confirmation_window)
     {
       DisplayResetGameButton();
-      DisplayMuteButton();
+      DisplayMuteSoundEffectsButton();
+      DisplayMuteMusicButton();
     }
     else
     {
@@ -91,34 +93,61 @@ public class OptionsMenu : HUDField
                                "NO", button_style);
   }
 
-  private void DisplayMuteButton()
+  private void DisplayMuteSoundEffectsButton()
   {
-    if (MuteButtonIsPressed())
+    if (MuteSoundEffectsButtonIsPressed())
     {
-      if (game_is_muted)
-        UnmuteGame();
+      if (AudioHandler.Instance().mute_sound_effects)
+        UnmuteSoundEffects();
       else
-        MuteGame();
+        MuteSoundEffects();
     }
   }
 
-  private void MuteGame()
+  private void DisplayMuteMusicButton()
   {
-    AudioListener.volume = 0.0f;
-    game_is_muted = true;
+    if (MuteMusicButtonIsPressed())
+    {
+      if (AudioHandler.Instance().mute_music)
+        UnmuteMusic();
+      else
+        MuteMusic();
+    }
   }
 
-  private void UnmuteGame()
+  private void MuteSoundEffects()
   {
-    AudioListener.volume = 1.0f;
-    game_is_muted = false;
+    AudioHandler.Instance().mute_sound_effects = true;
   }
 
-  private bool MuteButtonIsPressed()
+  private void UnmuteSoundEffects()
   {
-    if (game_is_muted)
-      return GUI.Button(mute_button_rect.GetRect(), "Unmute game", button_style);
+    AudioHandler.Instance().mute_sound_effects = false;
+  }
+
+  private bool MuteSoundEffectsButtonIsPressed()
+  {
+    if (AudioHandler.Instance().mute_sound_effects)
+      return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Unmute sounds", button_style);
     else
-      return GUI.Button(mute_button_rect.GetRect(), "Mute game", button_style);
+      return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Mute sounds", button_style);
+  }
+
+  private bool MuteMusicButtonIsPressed()
+  {
+    if (AudioHandler.Instance().mute_music)
+      return GUI.Button(mute_music_button_rect.GetRect(), "Unmute music", button_style);
+    else
+      return GUI.Button(mute_music_button_rect.GetRect(), "Mute music", button_style);
+  }
+
+  private void MuteMusic()
+  {
+    AudioHandler.Instance().MuteMusic();
+  }
+
+  private void UnmuteMusic()
+  {
+    AudioHandler.Instance().UnmuteMusic();
   }
 }

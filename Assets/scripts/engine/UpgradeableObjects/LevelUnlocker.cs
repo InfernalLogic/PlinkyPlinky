@@ -10,37 +10,12 @@ public class LevelUnlocker : UpgradeableObject
       ++value;
       SpendUpgradeCost();
       RecalculateUpgradeCost();
-      UpdateUnlockedLevels();
-
-      DestroyAllRemainingCoins();
+      
+      GetComponentInChildren<CoinDestroyer>().DestroyAllCoins();
 
       LevelHandler.Instance().load_newest_level_next = true;
       LevelCompleteChecker.Instance().CountCoins();
-    }
-  }
-
-  private static void DestroyAllRemainingCoins()
-  {
-    CoinScript[] coins = FindObjectsOfType<CoinScript>();
-
-    foreach (CoinScript coin in coins)
-    {
-      Debug.Log("coin destroyed by LevelUnlocker");
-      coin.HitCoin();
-    }
-
-    //FOR SOME REASON. If there's only one coin left in the scene, it won't be destroyed on the first pass. It has to be ran again.
-    coins = FindObjectsOfType<CoinScript>();
-
-    if (coins.Length != 0)
-    {
-      Debug.LogError("Not all coins were destroyed on the first pass!");
-
-      foreach (CoinScript coin in coins)
-      {
-        Debug.Log("coin destroyed by LevelUnlocker");
-        coin.HitCoin();
-      }
+      UpdateUnlockedLevels();
     }
   }
 

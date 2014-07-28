@@ -1,3 +1,0 @@
-I've been working on this little game for a while now, and it's finally ready for beta testing. I'd love it if some of you could try it out and let me know if you encounter any bugs or have any suggestions.
-
-It does require the Unity3D plugin, which can be found

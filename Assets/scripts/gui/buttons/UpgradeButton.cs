@@ -55,7 +55,8 @@ public class UpgradeButton : Button
 
   private void DisplayMaxUpgradesReached()
   {
-    GUI.Label(label_display_rect.GetRect(), max_upgrades_reached_message, button_style);
+    GUI.Label(display_rect.GetRect(), "", button_style);
+    GUI.Label(label_display_rect.GetRect(), max_upgrades_reached_message, label_style);
   }
 
   protected virtual void DisplayTextLabel()
