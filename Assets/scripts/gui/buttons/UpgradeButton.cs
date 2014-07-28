@@ -4,40 +4,35 @@ using System.Collections;
 public class UpgradeButton : Button 
 {
   [SerializeField]
-  private UpgradeableObject target_upgrade;
+  protected UpgradeableObject target_upgrade;
   [SerializeField]
-  private GUIStyle mask_style;
-  [SerializeField]
-  private GUIStyle label_style;
-  [SerializeField]
-  private ScalingRect indented_label_display_rect;
-
-  private ScoringObject target_scoring_object;
-
-  void Start()
-  {
-    target_scoring_object = (ScoringObject)target_upgrade;
-  }
+  protected string max_upgrades_reached_message;
 
   public override void Display()
   {
-    if (target_upgrade.PlayerHasEnoughMoney())
+    if (target_upgrade.UpgradesNotMaxedOut())
     {
-      if (ButtonIsPressed())
+      if (target_upgrade.PlayerHasEnoughMoney())
       {
-        target_upgrade.Upgrade();
+        if (ButtonIsPressed())
+        {
+          target_upgrade.Upgrade();
+        }
+        DisplayTextLabel();
       }
-      DisplayTextLabel();
+      else
+      {
+        DisplayDisabledButtonWithMask();
+      }
     }
     else
     {
-      DisplayDisabledButtonWithMask();
+      DisplayMaxUpgradesReached();
     }
   }
 
   public bool ButtonIsPressed()
   {
-
     return GUI.Button(display_rect.GetRect(), "", button_style);
   }
 
@@ -47,21 +42,10 @@ public class UpgradeButton : Button
     DisplayDisabledMask();
   }
 
-  private void DisplayDisabledMask()
-  {
-    GUI.Label(display_rect.GetRect(), "", mask_style);
-  }
-
   private void DisplayDummyButton()
   {
     GUI.Label(display_rect.GetRect(), "", button_style);
     DisplayTextLabel();
-  }
-
-  private void DisplayTextLabel()
-  {
-    GUI.Label(indented_label_display_rect.GetRect(), button_text + "\nCost: " + target_upgrade.GetUpgradeCost() +
-      "\nincome/hit: " + target_scoring_object.GetPointValue(), label_style);
   }
 
   private bool PlayerHasEnoughMoneyToUpgrade()
@@ -69,4 +53,14 @@ public class UpgradeButton : Button
     return target_upgrade.PlayerHasEnoughMoney();
   }
 
+  private void DisplayMaxUpgradesReached()
+  {
+    GUI.Label(display_rect.GetRect(), "", button_style);
+    GUI.Label(label_display_rect.GetRect(), max_upgrades_reached_message, label_style);
+  }
+
+  protected virtual void DisplayTextLabel()
+  {
+    GUI.Label(label_display_rect.GetRect(), button_text + "\nCost: " + target_upgrade.GetUpgradeCost(), label_style);
+  }
 }

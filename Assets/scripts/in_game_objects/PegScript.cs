@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PegScript : PlinkyObject 
+public class PegScript : MonoBehaviour 
 {
   [SerializeField]
-	private int hp = 1;
+  private GameEvent peg_hit_event;
+  [SerializeField]
+	private int hit_points = 1;
   [SerializeField]
   private bool is_destructible = true;
   [SerializeField]
@@ -14,23 +16,35 @@ public class PegScript : PlinkyObject
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "bomb")
+    if (CollidedWithABomb(collision))
 		{
-			AudioSource.PlayClipAtPoint(engine.audio_handler.GetPopSound(), gameObject.transform.position);
-      emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
-
 			if (is_destructible)
 			{
-				engine.player_stats.PegHit();
-				--hp;
-				if (hp <= 0)
+				--hit_points;
+				if (hit_points <= 0)
 				{
+          SpawnParticleEmitter();
+          PublishPegHitEvent();
 					Destroy (gameObject);
 				}
 			}
-
 		}
 	}
+
+  private void PublishPegHitEvent()
+  {
+    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().peg_hit_event);
+  }
+
+  private void SpawnParticleEmitter()
+  {
+    emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
+  }
+
+  private static bool CollidedWithABomb(Collision2D collision)
+  {
+    return collision.gameObject.tag == "bomb";
+  }
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{

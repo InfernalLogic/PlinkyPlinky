@@ -3,9 +3,9 @@ using System.Collections;
 
 public class OptionsMenu : HUDField
 {
-  private Rect reset_confirmation_window_rect;
+
   private bool display_reset_confirmation_window= false;
-  private bool game_is_muted = false;
+  private bool hide_level_number = false;
 
   [SerializeField]
   private GUIStyle button_style;
@@ -15,19 +15,19 @@ public class OptionsMenu : HUDField
   [SerializeField]
   ScalingRect reset_button_rect;
   [SerializeField]
-  ScalingRect mute_button_rect;
-
-  void Start()
-  {
-    InitializeResetConfirmationWindowRect();
-  }
+  ScalingRect mute_sound_effects_button_rect;
+  [SerializeField]
+  ScalingRect mute_music_button_rect;
+  [SerializeField]
+  private ScalingRect reset_confirmation_window_rect;
 
   protected override void DisplayGUIElements()
   {
     if (!display_reset_confirmation_window)
     {
       DisplayResetGameButton();
-      DisplayMuteButton();
+      DisplayMuteSoundEffectsButton();
+      DisplayMuteMusicButton();
     }
     else
     {
@@ -46,8 +46,8 @@ public class OptionsMenu : HUDField
 
   private void ResetGame()
   {
-    engine.player_stats.ResetStats();
-    engine.level_handler.LoadRandomLevel();
+    PlayerStats.Instance().ResetStats();
+    LevelHandler.Instance().LoadRandomLevel();
     Debug.Log("Game reset");
   }
 
@@ -56,12 +56,14 @@ public class OptionsMenu : HUDField
     return GUI.Button(reset_button_rect.GetRect(), "Reset game", button_style);
   }
 
+
+
   private void LoadResetConfirmationWindow()
   {
-    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.width, reset_confirmation_window_rect.height), 
+    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height), 
               "Are you sure you want to reset? All your progress will be lost.", label_style);
 
-    reset_confirmation_window_rect = GUI.ModalWindow(0, reset_confirmation_window_rect, LoadResetConfirmationButtons, "", GUIStyle.none);
+    reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadResetConfirmationButtons, "", GUIStyle.none));
   }
 
   private void LoadResetConfirmationButtons(int window_id)
@@ -80,53 +82,72 @@ public class OptionsMenu : HUDField
   private bool YesButtonIsPressed()
   {
     return GUI.Button(new Rect(10, 10,
-                               ((reset_confirmation_window_rect.width / 2) - 20), ((reset_confirmation_window_rect.height / 2) - 20)), 
+                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)), 
                                "YES", button_style);
   }
 
   private bool NoButtonIsPressed()
   {
-    return GUI.Button(new Rect((reset_confirmation_window_rect.width / 2) + 10, 10,
-                               ((reset_confirmation_window_rect.width / 2) - 20), ((reset_confirmation_window_rect.height / 2) - 20)), 
+    return GUI.Button(new Rect((reset_confirmation_window_rect.GetRect().width / 2) + 10, 10,
+                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)), 
                                "NO", button_style);
   }
 
-  private void InitializeResetConfirmationWindowRect()
+  private void DisplayMuteSoundEffectsButton()
   {
-    reset_confirmation_window_rect.width = Screen.width / 3;
-    reset_confirmation_window_rect.height = Screen.height / 4;
-    reset_confirmation_window_rect.x = Screen.width * (2f / 3f);
-    reset_confirmation_window_rect.y = Screen.height / 4;
-  }
-
-  private void DisplayMuteButton()
-  {
-    if (MuteButtonIsPressed())
+    if (MuteSoundEffectsButtonIsPressed())
     {
-      if (game_is_muted)
-        UnmuteGame();
+      if (AudioHandler.Instance().mute_sound_effects)
+        UnmuteSoundEffects();
       else
-        MuteGame();
+        MuteSoundEffects();
     }
   }
 
-  private void MuteGame()
+  private void DisplayMuteMusicButton()
   {
-    AudioListener.volume = 0.0f;
-    game_is_muted = true;
+    if (MuteMusicButtonIsPressed())
+    {
+      if (AudioHandler.Instance().mute_music)
+        UnmuteMusic();
+      else
+        MuteMusic();
+    }
   }
 
-  private void UnmuteGame()
+  private void MuteSoundEffects()
   {
-    AudioListener.volume = 1.0f;
-    game_is_muted = false;
+    AudioHandler.Instance().mute_sound_effects = true;
   }
 
-  private bool MuteButtonIsPressed()
+  private void UnmuteSoundEffects()
   {
-    if (game_is_muted)
-      return GUI.Button(mute_button_rect.GetRect(), "Unmute game", button_style);
+    AudioHandler.Instance().mute_sound_effects = false;
+  }
+
+  private bool MuteSoundEffectsButtonIsPressed()
+  {
+    if (AudioHandler.Instance().mute_sound_effects)
+      return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Unmute sounds", button_style);
     else
-      return GUI.Button(mute_button_rect.GetRect(), "Mute game", button_style);
+      return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Mute sounds", button_style);
+  }
+
+  private bool MuteMusicButtonIsPressed()
+  {
+    if (AudioHandler.Instance().mute_music)
+      return GUI.Button(mute_music_button_rect.GetRect(), "Unmute music", button_style);
+    else
+      return GUI.Button(mute_music_button_rect.GetRect(), "Mute music", button_style);
+  }
+
+  private void MuteMusic()
+  {
+    AudioHandler.Instance().MuteMusic();
+  }
+
+  private void UnmuteMusic()
+  {
+    AudioHandler.Instance().UnmuteMusic();
   }
 }

@@ -1,80 +1,57 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelUnlocker : UpgradeableObject 
+public class LevelUnlocker : UpgradeableObject
 {
-  protected override void Initialize()
-  {
-    upgrade_id = gameObject.name;
-  }
-
   public override void Upgrade()
   {
-
     if (PlayerHasEnoughMoney() && UpgradesNotMaxedOut())
     {
-      ++upgrades;
-      engine.player_stats.SpendMoney(upgrade_cost);
-      engine.level_handler.LoadUnlockedLevels();
+      ++value;
+      SpendUpgradeCost();
       RecalculateUpgradeCost();
-      LoadNewlyUnlockedLevel();
-    }
-    else
-    {
-      if (!PlayerHasEnoughMoney())
-      {
-        Debug.Log("Not enough moneys! " + gameObject.name);
-      }
+      
+      GetComponentInChildren<CoinDestroyer>().DestroyAllCoins();
 
-      if (!UpgradesNotMaxedOut())
-      {
-        Debug.Log("Max upgrades reached!" + gameObject.name);
-        Debug.Log("upgrades: " + upgrades + " max_upgrades: " + max_upgrades);
-      }
+      LevelHandler.Instance().load_newest_level_next = true;
+      LevelCompleteChecker.Instance().CountCoins();
+      UpdateUnlockedLevels();
     }
+  }
+
+  private static void UpdateUnlockedLevels()
+  {
+    LevelHandler.Instance().UpdateUnlockedLevels();
+  }
+
+  private void SpendUpgradeCost()
+  {
+    PlayerStats.Instance().SpendMoney(upgrade_cost);
   }
 
   private void LoadNewlyUnlockedLevel()
   {
-    engine.level_handler.LoadLevel(upgrades - 1);
+    LevelHandler.Instance().LoadLevel(value - 1);
   }
-
-  public override void Reset()
-  {
-    upgrades = GetLevelsToUnlockOnReset();
-    RecalculateUpgradeCost();
-  }
-
-  public bool UpgradesNotMaxedOut()
-  {
-  return upgrades < (max_upgrades);
-  }
-
-  public void SetMaxUpgrades(int max_upgrades)
-	{
-		this.max_upgrades = max_upgrades;
-	}
-
-	public void Save()
-	{
-		upgrade_id = gameObject.name;
-		PlayerPrefs.SetInt(upgrade_id +"_upgrades", upgrades);
-    Debug.Log(upgrade_id + " saved as: " + PlayerPrefs.GetInt(upgrade_id + "_upgrades", GetLevelsToUnlockOnReset()));
-	}
 
   public override void RecalculateUpgradeCost()
   {
-    upgrade_cost = (int)(500.0f * Mathf.Pow((float)(upgrades - GetLevelsToUnlockOnReset() + 1), 1.2f));
+    upgrade_cost = (int)(300.0f * Mathf.Pow((float)(value - GetLevelsToUnlockOnReset()), 1.2f)) + 200;
   }
 
   public int GetTotalUnlockedLevels()
   {
-    return upgrades;
+    return value;
   }
 
   public int GetLevelsToUnlockOnReset()
   {
     return base.GetUpgradesOnReset();
+  }
+
+  public int GetNewestLevelNumber()
+  {
+    return value - 1;
   }
 }
 

@@ -1,43 +1,62 @@
 ﻿using UnityEngine;
 
-public class BumperScript : PlinkyObject 
+public class BumperScript : MonoBehaviour 
 {
-	public float bump_strength = 0f;
-	public float bump_cooldown = 0f;
+  [SerializeField]
+  private GameEvent bumper_hit_event;
+  [SerializeField]
+	private float bump_strength = 0.0f;
+  [SerializeField]
+  private float bump_cooldown = 0.0f;
+  [SerializeField]
+  private float cooldown_timer = 0.0f;
 
 	private Animator bumper_animator;
-	private float cooldown_timer = 0f;
 
-	void Start()
+  private Vector2 bump_vector;
+
+	void Awake()
 	{
 		bumper_animator = GetComponent<Animator> ();
 	}
 
 	void OnCollisionEnter2D (Collision2D collision)
 	{
-		if (collision.gameObject.tag == "bomb")
+    if (CollidedWithABomb(collision))
 		{
 			if (IsCooledDown())
 			{
-				SetCooldownTimer ();			
-				bumper_animator.SetTrigger ("hit_trigger");
-        AudioSource.PlayClipAtPoint(engine.audio_handler.GetBumperHitSound(), Vector3.zero);
-			
-				ContactPoint2D[] contacts = collision.contacts;
-				Vector2 bump_vector;
-				foreach (ContactPoint2D element in contacts)
-				{
-					bump_vector = (-1 * element.normal * bump_strength);
-					element.collider.attachedRigidbody.AddForce(bump_vector);
-				}
+				ResetCooldownTimer ();
+        PlayBumperHitAnimation();
+        ApplyBumperForceToBomb(collision);
 
-				engine.player_stats.BumperHit();
+        GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().bumper_hit_event);
 			}
-
 		}
 	}
 
-	void SetCooldownTimer()
+  private void PlayBumperHitAnimation()
+  {
+    bumper_animator.SetTrigger("hit_trigger");
+  }
+
+  private void ApplyBumperForceToBomb(Collision2D collision)
+  {
+    ContactPoint2D[] contacts = collision.contacts;
+
+    foreach (ContactPoint2D element in contacts)
+    {
+      bump_vector = (-1 * element.normal * bump_strength);
+      element.collider.attachedRigidbody.AddForce(bump_vector);
+    }
+  }
+
+  private static bool CollidedWithABomb(Collision2D collision)
+  {
+    return collision.gameObject.tag == "bomb";
+  }
+
+	void ResetCooldownTimer()
 	{
 		cooldown_timer = Time.time + bump_cooldown;
 	}
@@ -52,4 +71,18 @@ public class BumperScript : PlinkyObject
 			return false;
 		}
 	}
+
+  void OnBecameInvisible()
+  {
+    Destroy(gameObject);
+  }
+
+  void OnTriggerEnter2D(Collider2D collider)
+  {
+    if (collider.gameObject.tag == "bumper_destroy_trigger")
+    {
+      Destroy(gameObject);
+    }
+  }
+
 }

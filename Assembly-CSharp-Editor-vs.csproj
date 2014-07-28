@@ -86,7 +86,6 @@
      <Compile Include="Assets\UnityTestTools\UnitTesting\Editor\TestRunner\UnitTestView.cs" />
      <Compile Include="Assets\UnityTestTools\UnitTesting\Editor\UnityUnitTest.cs" />
      <None Include="Assets\UnityTestTools\LICENSE.txt" />
-     <None Include="Assets\thumbnails\fb_post.txt" />
      <None Include="Assets\fonts\Liberation\Red Hat Liberation License.txt" />
      <None Include="Assets\thumbnails\htmlshit.txt" />
      <None Include="Assets\UnityTestTools\changelog.txt" />

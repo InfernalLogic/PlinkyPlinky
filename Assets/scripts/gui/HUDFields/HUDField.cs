@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class HUDField : PlinkyObject
+public abstract class HUDField : MonoBehaviour
 {
 	[SerializeField]
 	protected ScalingRect display_rect;

@@ -4,11 +4,11 @@ using System.Collections;
 public class PrefabLinker : MonoBehaviour 
 {
   [SerializeField]
-	private GameObject linked_prefab;
+	protected GameObject linked_prefab;
 
   private GameObject new_object;
 
-	void Awake()
+	protected virtual void Awake()
 	{
     //if the object has children, they could be outdated instances of the prefab this links to.
     if (ObjectHasChildren())
@@ -17,7 +17,6 @@ public class PrefabLinker : MonoBehaviour
     new_object = InstantiateUpdatedPrefab();
     NormalizeObjectRotation(new_object);
     MakeObjectAChild(new_object);
-
 	}
 
   private GameObject InstantiateUpdatedPrefab()
@@ -29,8 +28,7 @@ public class PrefabLinker : MonoBehaviour
 
   private void NormalizeObjectRotation(GameObject target_object)
   {
-    //target_object.transform.Rotate(transform.eulerAngles / 2);
-    target_object.transform.Rotate(transform.eulerAngles);
+    target_object.transform.Rotate(transform.rotation.eulerAngles);
   }
 
   private void MakeObjectAChild(GameObject target_object)

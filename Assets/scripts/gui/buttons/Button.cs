@@ -1,14 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-abstract public class Button : PlinkyObject 
+abstract public class Button : MonoBehaviour 
 {
+  [SerializeField]
+  protected ScalingRect display_rect;
   [SerializeField]
   protected string button_text;
   [SerializeField]
+  protected Texture disabled_mask_texture;
+  [SerializeField]
   protected GUIStyle button_style;
   [SerializeField]
-  protected ScalingRect display_rect;
+  protected GUIStyle label_style;
+  [SerializeField]
+  protected ScalingRect label_display_rect;
 
   public abstract void Display();
+
+  protected void DisplayDisabledMask()
+  {
+    GUI.DrawTexture(display_rect.GetRect(), disabled_mask_texture);
+  }
 }
