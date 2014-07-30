@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SavedStat : MonoBehaviour 
+public class SavedStat : MonoBehaviour
 {
   protected int value;
 
   [SerializeField]
-  protected string stat_name;
+  protected string stat_name = "";
   [SerializeField]
   protected int default_value_on_reset;
+  [SerializeField]
+  private bool ignore_reset = false;
 
   private int loaded_value;
-  
+
   new void Awake()
   {
-    if (stat_name == null)
+    if (stat_name == "")
       stat_name = gameObject.name;
 
     Load();
@@ -26,6 +28,11 @@ public class SavedStat : MonoBehaviour
     {
       loaded_value = PlayerPrefs.GetInt(stat_name, default_value_on_reset);
       value = loaded_value;
+      Debug.Log(GetKey() + " loaded: " + value);
+    }
+    else
+    {
+      Debug.LogError("Ignored clone for: " + GetKey());
     }
   }
 
@@ -33,7 +40,7 @@ public class SavedStat : MonoBehaviour
   {
     if (!IsClone())
     {
-      PlayerPrefs.SetInt(stat_name, value);
+      PlayerPrefs.SetInt(GetKey(), value);
     }
   }
 
@@ -44,8 +51,11 @@ public class SavedStat : MonoBehaviour
 
   public virtual void Reset()
   {
-    value = default_value_on_reset;
-    Debug.Log(name + " reset");
+    if (!ignore_reset)
+    {
+      value = default_value_on_reset;
+      Debug.Log(GetKey() + " reset");
+    }
   }
 
   public int GetValue()
@@ -55,7 +65,7 @@ public class SavedStat : MonoBehaviour
 
   public string GetKey()
   {
-    if (stat_name != null)
+    if (stat_name != "")
       return stat_name;
     else
       return gameObject.name;

@@ -7,57 +7,25 @@ public class StatsMenu : HUDField
   [SerializeField]
   private GUIStyle stat_display_style;
 
-  [SerializeField]
-  private ScalingRect total_money_earned_rect;
-  [SerializeField]
-  private ScalingRect total_poppers_popped_rect;
-  [SerializeField]
-  private ScalingRect total_bumpers_bumped_rect;
-  [SerializeField]
-  private ScalingRect total_coins_coined_rect;
-  [SerializeField]
-  private ScalingRect total_balls_dropped_rect;
+  private StatDisplayer[] stat_displayers;
+  AchievementChainDisplayer[] achievement_chain_displayers;
 
-  [SerializeField]
-  private AchievementChain pegs_hit_chain;
-  [SerializeField]
-  private AchievementChain bumpers_hit_chain;
-  [SerializeField]
-  private AchievementChain coins_hit_chain;
-  [SerializeField]
-  private AchievementChain bombs_dropped_chain;
+  void Awake()
+  {
+    stat_displayers = GetComponentsInChildren<StatDisplayer>();
+    achievement_chain_displayers = GetComponentsInChildren<AchievementChainDisplayer>();
+  }
 
   protected override void DisplayGUIElements()
   {
-    DisplayTotalMoneyEarned();
-    DisplayTotalPoppersPopped();
-    DisplayTotalBumpersBumped();
-    DisplayTotalCoinsCoined();
-    DisplayTotalBallsDropped();
-  }
+    foreach (StatDisplayer stat_displayer in stat_displayers)
+    {
+      stat_displayer.Display(stat_display_style);
+    }
 
-  private void DisplayTotalMoneyEarned()
-  {
-    GUI.Label(total_money_earned_rect.GetRect(), "Total money gained: " + PlayerStats.Instance().GetCareerMoney(), stat_display_style);
-  }
-
-  private void DisplayTotalPoppersPopped()
-  {
-    GUI.Label(total_poppers_popped_rect.GetRect(), "Total poppers plinked: " + pegs_hit_chain.GetTrackedStatValue(), stat_display_style);
-  }
-
-  private void DisplayTotalBumpersBumped()
-  {
-    GUI.Label(total_bumpers_bumped_rect.GetRect(), "Total bumpers bumped: " + bumpers_hit_chain.GetTrackedStatValue(), stat_display_style);
-  }
-
-  private void DisplayTotalCoinsCoined()
-  {
-    GUI.Label(total_coins_coined_rect.GetRect(), "Total coins coined: " + coins_hit_chain.GetTrackedStatValue(), stat_display_style);
-  }
-
-  private void DisplayTotalBallsDropped()
-  {
-    GUI.Label(total_balls_dropped_rect.GetRect(), "Total balls dropped: " + bombs_dropped_chain.GetTrackedStatValue(), stat_display_style);
+    foreach (AchievementChainDisplayer achievement_chain_displayer in achievement_chain_displayers)
+    {
+      achievement_chain_displayer.Display(stat_display_style);
+    }
   }
 }

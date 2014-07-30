@@ -7,6 +7,8 @@ public class Achievement : MonoBehaviour
   private int unlock_at = 0;
   [SerializeField]
   private Texture unlock_popup_texture;
+  [SerializeField]
+  public GUIContent thumbnail;
 
   private SavedStat is_unlocked;
   private SavedStat tracked_stat;
