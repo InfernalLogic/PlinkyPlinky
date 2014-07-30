@@ -9,6 +9,10 @@ public class AudioHandler : Singleton<AudioHandler>
   public float default_music_volume = 0.75f;
 
   [SerializeField]
+  private SavedBool mute_sfx;
+  [SerializeField]
+  private SavedBool mute_bgm;
+  [SerializeField]
 	private AudioClip[] peg_hit_sounds;
   [SerializeField]
   private AudioClip[] bumper_hit_sounds;

@@ -89,7 +89,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 	{
 		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("goal");
 		coins_left = goal_counter.Length;
-    Debug.Log("Counted: " + coins_left);
+    Debug.Log("LevelCompleteChecker.CountCoins(): " + coins_left);
 	}
 	
 	public void SetCoinsLeftToZero()
