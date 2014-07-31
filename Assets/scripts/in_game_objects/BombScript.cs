@@ -12,6 +12,8 @@ public class BombScript : MonoBehaviour
 
   private static int bomb_count = 0;
 
+  private int coins_hit_by_this_bomb = 0;
+
   void Awake()
   {
     cooldown = bomb_cooldown;
@@ -27,6 +29,23 @@ public class BombScript : MonoBehaviour
   void OnDestroy()
   {
     --bomb_count;
+  }
+
+  void OnTriggerEnter2D(Collider2D other_collider)
+  {
+    if (CollidedWithACoin(other_collider))
+      ++coins_hit_by_this_bomb;
+
+    if (coins_hit_by_this_bomb == 2)
+    {
+      GameEventPublisher.PublishMessage(GameEventPublisher.double_plink_event);
+    }
+
+  }
+
+  private bool CollidedWithACoin(Collider2D other_collider)
+  {
+    return other_collider.gameObject.tag == "goal";
   }
 
 	void OnBecameInvisible()
@@ -46,6 +65,6 @@ public class BombScript : MonoBehaviour
 
   private void PublishBombDroppedEvent()
   {
-    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().bomb_dropped_event);
+    GameEventPublisher.PublishMessage(GameEventPublisher.bomb_dropped_event);
   }
 }

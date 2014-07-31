@@ -3,8 +3,8 @@ using System.Collections;
 
 public class OptionsMenu : HUDField
 {
-
-  private bool display_reset_confirmation_window= false;
+  private bool display_reset_confirmation_window = false;
+  private bool display_hard_reset_confirmation_window = false;
   private bool hide_level_number = false;
 
   [SerializeField]
@@ -13,25 +13,35 @@ public class OptionsMenu : HUDField
   private GUIStyle label_style;
 
   [SerializeField]
-  ScalingRect reset_button_rect;
+  private ScalingRect reset_button_rect;
   [SerializeField]
-  ScalingRect mute_sound_effects_button_rect;
+  private ScalingRect mute_sound_effects_button_rect;
   [SerializeField]
-  ScalingRect mute_music_button_rect;
+  private ScalingRect mute_music_button_rect;
+  [SerializeField]
+  private ScalingRect current_level_display_rect;
   [SerializeField]
   private ScalingRect reset_confirmation_window_rect;
+  [SerializeField]
+  private ScalingRect hard_reset_button_rect;
 
   protected override void DisplayGUIElements()
   {
-    if (!display_reset_confirmation_window)
+    if (!display_reset_confirmation_window && !display_hard_reset_confirmation_window)
     {
       DisplayResetGameButton();
+      DisplayHardResetGameButton();
       DisplayMuteSoundEffectsButton();
       DisplayMuteMusicButton();
+      DisplayCurrentLevel();
     }
-    else
+    else if (display_reset_confirmation_window)
     {
       LoadResetConfirmationWindow();
+    }
+    else if (display_hard_reset_confirmation_window)
+    {
+      LoadHardResetConfirmationWindow();
     }
   }
 
@@ -44,11 +54,27 @@ public class OptionsMenu : HUDField
     }
   }
 
+  private void DisplayHardResetGameButton()
+  {
+    if (HardResetButtonIsPressed())
+    {
+      display_hard_reset_confirmation_window = true;
+      LoadResetConfirmationWindow();
+    }
+  }
+
   private void ResetGame()
   {
-    PlayerStats.Instance().ResetStats();
+    UpgradeHandler.Instance().ResetStats();
     LevelHandler.Instance().LoadRandomLevel();
     Debug.Log("Game reset");
+  }
+
+  private void HardResetGame()
+  {
+    UpgradeHandler.Instance().HardResetStats();
+    LevelHandler.Instance().LoadRandomLevel();
+    Debug.Log("Game hard reset");
   }
 
   private bool ResetButtonIsPressed()
@@ -56,14 +82,25 @@ public class OptionsMenu : HUDField
     return GUI.Button(reset_button_rect.GetRect(), "Reset game", button_style);
   }
 
-
+  private bool HardResetButtonIsPressed()
+  {
+    return GUI.Button(hard_reset_button_rect.GetRect(), "Delete all game data", button_style);
+  }
 
   private void LoadResetConfirmationWindow()
   {
     GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height), 
-              "Are you sure you want to reset? All your progress will be lost.", label_style);
+              "Are you sure you want to reset? All your progress will be lost, but you'll still have your achievements.", label_style);
 
     reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadResetConfirmationButtons, "", GUIStyle.none));
+  }
+
+  private void LoadHardResetConfirmationWindow()
+  {
+    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height),
+              "THIS WILL DELETE ALL OF YOUR PROGRESS AND ACHIEVEMENTS", label_style);
+
+    reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadHardResetConfirmationButtons, "", GUIStyle.none));
   }
 
   private void LoadResetConfirmationButtons(int window_id)
@@ -76,6 +113,19 @@ public class OptionsMenu : HUDField
     if (NoButtonIsPressed())
     {
       display_reset_confirmation_window = false;
+    }
+  }
+
+  private void LoadHardResetConfirmationButtons(int window_id)
+  {
+    if (YesButtonIsPressed())
+    {
+      HardResetGame();
+      display_hard_reset_confirmation_window = false;
+    }
+    if (NoButtonIsPressed())
+    {
+      display_hard_reset_confirmation_window = false;
     }
   }
 
@@ -97,7 +147,7 @@ public class OptionsMenu : HUDField
   {
     if (MuteSoundEffectsButtonIsPressed())
     {
-      if (AudioHandler.Instance().mute_sound_effects)
+      if (AudioHandler.Instance().mute_sfx.IsTrue())
         UnmuteSoundEffects();
       else
         MuteSoundEffects();
@@ -108,7 +158,7 @@ public class OptionsMenu : HUDField
   {
     if (MuteMusicButtonIsPressed())
     {
-      if (AudioHandler.Instance().mute_music)
+      if (AudioHandler.Instance().mute_bgm.IsTrue())
         UnmuteMusic();
       else
         MuteMusic();
@@ -117,17 +167,27 @@ public class OptionsMenu : HUDField
 
   private void MuteSoundEffects()
   {
-    AudioHandler.Instance().mute_sound_effects = true;
+    AudioHandler.Instance().MuteSFX();
   }
 
   private void UnmuteSoundEffects()
   {
-    AudioHandler.Instance().mute_sound_effects = false;
+    AudioHandler.Instance().UnmuteSFX();
+  }
+
+  private void MuteMusic()
+  {
+    AudioHandler.Instance().MuteBGM();
+  }
+
+  private void UnmuteMusic()
+  {
+    AudioHandler.Instance().UnmuteBGM();
   }
 
   private bool MuteSoundEffectsButtonIsPressed()
   {
-    if (AudioHandler.Instance().mute_sound_effects)
+    if (AudioHandler.Instance().mute_sfx.IsTrue())
       return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Unmute sounds", button_style);
     else
       return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Mute sounds", button_style);
@@ -135,19 +195,16 @@ public class OptionsMenu : HUDField
 
   private bool MuteMusicButtonIsPressed()
   {
-    if (AudioHandler.Instance().mute_music)
+    if (AudioHandler.Instance().mute_bgm.IsTrue())
       return GUI.Button(mute_music_button_rect.GetRect(), "Unmute music", button_style);
     else
       return GUI.Button(mute_music_button_rect.GetRect(), "Mute music", button_style);
   }
 
-  private void MuteMusic()
+  void DisplayCurrentLevel()
   {
-    AudioHandler.Instance().MuteMusic();
+    GUI.Label(current_level_display_rect.GetRect(),
+               "Playing stage: " + LevelHandler.Instance().GetCurrentLevel(), label_style);
   }
 
-  private void UnmuteMusic()
-  {
-    AudioHandler.Instance().UnmuteMusic();
-  }
 }

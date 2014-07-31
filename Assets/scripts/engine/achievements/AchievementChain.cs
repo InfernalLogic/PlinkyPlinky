@@ -17,12 +17,12 @@ public class AchievementChain : MonoBehaviour
     achievements = GetComponentsInChildren<Achievement>();
   }
 
-  public void Increment()
+  protected void Increment()
   {
     AddValue(1);
   }
 
-  public void AddValue(int value)
+  protected void AddValue(int value)
   {
     tracked_stat.AddValue(value);
     foreach (Achievement achieve in achievements)
@@ -39,5 +39,10 @@ public class AchievementChain : MonoBehaviour
   public int GetTrackedStatValue()
   {
     return tracked_stat.GetValue();
+  }
+
+  public virtual void HandleGameEvent(GameEvent game_event)
+  {
+    Increment();
   }
 }

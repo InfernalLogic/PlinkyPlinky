@@ -27,8 +27,7 @@ public class CoinScript : MonoBehaviour
 
   private void PublishCoinHitEvent()
   {
-    Debug.Log("coin_hit_event published");
-    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().coin_hit_event);
+    GameEventPublisher.PublishMessage(GameEventPublisher.coin_hit_event);
   }
 
   private static bool CollidedWithABomb(Collider2D other_collider)

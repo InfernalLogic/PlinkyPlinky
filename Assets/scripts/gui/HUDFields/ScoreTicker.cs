@@ -4,7 +4,16 @@ using System.Collections;
 public class ScoreTicker : HUDField
 {
   [SerializeField]
-  GUIStyle label_style;
+  private GUIStyle label_style;
+  [SerializeField]
+  private ScalingRect money_display_rect;
+
+  private TextAnchor original_alignment;
+
+  void Awake()
+  {
+    original_alignment = label_style.alignment;
+  }
 
 	protected override void DisplayGUIElements()
 	{
@@ -12,7 +21,6 @@ public class ScoreTicker : HUDField
 		
 		DisplayCurrentMoney ();
 
-    DisplayCurrentLevel();
 	}
 
 	void DisplayBackgroundBox ()
@@ -22,13 +30,12 @@ public class ScoreTicker : HUDField
 
 	void DisplayCurrentMoney ()
 	{
-    GUI.Label(new Rect(0, 10, display_rect.GetRect().width, display_rect.GetRect().height / 2), 
-		           "$: " + PlayerStats.Instance().GetCurrentMoney (), label_style);
+    GUI.Label(money_display_rect.GetRect(), "$: ", label_style);
+
+    label_style.alignment = TextAnchor.MiddleRight;
+    GUI.Label(money_display_rect.GetRect(), MoneyTracker.Instance().GetCurrentMoney().ToString(), label_style);
+    label_style.alignment = original_alignment;
 	}
 
-  void DisplayCurrentLevel()
-  {
-    GUI.Label(new Rect(0, display_rect.GetRect().height / 2 - 5, display_rect.GetRect().width, display_rect.GetRect().height / 2),
-               "Playing stage: " + LevelHandler.Instance().GetCurrentLevel(), label_style);
-  }
+
 }

@@ -22,7 +22,7 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
 
   void Start()
   {
-    GameEventPublisher.Instance().AddSubscriber(game_event_listener);
+    GameEventPublisher.AddSubscriber(game_event_listener);
     bomb_cooldown_timer = Time.time;
   }
 
@@ -30,7 +30,7 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
   {
     while (!game_event_listener.IsEmpty())
     {
-      if (game_event_listener.ReadNewestMessage() == GameEventPublisher.Instance().bomb_dropped_event)
+      if (game_event_listener.ReadNewestMessage() == GameEventPublisher.bomb_dropped_event)
       {
         ResetBombCooldownTimer();
         game_event_listener.DeleteNewestMessage();

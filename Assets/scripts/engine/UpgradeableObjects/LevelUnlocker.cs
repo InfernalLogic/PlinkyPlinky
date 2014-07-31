@@ -26,7 +26,7 @@ public class LevelUnlocker : UpgradeableObject
 
   private void SpendUpgradeCost()
   {
-    PlayerStats.Instance().SpendMoney(upgrade_cost);
+    MoneyTracker.Instance().SpendMoney(upgrade_cost);
   }
 
   private void LoadNewlyUnlockedLevel()
@@ -52,6 +52,14 @@ public class LevelUnlocker : UpgradeableObject
   public int GetNewestLevelNumber()
   {
     return value - 1;
+  }
+
+  public void UnlockAllLevels()
+  {
+    Debug.Log("Unlocking all levels!");
+
+    while (value < max_upgrades)
+      ++value;
   }
 }
 

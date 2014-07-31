@@ -6,33 +6,34 @@ public class SavedStat : MonoBehaviour
   protected int value;
 
   [SerializeField]
-  protected string stat_name = "";
+  protected string stat_key = "";
   [SerializeField]
   protected int default_value_on_reset;
   [SerializeField]
   private bool ignore_reset = false;
+  [SerializeField]
+  private bool ignore_hard_reset = false;
 
   private int loaded_value;
 
-  new void Awake()
+  protected void Awake()
   {
-    if (stat_name == "")
-      stat_name = gameObject.name;
-
+    AssignKey();
     Load();
+  }
+
+  private void AssignKey()
+  {
+    if (stat_key.Length < 1)
+      stat_key = gameObject.name;
   }
 
   public virtual void Load()
   {
     if (!IsClone())
     {
-      loaded_value = PlayerPrefs.GetInt(stat_name, default_value_on_reset);
+      loaded_value = PlayerPrefs.GetInt(stat_key, default_value_on_reset);
       value = loaded_value;
-      Debug.Log(GetKey() + " loaded: " + value);
-    }
-    else
-    {
-      Debug.LogError("Ignored clone for: " + GetKey());
     }
   }
 
@@ -58,6 +59,15 @@ public class SavedStat : MonoBehaviour
     }
   }
 
+  public virtual void HardReset()
+  {
+    if (!ignore_hard_reset)
+    {
+      value = default_value_on_reset;
+      Debug.Log(GetKey() + " hard reset");
+    }
+  }
+
   public int GetValue()
   {
     return value;
@@ -65,10 +75,13 @@ public class SavedStat : MonoBehaviour
 
   public string GetKey()
   {
-    if (stat_name != "")
-      return stat_name;
+    if (stat_key.Length > 0)
+      return stat_key;
     else
+    {
+      Debug.LogError("Stat not properly renamed: " + gameObject.name);
       return gameObject.name;
+    }
   }
 
   public void AddValue(int value)

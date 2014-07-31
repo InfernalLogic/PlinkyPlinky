@@ -13,7 +13,7 @@ public class AchievementTracker : Singleton<AchievementTracker>
     base.Awake();
 
     InitializeAchievementChainsDictionary();
-    GameEventPublisher.Instance().AddSubscriber(game_event_listener);
+    GameEventPublisher.AddSubscriber(game_event_listener);
   }
 
   private void InitializeAchievementChainsDictionary()
@@ -30,15 +30,15 @@ public class AchievementTracker : Singleton<AchievementTracker>
   {
     while (!game_event_listener.IsEmpty())
     {
-      IncrementAchievementStat(game_event_listener.ReadNewestMessage());
+      RouteGameEvent(game_event_listener.ReadNewestMessage());
       game_event_listener.DeleteNewestMessage();
     }
   }
 
-  public void IncrementAchievementStat(GameEvent relevant_event)
+  public void RouteGameEvent(GameEvent relevant_event)
   {
     if (achievement_chains.ContainsKey(relevant_event.name))
-      achievement_chains[relevant_event.name].Increment();
+      achievement_chains[relevant_event.name].HandleGameEvent(relevant_event);
   }
 
   public void EnqueueAchievementPopup(Texture popup_texture)

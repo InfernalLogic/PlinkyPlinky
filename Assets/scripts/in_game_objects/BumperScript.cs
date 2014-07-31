@@ -30,7 +30,7 @@ public class BumperScript : MonoBehaviour
         PlayBumperHitAnimation();
         ApplyBumperForceToBomb(collision);
 
-        GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().bumper_hit_event);
+        GameEventPublisher.PublishMessage(GameEventPublisher.bumper_hit_event);
 			}
 		}
 	}
@@ -71,11 +71,6 @@ public class BumperScript : MonoBehaviour
 			return false;
 		}
 	}
-
-  void OnBecameInvisible()
-  {
-    Destroy(gameObject);
-  }
 
   void OnTriggerEnter2D(Collider2D collider)
   {

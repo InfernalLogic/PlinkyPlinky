@@ -11,6 +11,8 @@ public class AchievementChainDisplayer : MonoBehaviour
   private Texture locked_achievement_mask;
   [SerializeField]
   private float buffer = 0.0f;
+  [SerializeField]
+  private int row_number = 0;
 
   private Achievement[] achievements;
 
@@ -18,8 +20,18 @@ public class AchievementChainDisplayer : MonoBehaviour
 
   void Awake()
   {
+    InitializeFirstAchievementRect();
     achievements = target_chain.GetComponentsInChildren<Achievement>();
     current_display_rect = first_achievement_position.GetRect();
+    
+  }
+
+  private void InitializeFirstAchievementRect()
+  {
+    first_achievement_position.SetX(0.0f);
+    first_achievement_position.SetY((float)row_number * 12.0f + 6.0f);
+    first_achievement_position.SetWidth(4.0f);
+    first_achievement_position.SetHeight(8.0f);
   }
 
   public void Display(GUIStyle style)

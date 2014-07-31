@@ -33,7 +33,7 @@ public class PegScript : MonoBehaviour
 
   private void PublishPegHitEvent()
   {
-    GameEventPublisher.Instance().PublishMessage(GameEventPublisher.Instance().peg_hit_event);
+    GameEventPublisher.PublishMessage(GameEventPublisher.peg_hit_event);
   }
 
   private void SpawnParticleEmitter()
