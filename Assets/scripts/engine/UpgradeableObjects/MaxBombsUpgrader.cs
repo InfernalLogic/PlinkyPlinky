@@ -17,6 +17,7 @@ public class MaxBombsUpgrader : UpgradeableObject
       MoneyTracker.Instance().SpendMoney(upgrade_cost);
       ++value;
       RecalculateUpgradeCost();
+      UpgradeEvents.Publish(UpgradeEvents.max_bombs_upgraded);
     }
   }
 }

@@ -5,21 +5,17 @@ public class MoneyTracker : Singleton<MoneyTracker>
 {
   [SerializeField]
   private SavedStat current_money;
+  [SerializeField]
+  private SavedStat current_plinkagon_points;
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
+  private Subscriber<AchievementUnlocked> achievement_listener = new Subscriber<AchievementUnlocked>();
 
   new void Awake()
   {
     base.Awake();
-    GameEventPublisher.AddSubscriber(game_event_listener);
-  }
-
-  public int GetCurrentMoney()
-  {
-    if (current_money != null)
-      return current_money.GetValue();
-    else
-      return -1;
+    GameEvents.AddSubscriber(game_event_listener);
+    AchievementUnlockedEvents.AddSubscriber(achievement_listener);
   }
 
   void Update()
@@ -37,6 +33,13 @@ public class MoneyTracker : Singleton<MoneyTracker>
         game_event_listener.DeleteNewestMessage();
       }
     }
+
+    while (!achievement_listener.IsEmpty())
+    {
+      current_plinkagon_points.AddValue(achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value);
+      achievement_listener.DeleteNewestMessage();
+      Debug.Log("current_plinkagon_points: " + current_plinkagon_points);
+    }
   }
 
   private string CurrentEventKey()
@@ -46,7 +49,7 @@ public class MoneyTracker : Singleton<MoneyTracker>
 
   private void PublishMoneyEarnedEvent()
   {
-    GameEventPublisher.PublishMessage(CurrentMoneyEarnedEvent());
+    GameEvents.Publish(CurrentMoneyEarnedEvent());
   }
 
   private MoneyEarnedGameEvent CurrentMoneyEarnedEvent()
@@ -62,5 +65,21 @@ public class MoneyTracker : Singleton<MoneyTracker>
   public void SpendMoney(int price)
   {
     current_money.AddValue(-price);
+  }
+
+  public int GetCurrentMoney()
+  {
+    if (current_money != null)
+      return current_money.GetValue();
+    else
+      return -1;
+  }
+
+  public int GetCurrentPlinkagonPoints()
+  {
+    if (current_plinkagon_points != null)
+      return current_plinkagon_points.GetValue();
+    else
+      return -1;
   }
 }

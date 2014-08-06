@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\gui\HUDFields\ScoreTicker.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\engine\Timer.cs">
     <Files>
-      <File FileName="Assets\scripts\gui\HUD.cs" Line="44" Column="23" />
-      <File FileName="Assets\scripts\gui\HUDField.cs" Line="21" Column="2" />
-      <File FileName="Assets\scripts\gui\HUDFields\ScoreTicker.cs" Line="12" Column="3" />
+      <File FileName="Assets\scripts\engine\BombIsReadyChecker.cs" Line="47" Column="18" />
+      <File FileName="Assets\scripts\in_game_objects\BumperScript.cs" Line="35" Column="47" />
+      <File FileName="Assets\scripts\engine\Timer.cs" Line="13" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

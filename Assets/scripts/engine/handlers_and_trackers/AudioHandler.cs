@@ -77,17 +77,17 @@ public class AudioHandler : Singleton<AudioHandler>
 
   private void LoadAudioClipDictionary()
   {
-    audio_clips.Add(GameEventPublisher.peg_hit_event, peg_hit_sounds);
-    audio_clips.Add(GameEventPublisher.bumper_hit_event, bumper_hit_sounds);
-    audio_clips.Add(GameEventPublisher.coin_hit_event, coin_hit_sounds);
-    audio_clips.Add(GameEventPublisher.bomb_dropped_event, bomb_dropped_sounds);
-    audio_clips.Add(GameEventPublisher.level_loaded_event, level_loaded_sounds);
-    audio_clips.Add(GameEventPublisher.level_completed_event, level_completed_sounds);
+    audio_clips.Add(GameEvents.peg_hit_event, peg_hit_sounds);
+    audio_clips.Add(GameEvents.bumper_hit_event, bumper_hit_sounds);
+    audio_clips.Add(GameEvents.coin_hit_event, coin_hit_sounds);
+    audio_clips.Add(GameEvents.bomb_dropped_event, bomb_dropped_sounds);
+    audio_clips.Add(GameEvents.level_loaded_event, level_loaded_sounds);
+    audio_clips.Add(GameEvents.level_completed_event, level_completed_sounds);
   }
 
   private void SubscribeToRelevantEvents()
   {
-    GameEventPublisher.AddSubscriber(game_event_listener);
+    GameEvents.AddSubscriber(game_event_listener);
   }
 
   private AudioClip GetRandomSoundFrom(AudioClip[] clips)

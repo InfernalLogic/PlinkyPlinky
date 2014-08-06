@@ -20,8 +20,6 @@ public class HUD : Singleton<HUD>
 
   void OnGUI()
   {
-
-
     if (ScreenDimensionsHaveBeenChanged())
     {
       ResetLastScreenWidth();

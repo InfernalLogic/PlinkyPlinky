@@ -30,10 +30,15 @@ abstract public class UpgradeableObject : SavedStat
 		return upgrade_cost;
 	}
 
-	public bool PlayerHasEnoughMoney()
+	public virtual bool PlayerHasEnoughMoney()
 	{
     return (MoneyTracker.Instance().GetCurrentMoney() >= upgrade_cost);
 	}
+
+  public virtual bool PlayerHasEnoughPlinkagonPoints()
+  {
+    return (MoneyTracker.Instance().GetCurrentPlinkagonPoints() >= upgrade_cost);
+  }
 
   public int GetUpgradesOnReset()
   {

@@ -16,7 +16,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
   
   void Awake()
   {
-    GameEventPublisher.AddSubscriber(game_event_subscriber);
+    GameEvents.AddSubscriber(game_event_subscriber);
   }
 
 	void Update()
@@ -50,14 +50,14 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
   private static void PublishLevelCompletedEvent()
   {
-    GameEventPublisher.PublishMessage(GameEventPublisher.level_completed_event);
+    GameEvents.Publish(GameEvents.level_completed_event);
   }
 
   private void HandleMessage(GameEvent message)
   {
-    if (message == GameEventPublisher.bomb_dropped_event)
+    if (message == GameEvents.bomb_dropped_event)
       ++bombs_dropped;
-    else if (message == GameEventPublisher.coin_hit_event)
+    else if (message == GameEvents.coin_hit_event)
     {
       CountCoins();
     }
@@ -86,7 +86,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
 	public void CountCoins()
 	{
-		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("goal");
+		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("coin");
 		coins_left = goal_counter.Length;
     Debug.Log("LevelCompleteChecker.CountCoins(): " + coins_left);
 	}
