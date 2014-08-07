@@ -13,7 +13,16 @@ public class Plinker : MonoBehaviour
   private float bomb_cooling_down_alpha = 0.0f;
   private Color bomb_cooling_down_color;
   private Color bomb_ready_color;
-	
+
+  private Vector3 starting_position;
+
+  private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
+
+  void Awake()
+  {
+    GameEvents.AddSubscriber(subscriber);
+  }
+
   void Start()
   {
 		movement_vector.x = movement_speed;
@@ -21,6 +30,8 @@ public class Plinker : MonoBehaviour
     new_bomb = selected_bomb;
 
     InitializeCooldownColors();
+
+    starting_position = transform.position;
   }
 
 	void Update()
@@ -31,6 +42,16 @@ public class Plinker : MonoBehaviour
       renderer.material.color = bomb_ready_color;
     else
       renderer.material.color = bomb_cooling_down_color;
+
+    if (!subscriber.IsEmpty())
+    {
+      if (subscriber.ReadNewestMessage() == GameEvents.game_reset_event)
+      {
+        transform.position = starting_position;
+      }
+      subscriber.DeleteNewestMessage();
+    }
+
 	}
 
   private void InitializeCooldownColors()

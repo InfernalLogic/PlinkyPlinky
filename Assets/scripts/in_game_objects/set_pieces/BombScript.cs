@@ -15,6 +15,13 @@ public class BombScript : MonoBehaviour
   private int coins_hit_by_this_bomb = 0;
   private int bombs_spawned = 0;
 
+  private CloneBallUpgrader clone_ball_upgrader;
+
+  void Awake()
+  {
+    clone_ball_upgrader = FindObjectOfType<CloneBallUpgrader>();
+  }
+
 	void Start () 
 	{
     if (!is_clone)
@@ -31,7 +38,7 @@ public class BombScript : MonoBehaviour
 
   void OnCollisionEnter2D(Collision2D collision)
   {
-    if (CollidedWithABumper(collision) && RolledToSpawnNewBomb())
+    if (CollidedWithABumper(collision) && RolledToSpawnNewBomb() && !is_clone)
     {
       ++bombs_spawned;
       SpawnNewBomb();
@@ -45,7 +52,7 @@ public class BombScript : MonoBehaviour
 
   private bool RolledToSpawnNewBomb()
   {
-    return bombs_spawned == 0 && !is_clone;
+    return Random.Range(0.0f, 100.0f) <= clone_ball_upgrader.GetChanceToSpawn();
   }
 
   private void SpawnNewBomb()

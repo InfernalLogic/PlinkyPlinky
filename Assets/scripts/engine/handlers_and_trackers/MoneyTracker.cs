@@ -7,6 +7,8 @@ public class MoneyTracker : Singleton<MoneyTracker>
   private SavedStat current_money;
   [SerializeField]
   private SavedStat current_plinkagon_points;
+  [SerializeField]
+  private FloatingText plinkagon_floating_text;
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
   private Subscriber<AchievementUnlocked> achievement_listener = new Subscriber<AchievementUnlocked>();
@@ -36,9 +38,13 @@ public class MoneyTracker : Singleton<MoneyTracker>
 
     while (!achievement_listener.IsEmpty())
     {
-      current_plinkagon_points.AddValue(achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value);
+      AchievementPopupInfo popup_info = achievement_listener.ReadNewestMessage().popup_info;
+      current_plinkagon_points.AddValue(popup_info.plinkagon_point_value);
+      FloatingText new_text = (FloatingText)Instantiate(plinkagon_floating_text, Vector3.zero, transform.rotation);
+      new_text.SetText("  " + popup_info.achievement_text_number + " " + popup_info.achievement_text + "\n+" + popup_info.plinkagon_point_value + " plinkagon points!");
+      PublishPlinkagonPointEarnedEvent();
       achievement_listener.DeleteNewestMessage();
-      Debug.Log("current_plinkagon_points: " + current_plinkagon_points);
+      Debug.Log("current_plinkagon_points: " + current_plinkagon_points.GetValue());
     }
   }
 
@@ -50,6 +56,18 @@ public class MoneyTracker : Singleton<MoneyTracker>
   private void PublishMoneyEarnedEvent()
   {
     GameEvents.Publish(CurrentMoneyEarnedEvent());
+
+  }
+
+  private void PublishPlinkagonPointEarnedEvent()
+  {
+    GameEvents.Publish(CurrentPlinkagonPointEvent());
+    Debug.Log("plinkagon_point_earned published: +" + achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value);
+  }
+
+  private MoneyEarnedGameEvent CurrentPlinkagonPointEvent()
+  {
+    return new MoneyEarnedGameEvent(achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value, "plinkagon_point_earned_event");
   }
 
   private MoneyEarnedGameEvent CurrentMoneyEarnedEvent()

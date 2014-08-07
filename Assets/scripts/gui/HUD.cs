@@ -3,8 +3,8 @@ using System.Collections;
 
 public class HUD : Singleton<HUD>
 {
-  public HUDField[] HUD_fields;
-
+  [SerializeField]
+  private HUDField[] HUD_fields;
   [SerializeField]
   private GUIStyle tooltip_style;
   [SerializeField]

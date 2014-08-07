@@ -11,4 +11,11 @@ public class MoneyEarnedGameEvent : GameEvent
     this.value = value;
     this.source_event = source_event;
   }
+
+  public MoneyEarnedGameEvent(int value, string name)
+    : base(name)
+  {
+    this.value = value;
+    this.source_event = null;
+  }
 }

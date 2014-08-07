@@ -5,36 +5,34 @@ public class Achievement : MonoBehaviour
 {
   [SerializeField]
   private int unlock_at = 0;
-  [SerializeField]
-  private int plinkagon_point_value = 1;
-  [SerializeField]
   public GUIContent thumbnail;
   [SerializeField]
   private AchievementPopupInfo popup_info;
 
-  private SavedStat is_unlocked;
+  private SavedBool is_unlocked;
   private SavedStat tracked_stat;
 
   void Awake()
   {
     tracked_stat = transform.parent.GetComponent<SavedStat>();
-    is_unlocked = GetComponent<SavedStat>();
+    is_unlocked = GetComponent<SavedBool>();
     popup_info.achievement_name = name;
     popup_info.achievement_text_number = AbbreviatedUnlockAt();
+    thumbnail.tooltip = "Unlocked at " + AbbreviatedUnlockAt();
   }
   
   public void CheckForCompletedAchievement()
   {
     if (tracked_stat.GetValue() >= unlock_at && !IsUnlocked())
     {
-      is_unlocked.AddValue(1);
+      is_unlocked.Set(true);
       AchievementUnlockedEvents.Publish(new AchievementUnlocked(popup_info));
     }
   }
 
   public bool IsUnlocked()
   {
-    return is_unlocked.GetValue() >= 1;
+    return is_unlocked.IsTrue();
   }
 
   private string AbbreviatedUnlockAt()

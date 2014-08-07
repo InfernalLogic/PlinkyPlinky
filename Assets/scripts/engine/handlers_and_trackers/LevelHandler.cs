@@ -81,8 +81,6 @@ public class LevelHandler : Singleton<LevelHandler>
 
 	public int PickNewLevel()
 	{
-
-
     if (!load_newest_level_next)
     {
       int new_level = (int)unlocked_levels[Random.Range(0, unlocked_levels.Count)];
