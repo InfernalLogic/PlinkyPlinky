@@ -7,8 +7,7 @@ public class MoneyTracker : Singleton<MoneyTracker>
   private SavedStat current_money;
   [SerializeField]
   private SavedStat current_plinkagon_points;
-  [SerializeField]
-  private FloatingText plinkagon_floating_text;
+
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
   private Subscriber<AchievementUnlocked> achievement_listener = new Subscriber<AchievementUnlocked>();
@@ -28,23 +27,14 @@ public class MoneyTracker : Singleton<MoneyTracker>
       {
         AddMoney(UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue());
         PublishMoneyEarnedEvent();
-        game_event_listener.DeleteNewestMessage();
       }
-      else
+      else if (CurrentEventKey() == "plinkagon_point_earned_event")
       {
-        game_event_listener.DeleteNewestMessage();
+        MoneyEarnedGameEvent money_earned_event = (MoneyEarnedGameEvent)game_event_listener.ReadNewestMessage();
+        AddPlinkagonPoints(money_earned_event.value);
       }
-    }
-
-    while (!achievement_listener.IsEmpty())
-    {
-      AchievementPopupInfo popup_info = achievement_listener.ReadNewestMessage().popup_info;
-      current_plinkagon_points.AddValue(popup_info.plinkagon_point_value);
-      FloatingText new_text = (FloatingText)Instantiate(plinkagon_floating_text, Vector3.zero, transform.rotation);
-      new_text.SetText("  " + popup_info.achievement_text_number + " " + popup_info.achievement_text + "\n+" + popup_info.plinkagon_point_value + " plinkagon points!");
-      PublishPlinkagonPointEarnedEvent();
-      achievement_listener.DeleteNewestMessage();
-      Debug.Log("current_plinkagon_points: " + current_plinkagon_points.GetValue());
+      
+      game_event_listener.DeleteNewestMessage();
     }
   }
 
@@ -62,7 +52,6 @@ public class MoneyTracker : Singleton<MoneyTracker>
   private void PublishPlinkagonPointEarnedEvent()
   {
     GameEvents.Publish(CurrentPlinkagonPointEvent());
-    Debug.Log("plinkagon_point_earned published: +" + achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value);
   }
 
   private MoneyEarnedGameEvent CurrentPlinkagonPointEvent()
@@ -78,6 +67,16 @@ public class MoneyTracker : Singleton<MoneyTracker>
   public void AddMoney(int income)
   {
     current_money.AddValue(income);
+  }
+
+  public void AddPlinkagonPoints(int income)
+  {
+    current_plinkagon_points.AddValue(income);
+  }
+
+  public void SpendPlinkagonPoints(int price)
+  {
+    current_plinkagon_points.AddValue(-price);
   }
 
   public void SpendMoney(int price)

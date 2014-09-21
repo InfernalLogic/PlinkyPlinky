@@ -8,7 +8,12 @@ public class CoinScript : MonoBehaviour
   [SerializeField]
   private ParticleSystem collision_emitter;
 
-  private ParticleSystem emitter;
+  private PlinkagonUpgrade critical_coin_upgrader;
+
+  void Awake()
+  {
+    critical_coin_upgrader = GameObject.Find("critical_coin_upgrader").GetComponent<PlinkagonUpgrade>();
+  }
 
   void OnTriggerEnter2D (Collider2D other_collider)
 	{
@@ -22,7 +27,7 @@ public class CoinScript : MonoBehaviour
   public void HitCoin()
   {
     PublishCoinHitEvent();
-    emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
+    Instantiate(collision_emitter, transform.position, transform.rotation);
     Destroy(gameObject);
   }
 
@@ -34,5 +39,10 @@ public class CoinScript : MonoBehaviour
   private static bool CollidedWithABomb(Collider2D other_collider)
   {
     return other_collider.gameObject.tag == "bomb";
+  }
+
+  private bool RolledToCriticalCoin()
+  {
+    return Random.Range(0.0f, 100.0f) <= critical_coin_upgrader.GetChanceToProc();
   }
 }

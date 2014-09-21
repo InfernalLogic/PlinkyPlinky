@@ -10,16 +10,16 @@ public class BombScript : MonoBehaviour
   [SerializeField]
   private float clone_launch_force_multiplier = 50.0f;
 
+  private PlinkagonUpgrade clone_ball_upgrader;
+
   private static int bomb_count = 0;
 
   private int coins_hit_by_this_bomb = 0;
   private int bombs_spawned = 0;
 
-  private CloneBallUpgrader clone_ball_upgrader;
-
   void Awake()
   {
-    clone_ball_upgrader = FindObjectOfType<CloneBallUpgrader>();
+    clone_ball_upgrader = GameObject.Find("clone_ball_upgrader").GetComponent<PlinkagonUpgrade>();
   }
 
 	void Start () 
@@ -52,7 +52,7 @@ public class BombScript : MonoBehaviour
 
   private bool RolledToSpawnNewBomb()
   {
-    return Random.Range(0.0f, 100.0f) <= clone_ball_upgrader.GetChanceToSpawn();
+    return Random.Range(0.0f, 100.0f) <= clone_ball_upgrader.GetChanceToProc();
   }
 
   private void SpawnNewBomb()

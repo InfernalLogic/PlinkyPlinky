@@ -12,7 +12,7 @@ public class MaxBombsUpgrader : UpgradeableObject
 
   public override void Upgrade()
   {
-    if (PlayerHasEnoughMoney() && UpgradesNotMaxedOut())
+    if (PlayerHasEnoughCurrency() && UpgradesNotMaxedOut())
     {
       MoneyTracker.Instance().SpendMoney(upgrade_cost);
       ++value;

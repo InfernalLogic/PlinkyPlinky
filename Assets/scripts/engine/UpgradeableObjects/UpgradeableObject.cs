@@ -5,6 +5,9 @@ abstract public class UpgradeableObject : SavedStat
 {
   [SerializeField]
   protected int max_upgrades = 0;
+
+  protected bool is_plinkagon_upgrade = false;
+
 	protected int upgrade_cost;
 
 	abstract public void Upgrade();
@@ -30,15 +33,13 @@ abstract public class UpgradeableObject : SavedStat
 		return upgrade_cost;
 	}
 
-	public virtual bool PlayerHasEnoughMoney()
+	public virtual bool PlayerHasEnoughCurrency()
 	{
-    return (MoneyTracker.Instance().GetCurrentMoney() >= upgrade_cost);
+    if (!is_plinkagon_upgrade)
+      return (MoneyTracker.Instance().GetCurrentMoney() >= upgrade_cost);
+    else
+      return (MoneyTracker.Instance().GetCurrentPlinkagonPoints() >= upgrade_cost);
 	}
-
-  public virtual bool PlayerHasEnoughPlinkagonPoints()
-  {
-    return (MoneyTracker.Instance().GetCurrentPlinkagonPoints() >= upgrade_cost);
-  }
 
   public int GetUpgradesOnReset()
   {

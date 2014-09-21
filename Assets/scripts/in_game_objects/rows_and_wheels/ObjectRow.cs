@@ -12,8 +12,6 @@ public class ObjectRow : MonoBehaviour
   private GameObject object_in_row;
   [SerializeField]
   private Vector3 slope = Vector3.right;
-  [SerializeField]
-  private ArrayList elements_to_skip = new ArrayList();
 
 	private GameObject new_object;
 

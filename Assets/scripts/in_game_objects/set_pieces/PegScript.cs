@@ -12,8 +12,6 @@ public class PegScript : MonoBehaviour
   [SerializeField]
   private ParticleSystem collision_emitter;
 
-  private ParticleSystem emitter;
-
 	void OnCollisionEnter2D(Collision2D collision)
 	{
     if (CollidedWithABomb(collision))
@@ -38,7 +36,7 @@ public class PegScript : MonoBehaviour
 
   private void SpawnParticleEmitter()
   {
-    emitter = Instantiate(collision_emitter, transform.position, transform.rotation) as ParticleSystem;
+    Instantiate(collision_emitter, transform.position, transform.rotation);
   }
 
   private static bool CollidedWithABomb(Collision2D collision)

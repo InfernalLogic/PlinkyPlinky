@@ -12,8 +12,9 @@ public class HUD : Singleton<HUD>
 
   private float last_screen_width;
 
-  void Awake()
+  new void Awake()
   {
+    base.Awake();
     last_screen_width = Screen.width;
     Screen.SetResolution(960, 600, false, 60);
   }

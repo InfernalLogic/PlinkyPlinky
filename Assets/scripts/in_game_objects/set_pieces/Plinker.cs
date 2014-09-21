@@ -4,7 +4,6 @@ public class Plinker : MonoBehaviour
 {
   [SerializeField]
 	private float movement_speed = 0f;
-  private GameObject new_bomb;
 	public GameObject selected_bomb;
 	
 	private Vector3 movement_vector = Vector3.zero;
@@ -26,8 +25,6 @@ public class Plinker : MonoBehaviour
   void Start()
   {
 		movement_vector.x = movement_speed;
-
-    new_bomb = selected_bomb;
 
     InitializeCooldownColors();
 

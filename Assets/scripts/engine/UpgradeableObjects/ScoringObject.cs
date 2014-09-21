@@ -26,7 +26,7 @@ abstract public class ScoringObject : UpgradeableObject
 
 	public override void Upgrade()
 	{
-		if (PlayerHasEnoughMoney())
+		if (PlayerHasEnoughCurrency())
 		{
       ++value;
 			MoneyTracker.Instance().SpendMoney(upgrade_cost);

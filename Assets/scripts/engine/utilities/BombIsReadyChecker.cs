@@ -15,8 +15,9 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
 
-  void Awake()
+  new void Awake()
   {
+    base.Awake();
     selected_bomb = FindObjectOfType<Plinker>().selected_bomb;
     selected_bomb_script = selected_bomb.GetComponent<BombScript>();
     bomb_cooldown_upgrader = FindObjectOfType<BombCooldownUpgrader>();
