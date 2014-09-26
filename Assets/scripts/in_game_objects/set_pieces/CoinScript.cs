@@ -7,33 +7,40 @@ public class CoinScript : MonoBehaviour
   private GameEvent coin_hit_event;
   [SerializeField]
   private ParticleSystem collision_emitter;
-
-  private PlinkagonUpgrade critical_coin_upgrader;
+  
+  private PlinkagonUpgrade coin_critical_upgrader;
 
   void Awake()
   {
-    critical_coin_upgrader = GameObject.Find("critical_coin_upgrader").GetComponent<PlinkagonUpgrade>();
+    coin_critical_upgrader = GameObject.Find("coin_critical_upgrader").GetComponent<PlinkagonUpgrade>();
   }
 
   void OnTriggerEnter2D (Collider2D other_collider)
 	{
     if (CollidedWithABomb(other_collider))
 		{
-      HitCoin();
       other_collider.GetComponent<BombScript>().IncrementCoinsHit();
+      HitCoin();
 		}
 	}
 
   public void HitCoin()
   {
-    PublishCoinHitEvent();
+    int multiplier = RollMultiplierProcs();
     Instantiate(collision_emitter, transform.position, transform.rotation);
+    PublishCoinHitEvent(multiplier);
+
+    if (multiplier > 1)
+    {
+      CoinMultiplierFloatingTextFactory.Instance().GenerateMultiplierPopup(multiplier, transform.position);
+    }
+
     Destroy(gameObject);
   }
 
-  private void PublishCoinHitEvent()
+  private void PublishCoinHitEvent(int multiplier)
   {
-    GameEvents.Publish(GameEvents.coin_hit_event);
+    GameEvents.Publish(new CoinHitEvent(multiplier));
   }
 
   private static bool CollidedWithABomb(Collider2D other_collider)
@@ -41,8 +48,8 @@ public class CoinScript : MonoBehaviour
     return other_collider.gameObject.tag == "bomb";
   }
 
-  private bool RolledToCriticalCoin()
+  private int RollMultiplierProcs()
   {
-    return Random.Range(0.0f, 100.0f) <= critical_coin_upgrader.GetChanceToProc();
+    return coin_critical_upgrader.RollProcs(0) + 1;
   }
 }

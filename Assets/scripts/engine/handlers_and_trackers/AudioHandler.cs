@@ -22,7 +22,7 @@ public class AudioHandler : Singleton<AudioHandler>
   private AudioClip[] level_completed_sounds;
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
-  private Dictionary<GameEvent, AudioClip[]> audio_clips = new Dictionary<GameEvent, AudioClip[]>();
+  private Dictionary<string, AudioClip[]> audio_clips = new Dictionary<string, AudioClip[]>();
 
   private GameEvent current_event = null;
 
@@ -61,7 +61,7 @@ public class AudioHandler : Singleton<AudioHandler>
 
   private bool CurrentEventIsFound()
   {
-    return audio_clips.ContainsKey(current_event);
+    return audio_clips.ContainsKey(current_event.name);
   }
 
   private bool CurrentEventHasNotBeenPlayedThisUpdate()
@@ -72,17 +72,17 @@ public class AudioHandler : Singleton<AudioHandler>
   private void PlayEventSound(GameEvent game_event)
   {
     if (mute_sfx.IsFalse())
-      AudioSource.PlayClipAtPoint(GetRandomSoundFrom(audio_clips[game_event]), Vector3.zero);
+      AudioSource.PlayClipAtPoint(GetRandomSoundFrom(audio_clips[game_event.name]), Vector3.zero);
   }
 
   private void LoadAudioClipDictionary()
   {
-    audio_clips.Add(GameEvents.peg_hit_event, peg_hit_sounds);
-    audio_clips.Add(GameEvents.bumper_hit_event, bumper_hit_sounds);
-    audio_clips.Add(GameEvents.coin_hit_event, coin_hit_sounds);
-    audio_clips.Add(GameEvents.bomb_dropped_event, bomb_dropped_sounds);
-    audio_clips.Add(GameEvents.level_loaded_event, level_loaded_sounds);
-    audio_clips.Add(GameEvents.level_completed_event, level_completed_sounds);
+    audio_clips.Add(GameEvents.peg_hit_event.name, peg_hit_sounds);
+    audio_clips.Add(GameEvents.bumper_hit_event.name, bumper_hit_sounds);
+    audio_clips.Add(GameEvents.coin_hit_event.name, coin_hit_sounds);
+    audio_clips.Add(GameEvents.bomb_dropped_event.name, bomb_dropped_sounds);
+    audio_clips.Add(GameEvents.level_loaded_event.name, level_loaded_sounds);
+    audio_clips.Add(GameEvents.level_completed_event.name, level_completed_sounds);
   }
 
   private void SubscribeToRelevantEvents()

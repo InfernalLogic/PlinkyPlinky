@@ -8,11 +8,6 @@ public class BumperUpgrader : ScoringObject
     upgrade_cost = (int)((Mathf.Pow((float)(value + 1), 1.4f) * 150));
 	}
 
-	public override int GetPointValue()
-	{
-    return point_value;
-	}
-
   public override void RecalculatePointValue()
   {
     point_value = value * 2;

@@ -8,7 +8,7 @@ abstract public class ScoringObject : UpgradeableObject
 
   protected int point_value;
 
-	abstract public int GetPointValue();
+
   abstract public void RecalculatePointValue();
 
   new void Awake()
@@ -42,5 +42,10 @@ abstract public class ScoringObject : UpgradeableObject
   public string GetRelevantEventName()
   {
     return relevant_event_name;
+  }
+
+  public virtual int GetPointValue()
+  {
+    return point_value;
   }
 }

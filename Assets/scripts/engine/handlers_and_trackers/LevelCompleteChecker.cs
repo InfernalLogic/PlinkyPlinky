@@ -14,8 +14,9 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
   private Subscriber<GameEvent> game_event_subscriber = new Subscriber<GameEvent>();
   
-  void Awake()
+  new void Awake()
   {
+    base.Awake();
     GameEvents.AddSubscriber(game_event_subscriber);
   }
 
@@ -55,9 +56,9 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
   private void HandleMessage(GameEvent message)
   {
-    if (message == GameEvents.bomb_dropped_event)
+    if (message.name == GameEvents.bomb_dropped_event.name)
       ++bombs_dropped;
-    else if (message == GameEvents.coin_hit_event)
+    else if (message.name == GameEvents.coin_hit_event.name)
     {
       CountCoins();
     }

@@ -38,7 +38,7 @@ public class BombScript : MonoBehaviour
 
   void OnCollisionEnter2D(Collision2D collision)
   {
-    if (CollidedWithABumper(collision) && RolledToSpawnNewBomb() && !is_clone)
+    if (CollidedWithABumper(collision) && clone_ball_upgrader.RollProcs(bombs_spawned) > 0 && !is_clone)
     {
       ++bombs_spawned;
       SpawnNewBomb();
@@ -48,11 +48,6 @@ public class BombScript : MonoBehaviour
   private bool CollidedWithABumper(Collision2D collision)
   {
     return collision.gameObject.tag == "bumper";
-  }
-
-  private bool RolledToSpawnNewBomb()
-  {
-    return Random.Range(0.0f, 100.0f) <= clone_ball_upgrader.GetChanceToProc();
   }
 
   private void SpawnNewBomb()

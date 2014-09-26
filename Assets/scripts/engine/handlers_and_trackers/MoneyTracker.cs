@@ -23,10 +23,20 @@ public class MoneyTracker : Singleton<MoneyTracker>
   {
     while (!game_event_listener.IsEmpty())
     {
-      if (UpgradeHandler.Instance().ContainsKey(CurrentEventKey()))
+      if (CurrentEventKey() == "coin_hit_event")
       {
-        AddMoney(UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue());
-        PublishMoneyEarnedEvent();
+        CoinHitEvent coin_event = (CoinHitEvent)game_event_listener.ReadNewestMessage();
+
+        int money_to_add = coin_event.GetMultiplier() * UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue();
+
+        AddMoney(money_to_add);
+        PublishMoneyEarnedEvent(money_to_add);
+      }
+      else if (UpgradeHandler.Instance().ContainsKey(CurrentEventKey()))
+      {
+        int money_to_add = UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue();
+        AddMoney(money_to_add);
+        PublishMoneyEarnedEvent(money_to_add);
       }
       else if (CurrentEventKey() == "plinkagon_point_earned_event")
       {
@@ -43,9 +53,9 @@ public class MoneyTracker : Singleton<MoneyTracker>
     return game_event_listener.ReadNewestMessage().name;
   }
 
-  private void PublishMoneyEarnedEvent()
+  private void PublishMoneyEarnedEvent(int money_to_add)
   {
-    GameEvents.Publish(CurrentMoneyEarnedEvent());
+    GameEvents.Publish(CurrentMoneyEarnedEvent(money_to_add));
 
   }
 
@@ -59,9 +69,9 @@ public class MoneyTracker : Singleton<MoneyTracker>
     return new MoneyEarnedGameEvent(achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value, "plinkagon_point_earned_event");
   }
 
-  private MoneyEarnedGameEvent CurrentMoneyEarnedEvent()
+  private MoneyEarnedGameEvent CurrentMoneyEarnedEvent(int money_to_add)
   {
-    return new MoneyEarnedGameEvent(UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue(), game_event_listener.ReadNewestMessage());
+    return new MoneyEarnedGameEvent(money_to_add, game_event_listener.ReadNewestMessage());
   }
 
   public void AddMoney(int income)

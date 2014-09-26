@@ -86,6 +86,7 @@
      <Compile Include="Assets\scripts\SFX\BGWallpaper.cs" />
      <Compile Include="Assets\scripts\SFX\BackgroundObject.cs" />
      <Compile Include="Assets\scripts\SFX\BackgroundObjectSpawner.cs" />
+     <Compile Include="Assets\scripts\SFX\CoinMultiplierFloatingTextFactory.cs" />
      <Compile Include="Assets\scripts\SFX\ParticleSystemInitializer.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\BombCooldownUpgrader.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\BumperUpgrader.cs" />
@@ -103,6 +104,7 @@
      <Compile Include="Assets\scripts\engine\achievements\TotalMoneyEarnedAchievementChain.cs" />
      <Compile Include="Assets\scripts\engine\game_events\Subscriber.cs" />
      <Compile Include="Assets\scripts\engine\game_events\event_classes\AchievementUnlocked.cs" />
+     <Compile Include="Assets\scripts\engine\game_events\event_classes\CoinHitEvent.cs" />
      <Compile Include="Assets\scripts\engine\game_events\event_classes\GameEvent.cs" />
      <Compile Include="Assets\scripts\engine\game_events\event_classes\MoneyEarnedGameEvent.cs" />
      <Compile Include="Assets\scripts\engine\game_events\publishers\AchievementUnlockedEvents.cs" />
@@ -125,6 +127,7 @@
      <Compile Include="Assets\scripts\engine\utilities\SavedStat.cs" />
      <Compile Include="Assets\scripts\engine\utilities\Singleton.cs" />
      <Compile Include="Assets\scripts\engine\utilities\Timer.cs" />
+     <Compile Include="Assets\scripts\engine\utilities\debug\CheatButton.cs" />
      <Compile Include="Assets\scripts\gui\FloatingText.cs" />
      <Compile Include="Assets\scripts\gui\HUD.cs" />
      <Compile Include="Assets\scripts\gui\HUDFields\HUDField.cs" />
@@ -142,9 +145,6 @@
      <Compile Include="Assets\scripts\gui\buttons\PlinkagonUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\ScoringObjectUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\UpgradeButton.cs" />
-     <Compile Include="Assets\scripts\gui\buttons\debug\AddToAchievementButton.cs" />
-     <Compile Include="Assets\scripts\gui\buttons\debug\CheatButton.cs" />
-     <Compile Include="Assets\scripts\gui\buttons\debug\RandomLevelButton.cs" />
      <Compile Include="Assets\scripts\gui\stat_displayers\AchievementChainDisplayer.cs" />
      <Compile Include="Assets\scripts\gui\stat_displayers\StatDisplayer.cs" />
      <Compile Include="Assets\scripts\gui\utilities\ScalingRect.cs" />
@@ -156,6 +156,7 @@
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\BombScript.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\BumperScript.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\CoinScript.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\set_pieces\PegHunter.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\PegScript.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\Plinker.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\projectiles\BumperProjectile.cs" />

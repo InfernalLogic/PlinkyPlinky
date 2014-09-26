@@ -3,14 +3,12 @@ using System.Collections;
 
 public class CoinUpgrader : ScoringObject 
 {
+  [SerializeField]
+  private PlinkagonUpgrade coin_critical_upgrader;
+
 	public override void RecalculateUpgradeCost()
 	{
 		upgrade_cost = (int)((Mathf.Pow((float)(value + 1), 1.3f) * 50)); 
-	}
-	
-	public override int GetPointValue()
-	{
-    return point_value;
 	}
 
   public override void RecalculatePointValue()
