@@ -8,39 +8,38 @@ public class PegHunter : MonoBehaviour
   [SerializeField]
   private float initial_bump_strength = 0.0f;
   [SerializeField]
-  private float vector_clamping_threshold = 45.0f;
+  private float vector_adjustment_factor = 0.02f;
 
   private GameObject target;
   private Vector2 vector_to_target;
 
   void Start()
   {
-    target = FindTargetPopper();
-
     SetTargetDirection();
     ApplyOrthogonalBumpForce();
   }
 
   void Update()
   {
-    DestroyIfNoTargetFound();
+    if (!target)
+      FindNewTarget(null);
 
     SetTargetDirection();
-    rigidbody2D.AddForce(vector_to_target.normalized * acceleration * (1.0f / vector_to_target.magnitude));
+    rigidbody2D.AddForce(vector_to_target.normalized * acceleration);
   }
 
-  private GameObject FindTargetPopper()
+  public void FindNewTarget(GameObject spawning_popper)
   {
-    GameObject[] poppers = GameObject.FindGameObjectsWithTag("peg");
-    return poppers[Random.Range(0, poppers.Length - 1)];
+    target = GameObject.FindWithTag("peg");
+
+    if (!target)
+      Destroy(this.gameObject);
   }
 
   private void SetTargetDirection()
   {
     vector_to_target = target.transform.position - this.transform.position;
-
-    if (Mathf.Abs(Vector2.Angle(this.rigidbody2D.velocity, vector_to_target)) < vector_clamping_threshold)
-      this.rigidbody2D.velocity = vector_to_target.normalized * this.rigidbody2D.velocity.magnitude;
+    this.rigidbody2D.velocity += (vector_to_target - this.rigidbody2D.velocity) * vector_adjustment_factor;
   }
 
   private void ApplyOrthogonalBumpForce()
@@ -54,7 +53,12 @@ public class PegHunter : MonoBehaviour
 
   private void DestroyIfNoTargetFound()
   {
-    if (!target)
-      Destroy(this);
+    if (!target || target.gameObject == null)
+      Destroy(this.gameObject);
+  }
+
+  void OnBecameInvisible()
+  {
+    Destroy(this.gameObject);
   }
 }

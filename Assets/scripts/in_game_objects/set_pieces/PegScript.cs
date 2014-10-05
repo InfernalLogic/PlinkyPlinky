@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PegScript : MonoBehaviour 
 {
-  
+  private static PlinkagonUpgrade peg_hunter_upgrade;
+
   [SerializeField]
   private GameEvent peg_hit_event;
   [SerializeField]
@@ -13,11 +14,19 @@ public class PegScript : MonoBehaviour
   [SerializeField]
   private ParticleSystem collision_emitter;
   [SerializeField]
-  private PlinkagonUpgrade peg_hunter_upgrade;
-  [SerializeField]
   private GameObject peg_hunter;
 
   private int peg_hunters_spawned = 0;
+  private Stack<PegHunter> incoming_peg_hunters = new Stack<PegHunter>();
+    
+
+  void Awake()
+  {
+    if (!peg_hunter_upgrade)
+    {
+      peg_hunter_upgrade = GameObject.FindGameObjectWithTag("peg_hunter_upgrade").GetComponent<PlinkagonUpgrade>();
+    }
+  }
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
@@ -46,9 +55,6 @@ public class PegScript : MonoBehaviour
       } 
     }
   }
-
-
-
 
   private void PublishPegHitEvent()
   {
@@ -79,12 +85,19 @@ public class PegScript : MonoBehaviour
   void SpawnNewPegHunter()
   {
     GameObject new_peg_hunter = Instantiate(peg_hunter, this.transform.position, this.transform.rotation) as GameObject;
+    new_peg_hunter.GetComponent<PegHunter>().FindNewTarget(this.gameObject);
   }
 
   private void DestroyPeg()
   {
     SpawnParticleEmitter();
     PublishPegHitEvent();
+
+    while (incoming_peg_hunters.Count > 0)
+    {
+      incoming_peg_hunters.Pop().FindNewTarget(this.gameObject);
+    }
+    
     Destroy(gameObject);
   }
 }
