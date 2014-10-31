@@ -8,7 +8,6 @@ public class MoneyTracker : Singleton<MoneyTracker>
   [SerializeField]
   private SavedStat current_plinkagon_points;
 
-
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
   private Subscriber<AchievementUnlocked> achievement_listener = new Subscriber<AchievementUnlocked>();
 
@@ -108,5 +107,19 @@ public class MoneyTracker : Singleton<MoneyTracker>
       return current_plinkagon_points.GetValue();
     else
       return -1;
+  }
+
+  public void ResetPlinkagonPoints()
+  {
+    int points_spent = 0;
+    PlinkagonUpgrade[] upgrades = FindObjectsOfType<PlinkagonUpgrade>();
+
+    foreach (PlinkagonUpgrade upgrade in upgrades)
+    {
+      points_spent += upgrade.GetValue();
+      upgrade.HardReset();
+    }
+
+    AddPlinkagonPoints(points_spent);
   }
 }

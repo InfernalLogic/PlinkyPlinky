@@ -39,8 +39,20 @@ public class HUD : Singleton<HUD>
   {
     if (GUI.tooltip != "")
     {
-      GUI.DrawTexture(new Rect (Input.mousePosition.x, (31 * Screen.height) / 32 - Input.mousePosition.y, 10 * GUI.tooltip.Length + 10, 30), tooltip_background);
-      GUI.Label(new Rect(Input.mousePosition.x, (31 * Screen.height) / 32 - Input.mousePosition.y, 10 * GUI.tooltip.Length, 20), GUI.tooltip, tooltip_style);
+      float tooltip_width = 10 * GUI.tooltip.Length + 10;
+      float x_pos = 0.0f;
+      if (Input.mousePosition.x + tooltip_width < Screen.width)
+        x_pos = Input.mousePosition.x;
+      else
+        x_pos = Input.mousePosition.x - tooltip_width;
+      
+
+      GUI.DrawTexture(new Rect(x_pos, (31 * Screen.height) / 32 - Input.mousePosition.y, tooltip_width, 30), 
+                     tooltip_background);
+
+      GUI.Label(new Rect(x_pos, (31 * Screen.height) / 32 - Input.mousePosition.y, tooltip_width, 20), 
+               GUI.tooltip, 
+               tooltip_style);
     }
   }
 

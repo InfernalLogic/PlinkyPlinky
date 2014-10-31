@@ -8,7 +8,7 @@ public class StatDisplayer : MonoBehaviour
   [SerializeField]
   private AchievementChain tracked_stat;
   [SerializeField]
-  private string lable_text;
+  private string label_text;
   [SerializeField]
   private Texture stat_display_background;
   [SerializeField]
@@ -32,7 +32,7 @@ public class StatDisplayer : MonoBehaviour
   public void Display(GUIStyle lable_display_style)
   {
     GUI.DrawTexture(display_rect.GetRect(), stat_display_background);
-    GUI.Label(display_rect.GetRect(), lable_text, lable_display_style);
+    GUI.Label(display_rect.GetRect(), label_text, lable_display_style);
 
     lable_display_style.alignment = TextAnchor.UpperRight;
     GUI.Label(display_rect.GetRect(), tracked_stat.GetTrackedStatValue().ToString(), lable_display_style);
