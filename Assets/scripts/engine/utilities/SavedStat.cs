@@ -80,7 +80,6 @@ public class SavedStat : MonoBehaviour
     else
     {
       key = gameObject.name;
-      Debug.LogError("Stat not properly renamed: " + key);
       return key;
     }
   }
