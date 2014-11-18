@@ -65,7 +65,7 @@ public class LevelHandler : Singleton<LevelHandler>
 
   private static void PublishLevelLoadedMessage()
   {
-    GameEventPublisher.PublishMessage(GameEventPublisher.level_loaded_event);
+    GameEvents.Publish(GameEvents.level_loaded_event);
   }
 
   private void ClearLevel()
@@ -75,14 +75,12 @@ public class LevelHandler : Singleton<LevelHandler>
     DestroyAllWithTag("bumper");
     DestroyAllWithTag("peg");
     DestroyAllWithTag("level");
-    DestroyAllWithTag("goal");
+    DestroyAllWithTag("coin");
     Destroy(loader);
   }
 
 	public int PickNewLevel()
 	{
-
-
     if (!load_newest_level_next)
     {
       int new_level = (int)unlocked_levels[Random.Range(0, unlocked_levels.Count)];

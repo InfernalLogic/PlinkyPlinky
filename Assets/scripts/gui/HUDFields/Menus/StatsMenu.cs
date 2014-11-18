@@ -7,16 +7,12 @@ public class StatsMenu : HUDField
   [SerializeField]
   private GUIStyle stat_display_style;
   [SerializeField]
-  private ScalingRect view_rect;
-  [SerializeField]
-  private ScalingRect scroll_view_position_rect;
-  [SerializeField]
   private ScalingRect initial_stat_display_rect;
+  [SerializeField]
+  private ScrollViewInfo scroll_view;
 
   private StatDisplayer[] stat_displayers;
   private AchievementChainDisplayer[] achievement_chain_displayers;
-
-  private Vector2 scroll_view_position = Vector2.zero;
 
   void Awake()
   {
@@ -24,9 +20,27 @@ public class StatsMenu : HUDField
     achievement_chain_displayers = GetComponentsInChildren<AchievementChainDisplayer>();
   }
 
+  void Start()
+  {
+    float view_height = 0.0f;
+
+    foreach (StatDisplayer stat_displayer in stat_displayers)
+    {
+      view_height += stat_displayer.GetHeight();
+    }
+
+    foreach (AchievementChainDisplayer achievement_chain_displayer in achievement_chain_displayers)
+    {
+      view_height += achievement_chain_displayer.GetHeight();
+    }
+
+    scroll_view.SetViewHeight(view_height);
+  }
+
   protected override void DisplayGUIElements()
   {
-    scroll_view_position = GUI.BeginScrollView(scroll_view_position_rect.GetRect(), scroll_view_position, view_rect.GetRect());
+    scroll_view.Begin();
+
       foreach (StatDisplayer stat_displayer in stat_displayers)
       {
         stat_displayer.Display(stat_display_style);
@@ -37,6 +51,6 @@ public class StatsMenu : HUDField
         achievement_chain_displayer.Display(stat_display_style);
       }
 
-    GUI.EndScrollView();
+    scroll_view.End();
   }
 }

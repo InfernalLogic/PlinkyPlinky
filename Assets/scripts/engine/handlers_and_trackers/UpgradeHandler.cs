@@ -54,6 +54,7 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
     }
 
     RebuildStats();
+    GameEvents.Publish(GameEvents.game_reset_event);
   }
 
   private static void RebuildStats()

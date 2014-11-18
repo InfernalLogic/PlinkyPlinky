@@ -12,7 +12,7 @@ public class UpgradeButton : Button
   {
     if (target_upgrade.UpgradesNotMaxedOut())
     {
-      if (target_upgrade.PlayerHasEnoughMoney())
+      if (target_upgrade.PlayerHasEnoughCurrency())
       {
         if (ButtonIsPressed())
         {
@@ -50,7 +50,7 @@ public class UpgradeButton : Button
 
   private bool PlayerHasEnoughMoneyToUpgrade()
   {
-    return target_upgrade.PlayerHasEnoughMoney();
+    return target_upgrade.PlayerHasEnoughCurrency();
   }
 
   private void DisplayMaxUpgradesReached()

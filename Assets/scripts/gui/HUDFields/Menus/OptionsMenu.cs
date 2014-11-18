@@ -90,7 +90,7 @@ public class OptionsMenu : HUDField
   private void LoadResetConfirmationWindow()
   {
     GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height), 
-              "Are you sure you want to reset? All your progress will be lost, but you'll still have your achievements.", label_style);
+              "Restart the game from the beginning? You'll still have your plinkagon points.", label_style);
 
     reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadResetConfirmationButtons, "", GUIStyle.none));
   }

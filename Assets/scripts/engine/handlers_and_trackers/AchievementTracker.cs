@@ -13,7 +13,7 @@ public class AchievementTracker : Singleton<AchievementTracker>
     base.Awake();
 
     InitializeAchievementChainsDictionary();
-    GameEventPublisher.AddSubscriber(game_event_listener);
+    GameEvents.AddSubscriber(game_event_listener);
   }
 
   private void InitializeAchievementChainsDictionary()
@@ -39,11 +39,6 @@ public class AchievementTracker : Singleton<AchievementTracker>
   {
     if (achievement_chains.ContainsKey(relevant_event.name))
       achievement_chains[relevant_event.name].HandleGameEvent(relevant_event);
-  }
-
-  public void EnqueueAchievementPopup(Texture popup_texture)
-  {
-    FindObjectOfType<AchievementUnlockedPopups>().EnqueueAchievementPopup(popup_texture);
   }
 
   public AchievementChain FindAchievementChainFor(GameEvent game_event)

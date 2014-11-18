@@ -45,4 +45,9 @@ public class AchievementChain : MonoBehaviour
   {
     Increment();
   }
+
+  public virtual void Cheat(int amount)
+  {
+    AddValue(amount);
+  }
 }
