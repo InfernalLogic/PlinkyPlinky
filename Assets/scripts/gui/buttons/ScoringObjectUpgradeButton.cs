@@ -3,11 +3,11 @@ using System.Collections;
 
 public class ScoringObjectUpgradeButton : UpgradeButton 
 {
-  private ScoringObject target_scoring_object;
+  private ScoringObjectUpgrade target_scoring_object;
 
   void Start()
   {
-    target_scoring_object = (ScoringObject)target_upgrade;
+    target_scoring_object = (ScoringObjectUpgrade)target_upgrade;
   }
 
   protected override void DisplayTextLabel()

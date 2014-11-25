@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CoinUpgrader : ScoringObject 
+public class CoinUpgrader : ScoringObjectUpgrade 
 {
   [SerializeField]
   private PlinkagonUpgrade coin_critical_upgrader;

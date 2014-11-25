@@ -94,6 +94,7 @@
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\LevelUnlocker.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\MaxBombsUpgrader.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\PegUpgrader.cs" />
+     <Compile Include="Assets\scripts\engine\UpgradeableObjects\PlinkagonPointBuyer.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\PlinkagonUpgrade.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\ScoringObject.cs" />
      <Compile Include="Assets\scripts\engine\UpgradeableObjects\UpgradeableObject.cs" />
@@ -141,6 +142,7 @@
      <Compile Include="Assets\scripts\gui\UserInput.cs" />
      <Compile Include="Assets\scripts\gui\buttons\BombCooldownUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\Button.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\BuyPlinkagonPointButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\MaxBombsUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\PlinkagonUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\ResetPlinkagonPointsButton.cs" />

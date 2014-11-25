@@ -35,12 +35,7 @@ public class PlinkagonUpgrade : UpgradeableObject
   public int RollProcs(int procs)
   {
     while (ProcRolled(procs))
-    {
       ++procs;
-      Debug.Log(name + " rolled: " + procs);
-    }
-
-    Debug.Log(name + " rolled: " + procs);
 
     return procs;
   }

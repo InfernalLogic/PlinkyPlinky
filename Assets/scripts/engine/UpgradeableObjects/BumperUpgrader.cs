@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BumperUpgrader : ScoringObject 
+public class BumperUpgrader : ScoringObjectUpgrade 
 {
 	public override void RecalculateUpgradeCost()
 	{

@@ -55,4 +55,9 @@ abstract public class UpgradeableObject : SavedStat
   {
     return value < (max_upgrades) || max_upgrades == 0;
   }
+
+  public bool UpgradesMaxedOut()
+  {
+    return value >= (max_upgrades) || max_upgrades == 0;
+  }
 }

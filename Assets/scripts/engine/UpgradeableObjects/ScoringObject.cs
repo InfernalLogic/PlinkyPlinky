@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-abstract public class ScoringObject : UpgradeableObject 
+abstract public class ScoringObjectUpgrade : UpgradeableObject 
 {
   [SerializeField]
   private string relevant_event_name;

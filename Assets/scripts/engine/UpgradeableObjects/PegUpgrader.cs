@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PegUpgrader : ScoringObject 
+public class PegUpgrader : ScoringObjectUpgrade 
 {
 	public override void RecalculateUpgradeCost()
 	{

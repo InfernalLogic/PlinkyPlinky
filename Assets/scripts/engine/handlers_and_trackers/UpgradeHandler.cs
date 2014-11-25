@@ -7,7 +7,7 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
   [SerializeField]
   private bool hard_reset_on_load_enabled = false;
 
-  private IDictionary<string, ScoringObject> scoring_objects = new Dictionary<string, ScoringObject>();
+  private IDictionary<string, ScoringObjectUpgrade> scoring_objects = new Dictionary<string, ScoringObjectUpgrade>();
 
   new void Awake()
   {
@@ -24,9 +24,9 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
 
   private void InitializeScoringObjectsDictionary()
   {
-    ScoringObject[] scoring_objects_in_children = GetComponentsInChildren<ScoringObject>();
+    ScoringObjectUpgrade[] scoring_objects_in_children = GetComponentsInChildren<ScoringObjectUpgrade>();
 
-    foreach (ScoringObject scoring_object in scoring_objects_in_children)
+    foreach (ScoringObjectUpgrade scoring_object in scoring_objects_in_children)
     {
       scoring_objects.Add(scoring_object.GetRelevantEventName(), scoring_object);
     }
@@ -67,9 +67,9 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
 
   private static void RecalculateScoringObjectPointValues()
   {
-    ScoringObject[] scoring_objects = Resources.FindObjectsOfTypeAll<ScoringObject>();
+    ScoringObjectUpgrade[] scoring_objects = Resources.FindObjectsOfTypeAll<ScoringObjectUpgrade>();
 
-    foreach (ScoringObject scoring_object in scoring_objects)
+    foreach (ScoringObjectUpgrade scoring_object in scoring_objects)
     {
       scoring_object.RecalculatePointValue();
     }
@@ -85,7 +85,7 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
     }
   }
 
-  public ScoringObject FindScoringObjectByKey(string key)
+  public ScoringObjectUpgrade FindScoringObjectByKey(string key)
   {
     if (scoring_objects.ContainsKey(key))
       return scoring_objects[key];
