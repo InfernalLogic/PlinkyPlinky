@@ -18,6 +18,7 @@ public class BuyPlinkagonPointButton : UpgradeButton
       {
         if (ButtonIsPressed())
         {
+          MoneyTracker.Instance().SpendMoney(target_upgrade.GetUpgradeCost());
           target_upgrade.Upgrade();
         }
         DisplayTextLabel();
