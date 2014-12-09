@@ -34,14 +34,16 @@ public class PlinkagonUpgrade : UpgradeableObject
 
   public int RollProcs(int procs)
   {
-    while (ProcRolled(procs))
-      ++procs;
+    int new_procs = 0;
 
-    return procs;
+    while (ProcRolled(procs + new_procs))
+      ++new_procs;
+
+    return new_procs;
   }
 
   private bool ProcRolled(int procs)
   {
-    return Random.Range(0.0f, 100.0f) <= GetChanceToProc() - ((float)(procs) * 100.0);
+    return Random.Range(0.0f, 100.0f) < GetChanceToProc() - ((float)(procs) * 100.0);
   }
 }
