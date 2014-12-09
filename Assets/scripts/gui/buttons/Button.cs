@@ -18,8 +18,30 @@ abstract public class Button : MonoBehaviour
 
   public abstract void Display();
 
+  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
+
+  protected virtual void Awake()
+  {
+    ResizeText();
+    HUDEvents.AddSubscriber(rescale_events);
+  }
+
+  void Update()
+  {
+    if (!rescale_events.IsEmpty())
+    {
+      ResizeText();
+      rescale_events.DeleteNewestMessage();
+    }
+  }
+
   protected void DisplayDisabledMask()
   {
     GUI.DrawTexture(display_rect.GetRect(), disabled_mask_texture);
+  }
+
+  public void ResizeText()
+  {
+    label_style.fontSize = (int)Screen.height / 35;
   }
 }

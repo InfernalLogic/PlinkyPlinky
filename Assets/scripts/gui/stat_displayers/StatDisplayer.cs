@@ -15,6 +15,7 @@ public class StatDisplayer : MonoBehaviour
   private int row_number = 0;
 
   private TextAnchor original_alignment;
+  
 
   void Awake()
   {
@@ -29,14 +30,14 @@ public class StatDisplayer : MonoBehaviour
     display_rect.SetHeight(4.0f);
   }
 
-  public void Display(GUIStyle lable_display_style)
+  public void Display(GUIStyle label_display_style)
   {
     GUI.DrawTexture(display_rect.GetRect(), stat_display_background);
-    GUI.Label(display_rect.GetRect(), label_text, lable_display_style);
+    GUI.Label(display_rect.GetRect(), label_text, label_display_style);
 
-    lable_display_style.alignment = TextAnchor.UpperRight;
-    GUI.Label(display_rect.GetRect(), tracked_stat.GetTrackedStatValue().ToString(), lable_display_style);
-    lable_display_style.alignment = original_alignment;
+    label_display_style.alignment = TextAnchor.UpperRight;
+    GUI.Label(display_rect.GetRect(), tracked_stat.GetTrackedStatValue().ToString(), label_display_style);
+    label_display_style.alignment = original_alignment;
   }
 
   public float GetHeight()

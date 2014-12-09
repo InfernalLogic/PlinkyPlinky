@@ -7,13 +7,15 @@ public class PlinkagonPointBuyer : UpgradeableObject
   {
     if (PlayerHasEnoughCurrency())
     {
+      MoneyTracker.Instance().SpendMoney(upgrade_cost);
       ++value;
       GameEvents.Publish(new MoneyEarnedGameEvent(1, "plinkagon_point_earned_event"));
       RecalculateUpgradeCost();
     }
     else
     {
-      Debug.Log("Not enough plinkagon points!");
+      Debug.Log(this.name + ": Not enough money!");
+      Debug.Log("costs: " + this.upgrade_cost);
     }
   }
 

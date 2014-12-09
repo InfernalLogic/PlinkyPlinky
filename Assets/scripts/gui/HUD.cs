@@ -23,14 +23,14 @@ public class HUD : Singleton<HUD>
   {
     if (ScreenDimensionsHaveBeenChanged())
     {
+      Debug.Log("rescaling");
+      HUDEvents.Publish(new RescaleHUDEvent(Screen.height));
       ResetLastScreenWidth();
-      ResizeAllScalingRects();
     }
+      
 
     foreach (HUDField field in HUD_fields)
-    {
       field.Display();
-    }
 
     DisplayToolTips();
   }
@@ -61,9 +61,7 @@ public class HUD : Singleton<HUD>
     ScalingRect[] scaling_rects = GetAllScalingRects();
 
     foreach (ScalingRect rect in scaling_rects)
-    {
       rect.RecalculateRect();
-    }
   }
 
   private bool ScreenDimensionsHaveBeenChanged()
@@ -79,5 +77,10 @@ public class HUD : Singleton<HUD>
   private ScalingRect[] GetAllScalingRects()
   {
     return Object.FindObjectsOfType<ScalingRect>();
+  }
+
+  private Button[] GetAllButtons()
+  {
+    return Object.FindObjectsOfType<Button>();
   }
 }

@@ -13,11 +13,13 @@ public class StatsMenu : HUDField
 
   private StatDisplayer[] stat_displayers;
   private AchievementChainDisplayer[] achievement_chain_displayers;
+  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
 
   void Awake()
   {
     stat_displayers = GetComponentsInChildren<StatDisplayer>();
     achievement_chain_displayers = GetComponentsInChildren<AchievementChainDisplayer>();
+    HUDEvents.AddSubscriber(rescale_events);
   }
 
   void Start()
@@ -37,6 +39,15 @@ public class StatsMenu : HUDField
     scroll_view.SetViewHeight(view_height);
   }
 
+  void Update()
+  {
+    if (!rescale_events.IsEmpty())
+    {
+      ResizeText();
+      rescale_events.DeleteNewestMessage();
+    }
+  }
+
   protected override void DisplayGUIElements()
   {
     scroll_view.Begin();
@@ -52,5 +63,10 @@ public class StatsMenu : HUDField
       }
 
     scroll_view.End();
+  }
+
+  public void ResizeText()
+  {
+    stat_display_style.fontSize = (int)Screen.height / 35;
   }
 }
