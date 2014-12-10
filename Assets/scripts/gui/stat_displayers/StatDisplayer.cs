@@ -44,4 +44,9 @@ public class StatDisplayer : MonoBehaviour
   {
     return display_rect.GetDimensions().height;
   }
+
+  public float GetY()
+  {
+    return display_rect.GetDimensions().y;
+  }
 }

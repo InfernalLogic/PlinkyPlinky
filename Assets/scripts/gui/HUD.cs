@@ -23,12 +23,10 @@ public class HUD : Singleton<HUD>
   {
     if (ScreenDimensionsHaveBeenChanged())
     {
-      Debug.Log("rescaling");
       HUDEvents.Publish(new RescaleHUDEvent(Screen.height));
       ResetLastScreenWidth();
     }
       
-
     foreach (HUDField field in HUD_fields)
       field.Display();
 

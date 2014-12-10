@@ -37,6 +37,7 @@ public class StatsMenu : HUDField
     }
 
     scroll_view.SetViewHeight(view_height);
+    ResizeAchievements();
   }
 
   void Update()
@@ -44,6 +45,7 @@ public class StatsMenu : HUDField
     if (!rescale_events.IsEmpty())
     {
       ResizeText();
+      ResizeAchievements();
       rescale_events.DeleteNewestMessage();
     }
   }
@@ -68,5 +70,13 @@ public class StatsMenu : HUDField
   public void ResizeText()
   {
     stat_display_style.fontSize = (int)Screen.height / 35;
+  }
+
+  public void ResizeAchievements()
+  {
+    foreach (AchievementChainDisplayer achievement_chain_displayer in achievement_chain_displayers)
+    {
+      achievement_chain_displayer.Resize();
+    }
   }
 }

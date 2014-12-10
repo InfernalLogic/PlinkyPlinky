@@ -6,9 +6,10 @@ public class BombCooldownUpgradeButton : UpgradeButton
   [SerializeField]
   private BombCooldownTimer bomb_cooldown_timer;
 
-  void Awake()
+  protected virtual void Awake()
   {
     bomb_cooldown_timer = FindObjectOfType<BombCooldownTimer>();
+    base.Awake();
   }
 
   protected override void DisplayTextLabel()

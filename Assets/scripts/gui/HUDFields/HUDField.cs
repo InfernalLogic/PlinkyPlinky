@@ -17,6 +17,4 @@ public abstract class HUDField : MonoBehaviour
     DisplayGUIElements();
     GUI.EndGroup();
   }
-
-
 }

@@ -11,6 +11,23 @@ public class MenuSelector : HUDField
   [SerializeField]
   private ScalingRect selection_grid_rect;
 
+  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
+
+  protected virtual void Awake()
+  {
+    ResizeText();
+    HUDEvents.AddSubscriber(rescale_events);
+  }
+
+  void Update()
+  {
+    if (!rescale_events.IsEmpty())
+    {
+      ResizeText();
+      rescale_events.DeleteNewestMessage();
+    }
+  }
+
   protected override void DisplayGUIElements()
   {
     LoadMenuSelectionGrid();
@@ -26,5 +43,10 @@ public class MenuSelector : HUDField
   public int GetSelectedMenu()
   {
     return selected_menu;
+  }
+
+  public void ResizeText()
+  {
+    button_style.fontSize = (int)Screen.height / 30;
   }
 }
