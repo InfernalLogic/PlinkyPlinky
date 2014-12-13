@@ -30,6 +30,7 @@ public class OptionsMenu : HUDField
   void Awake()
   {
     HUDEvents.AddSubscriber(rescale_events);
+    ResizeText();
   }
 
   void Update()

@@ -20,6 +20,8 @@ public class StatsMenu : HUDField
     stat_displayers = GetComponentsInChildren<StatDisplayer>();
     achievement_chain_displayers = GetComponentsInChildren<AchievementChainDisplayer>();
     HUDEvents.AddSubscriber(rescale_events);
+    ResizeText();
+    ResizeAchievements();
   }
 
   void Start()

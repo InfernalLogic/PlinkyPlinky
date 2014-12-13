@@ -27,7 +27,7 @@ public class AchievementChainDisplayer : MonoBehaviour
   private void InitializeFirstAchievementRect()
   {
     first_achievement_position.SetX(0.0f);
-    first_achievement_position.SetY((float)row_number * Screen.height / 40.0f + Screen.height / 80.0f);
+    first_achievement_position.SetY((float)row_number * Screen.height / 50.0f + Screen.height / 120.0f);
     first_achievement_position.SetWidth(4.0f);
     first_achievement_position.SetHeight(8.0f);
     first_achievement_position.RecalculateRect();
