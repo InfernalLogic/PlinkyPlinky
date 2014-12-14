@@ -11,6 +11,16 @@ public class MenuSelector : HUDField
   [SerializeField]
   private ScalingRect selection_grid_rect;
 
+  protected virtual void Awake()
+  {
+    ResizeText();
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += ResizeText;
+  }
+
   protected override void DisplayGUIElements()
   {
     LoadMenuSelectionGrid();
@@ -26,5 +36,10 @@ public class MenuSelector : HUDField
   public int GetSelectedMenu()
   {
     return selected_menu;
+  }
+
+  public void ResizeText()
+  {
+    button_style.fontSize = (int)Screen.height / 30;
   }
 }

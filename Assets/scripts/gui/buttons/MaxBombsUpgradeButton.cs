@@ -5,9 +5,10 @@ public class MaxBombsUpgradeButton : UpgradeButton
 {
   private MaxBombsUpgrader max_bombs_upgrader;
 
-  void Awake()
+  protected virtual void Awake()
   {
     max_bombs_upgrader = FindObjectOfType<MaxBombsUpgrader>();
+    base.Awake();
   }
 
   protected override void DisplayTextLabel()

@@ -5,9 +5,10 @@ public class PlinkagonUpgradeButton : UpgradeButton
 {
   private PlinkagonUpgrade plinkagon_upgrade;
 
-  void Awake()
+  protected override void Awake()
   {
     plinkagon_upgrade = target_upgrade as PlinkagonUpgrade;
+    base.Awake();
   }
 
   protected override void DisplayTextLabel()

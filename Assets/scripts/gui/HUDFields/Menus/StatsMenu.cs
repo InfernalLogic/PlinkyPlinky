@@ -18,6 +18,14 @@ public class StatsMenu : HUDField
   {
     stat_displayers = GetComponentsInChildren<StatDisplayer>();
     achievement_chain_displayers = GetComponentsInChildren<AchievementChainDisplayer>();
+    ResizeText();
+    ResizeAchievements();
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += ResizeText;
+    HUDEvents.OnScreenResize += ResizeAchievements;
   }
 
   void Start()
@@ -35,6 +43,7 @@ public class StatsMenu : HUDField
     }
 
     scroll_view.SetViewHeight(view_height);
+    ResizeAchievements();
   }
 
   protected override void DisplayGUIElements()
@@ -52,5 +61,18 @@ public class StatsMenu : HUDField
       }
 
     scroll_view.End();
+  }
+
+  public void ResizeText()
+  {
+    stat_display_style.fontSize = (int)Screen.height / 35;
+  }
+
+  public void ResizeAchievements()
+  {
+    foreach (AchievementChainDisplayer achievement_chain_displayer in achievement_chain_displayers)
+    {
+      achievement_chain_displayer.Resize();
+    }
   }
 }

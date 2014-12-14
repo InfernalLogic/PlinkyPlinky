@@ -1,0 +1,50 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch hud_scaling
+# Your branch is up-to-date with 'origin/hud_scaling'.
+#
+# Changes to be committed:
+#	modified:   Assembly-CSharp-vs.csproj
+#	modified:   Assembly-CSharp.csproj
+#	modified:   Assets/Scenes/_tester.unity
+#	modified:   Assets/scripts/engine/UpgradeableObjects/PlinkagonPointBuyer.cs
+#	modified:   Assets/scripts/engine/achievements/AchievementFloatingTextFactory.cs
+#	modified:   Assets/scripts/engine/handlers_and_trackers/MoneyTracker.cs
+#	modified:   Assets/scripts/gui/HUD.cs
+#	modified:   Assets/scripts/gui/HUDFields/Menus/StatsMenu.cs
+#	modified:   Assets/scripts/gui/buttons/Button.cs
+#	modified:   Assets/scripts/gui/buttons/BuyPlinkagonPointButton.cs
+#	modified:   Assets/scripts/gui/buttons/PlinkagonUpgradeButton.cs
+#	modified:   Assets/scripts/gui/buttons/ResetPlinkagonPointsButton.cs
+#	modified:   Assets/scripts/gui/stat_displayers/StatDisplayer.cs
+#	modified:   Assets/scripts/gui/utilities/ScalingRect.cs
+#	modified:   PlinkyPlinky-csharp.sln
+#	modified:   PlinkyPlinky.sln
+#	modified:   library/InspectorExpandedItems.asset
+#	modified:   library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+#	modified:   library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb
+#	modified:   library/ScriptAssemblies/Assembly-CSharp.dll
+#	modified:   library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+#	modified:   library/assetDatabase3
+#	modified:   library/guidmapper
+#	modified:   library/metadata/20/20f9a2cb4602af1409da8d0ca7e304ff
+#	modified:   library/metadata/22/22840c0a0769c6d449908832204d0727
+#	modified:   library/metadata/30/30d39f5ad7ad64b4c8abf1773970b6c9
+#	modified:   library/metadata/31/31710f47038e1f3408d4bba2c9e878d5
+#	modified:   library/metadata/32/32d16de2973e8e44a910518360b541c2
+#	modified:   library/metadata/32/32d660fb320208248976672daac3133f
+#	modified:   library/metadata/56/568b327aef4e7a4488bf6901b10a018d
+#	modified:   library/metadata/6b/6b1e1403d15e41b4588c1938070d79c6
+#	modified:   library/metadata/9c/9c7c419a13a987e4db39b65b49a0c6d9
+#	modified:   library/metadata/a1/a109c5342f9432548b69afad790ed4d0
+#	modified:   library/metadata/f0/f04a48127468a4a409786bef922cd9a4
+#
+# Untracked files:
+#	Assets/scripts/engine/game_events/event_classes/RescaleHUDEvent.cs
+#	Assets/scripts/engine/game_events/publishers/HUDEvents.cs
+#	Temp/
+#	library/metadata/0f/0ff32763a461b7845b4db63fed1ed3c6
+#	library/metadata/42/428f432c34ae58a41981eb539545a092
+#
+

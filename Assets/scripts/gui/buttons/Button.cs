@@ -18,8 +18,23 @@ abstract public class Button : MonoBehaviour
 
   public abstract void Display();
 
+  protected virtual void Awake()
+  {
+    ResizeText();
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += this.ResizeText;
+  }
+
   protected void DisplayDisabledMask()
   {
     GUI.DrawTexture(display_rect.GetRect(), disabled_mask_texture);
+  }
+
+  public void ResizeText()
+  {
+    label_style.fontSize = (int)Screen.height / 35;
   }
 }

@@ -15,6 +15,11 @@ public class ScalingRect : MonoBehaviour
     RecalculateRect();
   }
 
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += RecalculateRect;
+  }
+
   public void RecalculateRect()
   {
     scaled_rect.width = CalculateWidth();

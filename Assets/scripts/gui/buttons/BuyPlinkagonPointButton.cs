@@ -3,7 +3,17 @@ using System.Collections;
 
 public class BuyPlinkagonPointButton : UpgradeButton 
 {
+  [SerializeField]
+  private string disabled_text;
+  private string enabled_text;
+
   LevelUnlocker level_unlocker;
+
+  protected override void Awake()
+  {
+    enabled_text = button_text;
+    base.Awake();
+  }
 
   void Start()
   {
@@ -14,13 +24,12 @@ public class BuyPlinkagonPointButton : UpgradeButton
   {
     if (level_unlocker.UpgradesMaxedOut())
     {
+      button_text = enabled_text;
       if (target_upgrade.PlayerHasEnoughCurrency())
       {
         if (ButtonIsPressed())
-        {
-          MoneyTracker.Instance().SpendMoney(target_upgrade.GetUpgradeCost());
           target_upgrade.Upgrade();
-        }
+
         DisplayTextLabel();
       }
       else
@@ -30,6 +39,7 @@ public class BuyPlinkagonPointButton : UpgradeButton
     }
     else
     {
+      button_text = disabled_text;
       DisplayDisabledButtonWithMask();
     }
   }

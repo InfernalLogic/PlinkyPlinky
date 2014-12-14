@@ -17,6 +17,17 @@ public class PlinkagonMenu : HUDField
   private Button[] upgrade_buttons;
   private TextAnchor original_alignment;
 
+  void Awake()
+  {
+    original_alignment = label_style.alignment;
+    ResizeText();
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += ResizeText;
+  }
+
   void Start()
   {
     upgrade_buttons = GetComponentsInChildren<Button>();
@@ -43,5 +54,10 @@ public class PlinkagonMenu : HUDField
     label_style.alignment = TextAnchor.MiddleRight;
     GUI.Label(plinkagon_point_display_rect.GetRect(), MoneyTracker.Instance().GetCurrentPlinkagonPoints().ToString(), label_style);
     label_style.alignment = original_alignment;
+  }
+
+  private void ResizeText()
+  {
+    label_style.fontSize = Screen.height / 30;
   }
 }

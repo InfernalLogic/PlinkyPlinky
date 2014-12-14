@@ -22,8 +22,6 @@ public class AchievementChainDisplayer : MonoBehaviour
   {
     InitializeFirstAchievementRect();
     achievements = target_chain.GetComponentsInChildren<Achievement>();
-    current_display_rect = first_achievement_position.GetRect();
-    
   }
 
   private void InitializeFirstAchievementRect()
@@ -32,6 +30,7 @@ public class AchievementChainDisplayer : MonoBehaviour
     first_achievement_position.SetY((float)row_number * 12.0f + 6.0f);
     first_achievement_position.SetWidth(4.0f);
     first_achievement_position.SetHeight(8.0f);
+    first_achievement_position.RecalculateRect();
   }
 
   public void Display(GUIStyle style)
@@ -50,8 +49,15 @@ public class AchievementChainDisplayer : MonoBehaviour
     current_display_rect.x = first_achievement_position.GetRect().x + ((first_achievement_position.GetRect().width + buffer)* index);
     return current_display_rect;
   }
+
   public float GetHeight()
   {
     return first_achievement_position.GetDimensions().height;
+  }
+
+  public void Resize()
+  {
+    InitializeFirstAchievementRect();
+    current_display_rect = first_achievement_position.GetRect();
   }
 }

@@ -25,6 +25,21 @@ public class OptionsMenu : HUDField
   [SerializeField]
   private ScalingRect hard_reset_button_rect;
 
+  void Awake()
+  {
+    ResizeText();
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += ResizeText;
+  }
+
+  private void ResizeText()
+  {
+    button_style.fontSize = Screen.height / 35;
+  }
+
   protected override void DisplayGUIElements()
   {
     if (!display_reset_confirmation_window && !display_hard_reset_confirmation_window)

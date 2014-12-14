@@ -40,7 +40,6 @@ public class AchievementFloatingTextFactory : Singleton<AchievementFloatingTextF
   private void PublishPlinkagonPointEarnedEvent()
   {
     GameEvents.Publish(CurrentPlinkagonPointEvent());
-    Debug.Log("plinkagon_point_earned published: +" + achievement_listener.ReadNewestMessage().popup_info.plinkagon_point_value);
   }
 
   private MoneyEarnedGameEvent CurrentPlinkagonPointEvent()
