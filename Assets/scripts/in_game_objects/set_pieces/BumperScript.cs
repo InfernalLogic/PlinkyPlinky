@@ -7,8 +7,6 @@ public class BumperScript : MonoBehaviour
   [SerializeField]
 	private float bump_strength = 0.0f;
   [SerializeField]
-  private float bump_cooldown = 0.0f;
-  [SerializeField]
   private Timer cooldown_timer;
   [SerializeField]
 	private Animator bumper_animator;

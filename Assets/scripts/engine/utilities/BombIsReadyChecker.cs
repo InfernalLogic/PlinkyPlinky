@@ -7,20 +7,13 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
   [SerializeField]
   private Timer bomb_cooldown;
 
-  private GameObject selected_bomb;
-  private BombScript selected_bomb_script;
-
   private MaxBombsUpgrader max_bombs_upgrader;
-  private BombCooldownUpgrader bomb_cooldown_upgrader;
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
 
   new void Awake()
   {
     base.Awake();
-    selected_bomb = FindObjectOfType<Plinker>().selected_bomb;
-    selected_bomb_script = selected_bomb.GetComponent<BombScript>();
-    bomb_cooldown_upgrader = FindObjectOfType<BombCooldownUpgrader>();
     max_bombs_upgrader = FindObjectOfType<MaxBombsUpgrader>();
     bomb_cooldown = GetComponentInChildren<Timer>();
   }

@@ -42,6 +42,8 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
 		}
 
     RebuildStats();
+
+    FindObjectOfType<BallsLeftWheel>().RespawnWheel();
 	}
 
   public void HardResetStats()

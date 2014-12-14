@@ -5,7 +5,6 @@ public class OptionsMenu : HUDField
 {
   private bool display_reset_confirmation_window = false;
   private bool display_hard_reset_confirmation_window = false;
-  private bool hide_level_number = false;
 
   [SerializeField]
   private GUIStyle button_style;

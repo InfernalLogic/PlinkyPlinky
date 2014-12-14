@@ -43,7 +43,7 @@ public class BallsLeftWheel : ObjectWheel
     RotateWheel();
   }
 
-  private void RespawnWheel()
+  public void RespawnWheel()
   {
     object_count = max_bombs.GetValue();
     DestroyAllChildren();

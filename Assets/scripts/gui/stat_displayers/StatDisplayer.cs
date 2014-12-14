@@ -16,7 +16,6 @@ public class StatDisplayer : MonoBehaviour
 
   private TextAnchor original_alignment;
   
-
   void Awake()
   {
     InitializeDisplayRect();
@@ -32,6 +31,7 @@ public class StatDisplayer : MonoBehaviour
 
   public void Display(GUIStyle label_display_style)
   {
+    original_alignment = label_display_style.alignment;
     GUI.DrawTexture(display_rect.GetRect(), stat_display_background);
     GUI.Label(display_rect.GetRect(), label_text, label_display_style);
 
