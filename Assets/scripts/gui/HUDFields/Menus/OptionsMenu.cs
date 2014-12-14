@@ -25,21 +25,14 @@ public class OptionsMenu : HUDField
   [SerializeField]
   private ScalingRect hard_reset_button_rect;
 
-  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
-
   void Awake()
   {
-    HUDEvents.AddSubscriber(rescale_events);
     ResizeText();
   }
 
-  void Update()
+  void OnEnable()
   {
-    if (!rescale_events.IsEmpty())
-    {
-      ResizeText();
-      rescale_events.DeleteNewestMessage();
-    }
+    HUDEvents.OnScreenResize += ResizeText;
   }
 
   private void ResizeText()

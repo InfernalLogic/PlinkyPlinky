@@ -9,13 +9,16 @@ public class ScoreTicker : HUDField
   private ScalingRect money_display_rect;
 
   private TextAnchor original_alignment;
-  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
 
   void Awake()
   {
     ResizeText();
     original_alignment = label_style.alignment;
-    HUDEvents.AddSubscriber(rescale_events);
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += ResizeText;
   }
 
 	protected override void DisplayGUIElements()
@@ -23,15 +26,6 @@ public class ScoreTicker : HUDField
 		DisplayBackgroundBox ();
 		DisplayCurrentMoney ();
 	}
-
-  void Update()
-  {
-    if (!rescale_events.IsEmpty())
-    {
-      ResizeText();
-      rescale_events.DeleteNewestMessage();
-    }
-  }
 
 	void DisplayBackgroundBox ()
 	{

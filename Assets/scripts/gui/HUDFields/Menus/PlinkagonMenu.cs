@@ -17,13 +17,15 @@ public class PlinkagonMenu : HUDField
   private Button[] upgrade_buttons;
   private TextAnchor original_alignment;
 
-  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
-
   void Awake()
   {
-    HUDEvents.AddSubscriber(rescale_events);
     original_alignment = label_style.alignment;
     ResizeText();
+  }
+
+  void OnEnable()
+  {
+    HUDEvents.OnScreenResize += ResizeText;
   }
 
   void Start()
@@ -43,15 +45,6 @@ public class PlinkagonMenu : HUDField
       }
 
     scroll_view.End();
-  }
-
-  void Update()
-  {
-    if (!rescale_events.IsEmpty())
-    {
-      ResizeText();
-      rescale_events.DeleteNewestMessage();
-    }
   }
 
   void DisplayCurrentPlinkagonPoints()

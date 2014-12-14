@@ -10,23 +10,14 @@ public class HUD : Singleton<HUD>
   [SerializeField]
   private Texture tooltip_background;
 
-  private float last_screen_width;
-
   new void Awake()
   {
     base.Awake();
-    last_screen_width = Screen.width;
     Screen.SetResolution(960, 600, false, 60);
   }
 
   void OnGUI()
   {
-    if (ScreenDimensionsHaveBeenChanged())
-    {
-      HUDEvents.Publish(new RescaleHUDEvent(Screen.height));
-      ResetLastScreenWidth();
-    }
-      
     foreach (HUDField field in HUD_fields)
       field.Display();
 
@@ -60,16 +51,6 @@ public class HUD : Singleton<HUD>
 
     foreach (ScalingRect rect in scaling_rects)
       rect.RecalculateRect();
-  }
-
-  private bool ScreenDimensionsHaveBeenChanged()
-  {
-    return last_screen_width != Screen.width;
-  }
-
-  private void ResetLastScreenWidth()
-  {
-    last_screen_width = Screen.width;
   }
 
   private ScalingRect[] GetAllScalingRects()

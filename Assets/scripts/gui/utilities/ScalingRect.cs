@@ -10,21 +10,14 @@ public class ScalingRect : MonoBehaviour
 
   private Rect scaled_rect;
 
-  private Subscriber<RescaleHUDEvent> rescale_events = new Subscriber<RescaleHUDEvent>();
-
   void Awake()
   {
     RecalculateRect();
-    HUDEvents.AddSubscriber(rescale_events);
   }
 
-  void Update()
+  void OnEnable()
   {
-    if (!rescale_events.IsEmpty())
-    {
-      RecalculateRect();
-      rescale_events.DeleteNewestMessage();
-    }
+    HUDEvents.OnScreenResize += RecalculateRect;
   }
 
   public void RecalculateRect()
