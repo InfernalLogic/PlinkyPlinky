@@ -10,8 +10,6 @@ public class PegScript : MonoBehaviour
   [SerializeField]
 	private int hit_points = 1;
   [SerializeField]
-  private bool is_destructible = true;
-  [SerializeField]
   private ParticleSystem collision_emitter;
   [SerializeField]
   private GameObject peg_hunter;
@@ -30,30 +28,22 @@ public class PegScript : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-    if (CollidedWithABomb(collision))
+    if (CollidedWithABomb(collision) || CollidedWithAPeg(collision))
       PegHit(collision);
 	}
 
   private void PegHit(Collision2D collision)
   {
-    if (is_destructible)
-    {
-      --hit_points;
+      peg_hunters_spawned = peg_hunter_upgrade.RollProcs(0);
 
-      if (hit_points <= 0)
+      if (peg_hunters_spawned > 0)
       {
-        peg_hunters_spawned = peg_hunter_upgrade.RollProcs(0);
-
-        if (peg_hunters_spawned > 0)
+        for (int i = 0; i < peg_hunters_spawned; ++i)
         {
-          for (int i = 0; i < peg_hunters_spawned; ++i)
-          {
-            SpawnNewPegHunter();
-          }
+          SpawnNewPegHunter();
         }
-        DestroyPeg();
-      } 
-    }
+      }
+      DestroyPeg();
   }
 
   private void PublishPegHitEvent()
@@ -69,6 +59,11 @@ public class PegScript : MonoBehaviour
   private static bool CollidedWithABomb(Collision2D collision)
   {
     return collision.gameObject.tag == "bomb";
+  }
+
+  private static bool CollidedWithAPeg(Collision2D collision)
+  {
+    return collision.gameObject.tag == "peg";
   }
 
 	void OnTriggerEnter2D(Collider2D collider)
