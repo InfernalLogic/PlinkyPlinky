@@ -21,8 +21,7 @@ public class PegHunter : MonoBehaviour
 
   void Update()
   {
-    if (!target)
-      FindNewTarget(null);
+    FindNewTarget(null);
 
     SetTargetDirection();
     rigidbody2D.AddForce(vector_to_target.normalized * acceleration);
