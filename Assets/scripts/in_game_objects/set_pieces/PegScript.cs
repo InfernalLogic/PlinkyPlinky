@@ -16,13 +16,15 @@ public class PegScript : MonoBehaviour
 
   private int peg_hunters_spawned = 0;
   private Stack<PegHunter> incoming_peg_hunters = new Stack<PegHunter>();
-    
 
   void Awake()
   {
     if (!peg_hunter_upgrade)
     {
-      peg_hunter_upgrade = GameObject.FindGameObjectWithTag("peg_hunter_upgrade").GetComponent<PlinkagonUpgrade>();
+      GameObject upgrade = GameObject.FindGameObjectWithTag("peg_hunter_upgrade");
+      
+      if(upgrade)
+        peg_hunter_upgrade = upgrade.GetComponent<PlinkagonUpgrade>();
     }
   }
 

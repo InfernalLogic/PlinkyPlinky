@@ -14,6 +14,7 @@ public class Plinker : MonoBehaviour
   private Color bomb_ready_color;
 
   private Vector3 starting_position;
+  private AutoPlinker auto_plinker;
 
   private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
 
@@ -29,6 +30,7 @@ public class Plinker : MonoBehaviour
     InitializeCooldownColors();
 
     starting_position = transform.position;
+    auto_plinker = FindObjectOfType<AutoPlinker>();
   }
 
 	void Update()
@@ -76,12 +78,13 @@ public class Plinker : MonoBehaviour
 		movement_vector *= -1.0f;
   }
 
-  public void DropBomb()
+  public void DropBall()
   {
     if (BombIsReady())
 		{
 	    Instantiate(selected_bomb, transform.position, transform.rotation);
       PublishBombDroppedEvent();
+      auto_plinker.UserDroppedBall();
 		}
   }
 

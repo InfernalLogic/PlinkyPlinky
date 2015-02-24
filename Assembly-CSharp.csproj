@@ -106,10 +106,6 @@
      <Compile Include="Assets\scripts\gui\HUDFields\ScoreTicker.cs" />
      <Compile Include="Assets\scripts\gui\HUDFields\SelectedMenu.cs" />
      <Compile Include="Assets\scripts\gui\InstructionDisplayer.cs" />
-     <Compile Include="Assets\scripts\gui\LogoLevelTransitioner.cs" />
-     <Compile Include="Assets\scripts\gui\MainMenuBGMMuter.cs" />
-     <Compile Include="Assets\scripts\gui\MainMenuTransitioner.cs" />
-     <Compile Include="Assets\scripts\gui\MenuPlinker.cs" />
      <Compile Include="Assets\scripts\gui\UserInput.cs" />
      <Compile Include="Assets\scripts\gui\buttons\BombCooldownUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\Button.cs" />
@@ -120,10 +116,15 @@
      <Compile Include="Assets\scripts\gui\buttons\ResetPlinkagonPointsButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\ScoringObjectUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\UpgradeButton.cs" />
+     <Compile Include="Assets\scripts\gui\main_menu\LogoLevelTransitioner.cs" />
+     <Compile Include="Assets\scripts\gui\main_menu\MainMenuBGMMuter.cs" />
+     <Compile Include="Assets\scripts\gui\main_menu\MainMenuTransitioner.cs" />
+     <Compile Include="Assets\scripts\gui\main_menu\MenuPlinker.cs" />
      <Compile Include="Assets\scripts\gui\stat_displayers\AchievementChainDisplayer.cs" />
      <Compile Include="Assets\scripts\gui\stat_displayers\StatDisplayer.cs" />
      <Compile Include="Assets\scripts\gui\utilities\ScalingRect.cs" />
      <Compile Include="Assets\scripts\gui\utilities\ScrollViewInfo.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\AutoPlinker.cs" />
      <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\LinkedObjectRow.cs" />
      <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\ObjectRow.cs" />
      <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\ObjectWheel.cs" />

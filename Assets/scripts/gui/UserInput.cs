@@ -4,7 +4,6 @@ using System.Collections;
 public class UserInput : Singleton<UserInput> 
 {
 	private Plinker plinker = null;
-	private GameObject plinker_object = null;
   [SerializeField]
   private ScalingRect play_field_rect;
 
@@ -14,7 +13,7 @@ public class UserInput : Singleton<UserInput>
 
 	void Start()
 	{
-		plinker_object = GameObject.FindGameObjectWithTag("plinker");
+		GameObject plinker_object = GameObject.FindGameObjectWithTag("plinker");
 		plinker = plinker_object.GetComponent<Plinker>();
 
     if (Application.isWebPlayer)
@@ -34,7 +33,7 @@ public class UserInput : Singleton<UserInput>
   void Update()
   {
     if (Input.GetKeyDown(KeyCode.Space) && !is_pirated)
-      plinker.DropBomb();
+      plinker.DropBall();
   }
 
 	void OnGUI()
@@ -46,7 +45,7 @@ public class UserInput : Singleton<UserInput>
 	public void LoadInvisibleDropBombButton()
 	{
 		if (GUI.Button (play_field_rect.GetRect(), "", GUIStyle.none))
-			plinker.DropBomb();
+			plinker.DropBall();
 	}
 
   public ScalingRect GetPlayFieldRect()
