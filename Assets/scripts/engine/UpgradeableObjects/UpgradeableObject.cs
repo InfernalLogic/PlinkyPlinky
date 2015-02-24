@@ -13,7 +13,7 @@ abstract public class UpgradeableObject : SavedStat
 	abstract public void Upgrade();
 	abstract public void RecalculateUpgradeCost();
 
-  void Start()
+  protected void Start()
   {
     RecalculateUpgradeCost();
   }

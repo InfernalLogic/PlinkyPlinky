@@ -7,8 +7,6 @@ public class LevelHandler : Singleton<LevelHandler>
   public bool load_newest_level_next = false;
   [SerializeField]
   private bool disable_level_loading = false;
-  [SerializeField]
-  private bool unlock_all_levels = false;
 
 	public GameObject[] levels;
 	public ArrayList unlocked_levels = new ArrayList();
@@ -21,13 +19,8 @@ public class LevelHandler : Singleton<LevelHandler>
     CheckForDuplicates();
     FindObjectOfType<LevelUnlocker>().SetMaxUpgrades(levels.Length);
 
-    if (unlock_all_levels)
-      FindObjectOfType<LevelUnlocker>().UnlockAllLevels();
-
     LoadUnlockedLevels(PlayerPrefs.GetInt(LevelUnlockerPlayerPrefsKey(), 3));
 		LoadRandomLevel();
-
-
 	}
 
   private int DefaultLevelsToUnlockOnReset()

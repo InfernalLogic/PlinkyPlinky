@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class Plinker : MonoBehaviour
 {
+  [SerializeField]
+  private GameObject left_barrier;
+  [SerializeField]
+  private GameObject right_barrier;
   [SerializeField]
 	private float movement_speed = 0f;
 	public GameObject selected_bomb;
@@ -31,6 +36,8 @@ public class Plinker : MonoBehaviour
 
     starting_position = transform.position;
     auto_plinker = FindObjectOfType<AutoPlinker>();
+
+    StartCoroutine(OutOfBoundsCheck());
   }
 
 	void Update()
@@ -50,8 +57,23 @@ public class Plinker : MonoBehaviour
       }
       subscriber.DeleteNewestMessage();
     }
-
 	}
+
+  private IEnumerator OutOfBoundsCheck()
+  {
+    yield return new WaitForSeconds(1.0f);
+
+    if (IsOutOfBounds())
+      transform.position = starting_position;
+
+    StartCoroutine(OutOfBoundsCheck());
+  }
+
+  private bool IsOutOfBounds()
+  {
+    return transform.position.x > right_barrier.transform.position.x ||
+           transform.position.x < left_barrier.transform.position.x;
+  }
 
   private void InitializeCooldownColors()
   {
@@ -84,8 +106,16 @@ public class Plinker : MonoBehaviour
 		{
 	    Instantiate(selected_bomb, transform.position, transform.rotation);
       PublishBombDroppedEvent();
-      auto_plinker.UserDroppedBall();
 		}
+  }
+
+  public void AutoDrop()
+  {
+    if (BombIsReady())
+    {
+      Instantiate(selected_bomb, transform.position, transform.rotation);
+      PublishBombDroppedEvent();
+    }
   }
 
   private bool BombIsReady()

@@ -7,14 +7,15 @@ public class UserInput : Singleton<UserInput>
   [SerializeField]
   private ScalingRect play_field_rect;
 
+  private AutoPlinker auto_plinker;
   string url = "url";
 
   private bool is_pirated = true;
 
 	void Start()
 	{
-		GameObject plinker_object = GameObject.FindGameObjectWithTag("plinker");
-		plinker = plinker_object.GetComponent<Plinker>();
+		plinker = FindObjectOfType<Plinker>();
+    auto_plinker = FindObjectOfType<AutoPlinker>();
 
     if (Application.isWebPlayer)
     {
@@ -34,6 +35,9 @@ public class UserInput : Singleton<UserInput>
   {
     if (Input.GetKeyDown(KeyCode.Space) && !is_pirated)
       plinker.DropBall();
+
+    if (Input.GetKeyDown(KeyCode.A) && !is_pirated)
+      auto_plinker.ToggleEnable();
   }
 
 	void OnGUI()
@@ -45,7 +49,11 @@ public class UserInput : Singleton<UserInput>
 	public void LoadInvisibleDropBombButton()
 	{
 		if (GUI.Button (play_field_rect.GetRect(), "", GUIStyle.none))
-			plinker.DropBall();
+    {
+      plinker.DropBall();
+      auto_plinker.StartInitialCooldown();
+    }
+
 	}
 
   public ScalingRect GetPlayFieldRect()

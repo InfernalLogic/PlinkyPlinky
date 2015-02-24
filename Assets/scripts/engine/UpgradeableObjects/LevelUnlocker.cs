@@ -60,6 +60,8 @@ public class LevelUnlocker : UpgradeableObject
 
     while (value < max_upgrades)
       ++value;
+
+    UpdateUnlockedLevels();
   }
 }
 
