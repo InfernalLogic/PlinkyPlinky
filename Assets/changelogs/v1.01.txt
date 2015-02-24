@@ -1,13 +1,6 @@
 UPDATE 1.01
   -Spacebar now drops balls
   -Fixed a small bug in the main menu screen
-  -AutoPlinker upgrade added!
-    You'll find this in the "Shop" menu. The autoplinker waits five seconds 
-    after you click in the playfield to try to drop a ball, then it drops balls
-    with a cooldown of (5.0/autoplinker_upgrade_level). You can press the 'a' 
-    to enable or disable the autoplinker.
-  -Added an out-of-bounds check that will reset the plinker's position if it
-    disappears. This should fix that bug (assuming the problem is that it's not
-    colliding with the play area's boundaries properly and not despawning for some reason.)
-    If anyone encounters this issue again, please PM me and I will take another 
-    stab at it.
+  -AutoPlinker upgrade added, you lazy bastards!
+    You'll find this in the "Shop" menu. The autoplinker waits five seconds after you click in the playfield to try to drop a ball, then it drops balls with a cooldown of (5.0/autoplinker_upgrade_level). You can press the 'a' button to enable or disable the autoplinker.
+  -Added an out-of-bounds check that will reset the plinker's position if it disappears. This should fix that bug (assuming the problem is that it's not colliding with the play area's boundaries properly and not despawning for some reason.) If anyone encounters this issue again, please PM me and I will take another stab at it.
