@@ -31,8 +31,6 @@ public class AudioHandler : Singleton<AudioHandler>
     SubscribeToRelevantEvents();
     LoadAudioClipDictionary();
     InitializeBGM();
-
-    print(mute_bgm.GetKey() + " initialized to " + mute_bgm.GetValue());
   }
 
   private void InitializeBGM()

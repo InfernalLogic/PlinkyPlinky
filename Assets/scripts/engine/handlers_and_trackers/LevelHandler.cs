@@ -120,14 +120,10 @@ public class LevelHandler : Singleton<LevelHandler>
 
   private void LoadUnlockedLevels(int total_unlocked_levels)
   {
-    Debug.Log("total_unlocked_levels: " + total_unlocked_levels);
     unlocked_levels.Clear();
 
     for (int i = 0; i < total_unlocked_levels; ++i)
-    {
       unlocked_levels.Add(i);
-      Debug.Log("added level: " + i);
-    }
   }
 
   public int GetCurrentLevel()
