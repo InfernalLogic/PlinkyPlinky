@@ -85,6 +85,7 @@
      <Compile Include="Assets\scripts\engine\handlers_and_trackers\AchievementTracker.cs" />
      <Compile Include="Assets\scripts\engine\handlers_and_trackers\AudioHandler.cs" />
      <Compile Include="Assets\scripts\engine\handlers_and_trackers\LevelCompleteChecker.cs" />
+     <Compile Include="Assets\scripts\engine\handlers_and_trackers\LevelCompletionBonusTracker.cs" />
      <Compile Include="Assets\scripts\engine\handlers_and_trackers\LevelHandler.cs" />
      <Compile Include="Assets\scripts\engine\handlers_and_trackers\MoneyTracker.cs" />
      <Compile Include="Assets\scripts\engine\handlers_and_trackers\UpgradeHandler.cs" />

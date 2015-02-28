@@ -21,9 +21,11 @@ public class AutoPlinkerUpgrade : UpgradeableObject
     if (PlayerHasEnoughCurrency() && UpgradesNotMaxedOut())
     {
       MoneyTracker.Instance().SpendMoney(upgrade_cost);
+      if (value == 0)
+        auto_plinker.StartInitialCooldown();
+
       ++value;
       RecalculateUpgradeCost();
-      auto_plinker.StartInitialCooldown();
     }
   }
 }

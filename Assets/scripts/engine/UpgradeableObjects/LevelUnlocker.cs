@@ -16,6 +16,7 @@ public class LevelUnlocker : UpgradeableObject
       LevelHandler.Instance().load_newest_level_next = true;
       LevelCompleteChecker.Instance().CountCoins();
       UpdateUnlockedLevels();
+      LevelCompletionBonusTracker.Instance().AddUnlockedLevel();
     }
   }
 

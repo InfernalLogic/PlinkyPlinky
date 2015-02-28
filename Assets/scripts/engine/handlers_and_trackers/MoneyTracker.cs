@@ -40,10 +40,8 @@ public class MoneyTracker : Singleton<MoneyTracker>
       else if (CurrentEventKey() == "plinkagon_point_earned_event")
       {
         MoneyEarnedGameEvent money_earned_event = (MoneyEarnedGameEvent)game_event_listener.ReadNewestMessage();
-        Debug.Log("plinkagon_point_earned heard: +" + money_earned_event.value);
         AddPlinkagonPoints(money_earned_event.value);
       }
-      
       game_event_listener.DeleteNewestMessage();
     }
   }
@@ -56,7 +54,6 @@ public class MoneyTracker : Singleton<MoneyTracker>
   private void PublishMoneyEarnedEvent(int money_to_add)
   {
     GameEvents.Publish(CurrentMoneyEarnedEvent(money_to_add));
-
   }
 
   private void PublishPlinkagonPointEarnedEvent()

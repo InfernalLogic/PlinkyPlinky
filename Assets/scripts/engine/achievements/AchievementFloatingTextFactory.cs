@@ -23,13 +23,18 @@ public class AchievementFloatingTextFactory : Singleton<AchievementFloatingTextF
     {
       AchievementPopupInfo popup_info = achievement_listener.ReadNewestMessage().popup_info;
 
-      FloatingText new_text = (FloatingText)Instantiate(plinkagon_floating_text, Vector3.zero, transform.rotation);
-      new_text.SetText(GeneratePopupText(popup_info));
+      Announce(GeneratePopupText(popup_info));
 
       PublishPlinkagonPointEarnedEvent();
       achievement_listener.DeleteNewestMessage();
       popup_display_timer.Reset();
     }
+  }
+
+  public void Announce(string text)
+  {
+    FloatingText new_text = (FloatingText)Instantiate(plinkagon_floating_text, Vector3.zero, transform.rotation);
+    new_text.SetText(text);
   }
 
   private static string GeneratePopupText(AchievementPopupInfo popup_info)
