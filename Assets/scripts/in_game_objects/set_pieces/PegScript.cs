@@ -15,7 +15,6 @@ public class PegScript : MonoBehaviour
   private GameObject peg_hunter;
 
   private int peg_hunters_spawned = 0;
-  private Stack<PegHunter> incoming_peg_hunters = new Stack<PegHunter>();
 
   void Awake()
   {
@@ -82,18 +81,13 @@ public class PegScript : MonoBehaviour
   void SpawnNewPegHunter()
   {
     GameObject new_peg_hunter = Instantiate(peg_hunter, this.transform.position, this.transform.rotation) as GameObject;
-    new_peg_hunter.GetComponent<PegHunter>().FindNewTarget(this.gameObject);
+    new_peg_hunter.GetComponent<PegHunter>().FindNewTarget();
   }
 
   private void DestroyPeg()
   {
     SpawnParticleEmitter();
     PublishPegHitEvent();
-
-    while (incoming_peg_hunters.Count > 0)
-    {
-      incoming_peg_hunters.Pop().FindNewTarget(this.gameObject);
-    }
     
     Destroy(gameObject);
   }

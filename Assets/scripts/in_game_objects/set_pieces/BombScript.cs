@@ -16,6 +16,7 @@ public class BombScript : MonoBehaviour
 
   private int coins_hit_by_this_bomb = 0;
   private int bombs_spawned = 0;
+  private int peg_hunters_spawned = 0;
 
   void Awake()
   {

@@ -17,6 +17,9 @@ public class PegHunter : MonoBehaviour
 
   void Start()
   {
+    if (!target)
+      FindNewTarget();
+
     SetTargetDirection();
     ApplyOrthogonalBumpForce();
     StartCoroutine(IncreaseAcceleration());
@@ -24,7 +27,8 @@ public class PegHunter : MonoBehaviour
 
   void Update()
   {
-    FindNewTarget(null);
+    if (!target)
+      FindNewTarget();
 
     SetTargetDirection();
     rigidbody2D.AddForce(vector_to_target.normalized * acceleration);
@@ -33,29 +37,24 @@ public class PegHunter : MonoBehaviour
   private IEnumerator IncreaseAcceleration()
   {
     yield return new WaitForSeconds(0.5f);
-    acceleration *= 1.15f;
+    acceleration *= 1.2f;
     StartCoroutine(IncreaseAcceleration());
   }
 
-  public void FindNewTarget(GameObject spawning_popper)
+  public void FindNewTarget()
   {
     RaycastHit2D closest_popper = Physics2D.CircleCast(transform.position, 100.0f, Vector2.zero, 1.0f, popper_layer);
 
-    if (!closest_popper)
-      print("no object found");
-    else
-      print("found " + closest_popper.collider.gameObject.name);
-
-    target = GameObject.FindWithTag("peg");
-
-    if (!target)
+    if (!closest_popper || !closest_popper.collider)
       Destroy(this.gameObject);
+
+    target = closest_popper.collider.gameObject;
   }
 
   private void SetTargetDirection()
   {
     vector_to_target = target.transform.position - this.transform.position;
-    this.rigidbody2D.velocity += (vector_to_target - this.rigidbody2D.velocity) * vector_adjustment_factor;
+    this.rigidbody2D.velocity += (vector_to_target - this.rigidbody2D.velocity).normalized * vector_adjustment_factor;
   }
 
   private void ApplyOrthogonalBumpForce()
