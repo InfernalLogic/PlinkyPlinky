@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class SavedStat : MonoBehaviour
 {
@@ -20,6 +20,8 @@ public class SavedStat : MonoBehaviour
   {
     AssignKey();
     Load();
+
+    FindObjectOfType<AutoSaver>().Add(this);
   }
 
   private void AssignKey()
@@ -101,6 +103,11 @@ public class SavedStat : MonoBehaviour
 
   void OnDestroy()
   {
+    AutoSaver auto_saver = FindObjectOfType<AutoSaver>();
+
+    if (auto_saver)
+      auto_saver.Remove(this);
+
     Save();
   }
 }
