@@ -9,10 +9,14 @@ public class BombScript : MonoBehaviour
   private GameObject bomb_clone;
   [SerializeField]
   private float clone_launch_force_multiplier = 50.0f;
+  [SerializeField]
+  private GameObject peg_hunter;
 
   private PlinkagonUpgrade clone_ball_upgrader;
+  private PlinkagonUpgrade peg_hunter_upgrader;
 
   private static int bomb_count = 0;
+  private static int clone_count = 0;
 
   private int coins_hit_by_this_bomb = 0;
   private int bombs_spawned = 0;
@@ -21,12 +25,15 @@ public class BombScript : MonoBehaviour
   void Awake()
   {
     clone_ball_upgrader = GameObject.Find("clone_ball_upgrader").GetComponent<PlinkagonUpgrade>();
+    peg_hunter_upgrader = GameObject.Find("peg_hunter_upgrader").GetComponent<PlinkagonUpgrade>();
   }
 
 	void Start () 
 	{
     if (!is_clone)
       ++bomb_count;
+    else
+      ++clone_count;
 
     Destroy(gameObject, 45.0f);
   }
@@ -35,6 +42,8 @@ public class BombScript : MonoBehaviour
   {
     if (!is_clone)
       --bomb_count;
+    else
+      --clone_count;
   }
 
   void OnCollisionEnter2D(Collision2D collision)
@@ -44,11 +53,27 @@ public class BombScript : MonoBehaviour
       ++bombs_spawned;
       SpawnNewBomb();
     }
+    if (CollidedWithAPeg(collision) && peg_hunter_upgrader.RollProcs(peg_hunters_spawned) > 0 && !is_clone)
+    {
+      ++peg_hunters_spawned;
+      SpawnNewPegHunter();
+    }
+  }
+
+  void SpawnNewPegHunter()
+  {
+    GameObject new_peg_hunter = Instantiate(peg_hunter, this.transform.position, this.transform.rotation) as GameObject;
+    new_peg_hunter.GetComponent<PegHunter>().FindNewTarget();
   }
 
   private bool CollidedWithABumper(Collision2D collision)
   {
     return collision.gameObject.tag == "bumper";
+  }
+
+  private bool CollidedWithAPeg(Collision2D collision)
+  {
+    return collision.gameObject.tag == "peg";
   }
 
   private void SpawnNewBomb()

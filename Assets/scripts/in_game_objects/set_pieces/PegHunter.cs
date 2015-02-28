@@ -45,7 +45,7 @@ public class PegHunter : MonoBehaviour
   {
     RaycastHit2D closest_popper = Physics2D.CircleCast(transform.position, 100.0f, Vector2.zero, 1.0f, popper_layer);
 
-    if (!closest_popper || !closest_popper.collider)
+    if (closest_popper == null)
       Destroy(this.gameObject);
 
     target = closest_popper.collider.gameObject;
