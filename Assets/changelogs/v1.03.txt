@@ -2,7 +2,8 @@ UPDATE 1.03
   -Requirements for poppers popped achievements have been adjusted down
   -Autoplinker, Plink More, and Plink Faster upgrades now display their respective values when upgraded to max level
   -Popper hunter acceleration slowly increases over time to help them catch fast-moving targets
-  -Popper hunter targeting has been slightly improved, they may still miss some fast - moving targets
+  -Popper hunter targeting has been slightly improved, they may still miss some fast-moving targets
   -Popper hunters now follow similar spawn rules to the clone ball upgrade; each time a popper hunter is spawned, it reduces that ball's chance to spawn a popper hunter by 1.0.
   -Popper hunter chance to spawn per level has been increased
   -Coin critical chance per level has been increased
+  -The level loader now waits for all clone balls to be off the screen before loading the next level
