@@ -17,7 +17,7 @@ public class LevelCompletionBonusTracker : Singleton<LevelCompletionBonusTracker
 
     int current_levels_unlocked = FindObjectOfType<LevelUnlocker>().GetTotalUnlockedLevels();
 
-    if (total_levels_unlocked.GetValue() <= current_levels_unlocked - 3)
+    if (total_levels_unlocked.GetValue() < current_levels_unlocked - 3)
       total_levels_unlocked.AddValue(current_levels_unlocked);
   }
 
