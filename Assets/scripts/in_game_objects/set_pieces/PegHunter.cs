@@ -13,6 +13,8 @@ public class PegHunter : MonoBehaviour
   private GameObject target;
   private Vector2 vector_to_target;
 
+  private static int popper_layer = 1 << LayerMask.NameToLayer("3_pegs");
+
   void Start()
   {
     SetTargetDirection();
@@ -30,14 +32,20 @@ public class PegHunter : MonoBehaviour
 
   private IEnumerator IncreaseAcceleration()
   {
-    acceleration *= 1.05f;
-    print("Accelerated");
     yield return new WaitForSeconds(0.5f);
+    acceleration *= 1.15f;
     StartCoroutine(IncreaseAcceleration());
   }
 
   public void FindNewTarget(GameObject spawning_popper)
   {
+    RaycastHit2D closest_popper = Physics2D.CircleCast(transform.position, 100.0f, Vector2.zero, 1.0f, popper_layer);
+
+    if (!closest_popper)
+      print("no object found");
+    else
+      print("found " + closest_popper.collider.gameObject.name);
+
     target = GameObject.FindWithTag("peg");
 
     if (!target)
