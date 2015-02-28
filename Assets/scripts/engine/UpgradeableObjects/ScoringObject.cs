@@ -8,7 +8,6 @@ abstract public class ScoringObjectUpgrade : UpgradeableObject
 
   protected int point_value;
 
-
   abstract public void RecalculatePointValue();
 
   new void Awake()
@@ -47,5 +46,10 @@ abstract public class ScoringObjectUpgrade : UpgradeableObject
   public virtual int GetPointValue()
   {
     return point_value;
+  }
+
+  public virtual int GetNextPointValue()
+  {
+    return point_value + 1;
   }
 }

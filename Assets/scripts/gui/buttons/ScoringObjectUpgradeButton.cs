@@ -13,6 +13,6 @@ public class ScoringObjectUpgradeButton : UpgradeButton
   protected override void DisplayTextLabel()
   {
     GUI.Label(label_display_rect.GetRect(), button_text + "\nCost: " + target_upgrade.GetUpgradeCost() +
-      "\nincome/hit: " + target_scoring_object.GetPointValue(), label_style);
+      "\nincome/hit: " + target_scoring_object.GetPointValue() + "\nNext level: " + target_scoring_object.GetNextPointValue(), label_style);
   }
 }

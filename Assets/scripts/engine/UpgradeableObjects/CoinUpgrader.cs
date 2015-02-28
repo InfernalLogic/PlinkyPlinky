@@ -15,5 +15,10 @@ public class CoinUpgrader : ScoringObjectUpgrade
   {
     point_value = (value * 5) + 10;
   }
+
+  public override int GetNextPointValue()
+  {
+    return point_value + 5;
+  }
 }
 
