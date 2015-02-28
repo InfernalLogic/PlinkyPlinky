@@ -22,6 +22,9 @@ public class DevCheats : MonoBehaviour
 
     if (Input.GetKeyDown(KeyCode.U))
       FindObjectOfType<LevelUnlocker>().UnlockAllLevels();
+
+    if (Input.GetKeyDown(KeyCode.P))
+      MoneyTracker.Instance().AddPlinkagonPoints(5);
 	}
 
   void OnGUI()

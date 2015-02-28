@@ -19,4 +19,11 @@ public class BombCooldownUpgradeButton : UpgradeButton
               (bomb_cooldown_timer.GetDuration()) + "s",
               label_style);
   }
+
+  protected override void DisplayMaxUpgradesReached()
+  {
+    GUI.Label(display_rect.GetRect(), "", button_style);
+    GUI.Label(label_display_rect.GetRect(), max_upgrades_reached_message + "\nCooldown: " +
+              (bomb_cooldown_timer.GetDuration()) + "s", label_style);
+  }
 }

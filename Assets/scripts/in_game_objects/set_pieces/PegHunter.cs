@@ -17,6 +17,7 @@ public class PegHunter : MonoBehaviour
   {
     SetTargetDirection();
     ApplyOrthogonalBumpForce();
+    StartCoroutine(IncreaseAcceleration());
   }
 
   void Update()
@@ -25,6 +26,14 @@ public class PegHunter : MonoBehaviour
 
     SetTargetDirection();
     rigidbody2D.AddForce(vector_to_target.normalized * acceleration);
+  }
+
+  private IEnumerator IncreaseAcceleration()
+  {
+    acceleration *= 1.05f;
+    print("Accelerated");
+    yield return new WaitForSeconds(0.5f);
+    StartCoroutine(IncreaseAcceleration());
   }
 
   public void FindNewTarget(GameObject spawning_popper)

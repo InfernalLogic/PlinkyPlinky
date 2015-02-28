@@ -1,0 +1,4 @@
+UPDATE 1.03
+  -Requirements for poppers popped achievements have been adjusted down
+  -Autoplinker, Plink More, and Plink Faster upgrades now display their respective values when upgraded to max level
+  -Popper hunter acceleration slowly increases over time to help them catch fast-moving targets

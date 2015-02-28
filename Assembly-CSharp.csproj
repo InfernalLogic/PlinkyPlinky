@@ -144,7 +144,9 @@
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\projectiles\PegProjectile.cs" />
      <None Include="Assets\fonts\Liberation\Red Hat Liberation License.txt" />
      <None Include="Assets\thumbnails\htmlshit.txt" />
+     <None Include="Assets\changelogs\v1.03.txt" />
      <None Include="Assets\changelogs\v1.01.txt" />
+     <None Include="Assets\changelogs\v1.02.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

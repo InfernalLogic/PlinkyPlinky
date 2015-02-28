@@ -27,4 +27,11 @@ public class AutoPlinkerUpgradeButton : UpgradeButton
               button_text + "\nCost: " + target_upgrade.GetUpgradeCost() + "\nCooldown: " +
               cooldown, label_style);
   }
+
+  protected override void DisplayMaxUpgradesReached()
+  {
+    GUI.Label(display_rect.GetRect(), "", button_style);
+    GUI.Label(label_display_rect.GetRect(), max_upgrades_reached_message + "\nCooldown: " +
+              auto_plinker.Cooldown.ToString("n2"), label_style);
+  }
 }
