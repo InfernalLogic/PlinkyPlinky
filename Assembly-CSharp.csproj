@@ -169,6 +169,7 @@
      <Compile Include="Assets\scripts\gui\utilities\ScrollViewInfo.cs" />
      <Compile Include="Assets\scripts\in_game_objects\AutoPlinker.cs" />
      <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\LinkedObjectRow.cs" />
+     <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\ObjectRect.cs" />
      <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\ObjectRow.cs" />
      <Compile Include="Assets\scripts\in_game_objects\rows_and_wheels\ObjectWheel.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\BallsLeftWheel.cs" />
