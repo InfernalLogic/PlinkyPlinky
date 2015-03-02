@@ -61,6 +61,7 @@ public class UpgradeButton : Button
 
   protected virtual void DisplayTextLabel()
   {
-    GUI.Label(label_display_rect.GetRect(), button_text + "\nCost: " + target_upgrade.GetUpgradeCost(), label_style);
+    GUI.Label(label_display_rect.GetRect(), button_text + "\nCost: " + 
+              target_upgrade.GetUpgradeCost(), label_style);
   }
 }

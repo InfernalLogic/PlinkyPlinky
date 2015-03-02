@@ -6,12 +6,12 @@ public class PlinkagonUpgrade : UpgradeableObject
   [SerializeField]
   private float percent_chance_per_level = 2.0f;
 
-  private void OnEnable()
+  new protected virtual void OnEnable()
   {
     Events.PlinkagonRefundEvents += OnPlinkagonRefund;
   }
 
-  private void OnDisable()
+  new protected virtual void OnDisable()
   {
     Events.PlinkagonRefundEvents -= OnPlinkagonRefund;
   }

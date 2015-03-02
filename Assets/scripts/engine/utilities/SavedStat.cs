@@ -16,12 +16,12 @@ public class SavedStat : MonoBehaviour
 
   private int loaded_value;
 
-  private void OnEnable()
+  protected virtual void OnEnable()
   {
     Events.ResetEvents += OnReset;
   }
 
-  private void OnDisable()
+  protected virtual void OnDisable()
   {
     Events.ResetEvents -= OnReset;
   }

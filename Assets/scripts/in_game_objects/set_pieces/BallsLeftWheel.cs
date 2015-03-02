@@ -61,6 +61,12 @@ public class BallsLeftWheel : ObjectWheel
 
   private void OnReset(ResetType type)
   {
+    StartCoroutine(RespawnNextFrame());
+  }
+
+  private IEnumerator RespawnNextFrame()
+  {
+    yield return new WaitForFixedUpdate();
     RespawnWheel();
   }
 }

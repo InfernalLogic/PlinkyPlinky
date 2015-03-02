@@ -13,6 +13,16 @@ abstract public class UpgradeableObject : SavedStat
 	abstract public void Upgrade();
 	abstract public void RecalculateUpgradeCost();
 
+  new protected virtual void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  new protected virtual void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
   protected void Start()
   {
     RecalculateUpgradeCost();

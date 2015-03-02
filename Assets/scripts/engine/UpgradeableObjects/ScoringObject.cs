@@ -10,6 +10,16 @@ abstract public class ScoringObjectUpgrade : UpgradeableObject
 
   abstract public void RecalculatePointValue();
 
+  new protected virtual void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  new protected virtual void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
   new void Awake()
   {
     base.Awake();
