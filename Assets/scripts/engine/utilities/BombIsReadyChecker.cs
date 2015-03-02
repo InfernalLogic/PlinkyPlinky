@@ -28,12 +28,16 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
     while (!game_event_listener.IsEmpty())
     {
       if (game_event_listener.ReadNewestMessage() == GameEvents.bomb_dropped_event)
-      {
 				bomb_cooldown.Reset();
-        game_event_listener.DeleteNewestMessage();
-      }
-      else
-        game_event_listener.DeleteNewestMessage();
+
+      game_event_listener.DeleteNewestMessage();
+    }
+
+    if (Input.GetKey(KeyCode.L))
+    {
+      Debug.Log("bomb_cooldown.IsExpired(): " + bomb_cooldown.IsExpired());
+      Debug.Log("MaxBombsNotExceeded(): " + MaxBombsNotExceeded());
+      Debug.Log("LevelNotCompleted(): " + LevelNotCompleted());
     }
   }
 
@@ -49,6 +53,6 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
 
   private bool MaxBombsNotExceeded()
   {
-    return BombScript.GetBombCount() < max_bombs_upgrader.GetValue();
+    return BombScript.BombCount < max_bombs_upgrader.GetValue();
   }
 }

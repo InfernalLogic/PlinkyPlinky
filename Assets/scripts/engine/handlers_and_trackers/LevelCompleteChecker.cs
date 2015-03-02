@@ -20,6 +20,16 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     GameEvents.AddSubscriber(game_event_subscriber);
   }
 
+  private void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
 	void Update()
 	{
     if (!game_event_subscriber.IsEmpty())
@@ -40,7 +50,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 
         ResetNewLevelCountdown();
       } 
-      else if (level_completed && NewLevelCountdownCooledDown() && BombScript.GetBombCount() <= 0)
+      else if (level_completed && NewLevelCountdownCooledDown() && NoBombsInPlay())
 			{
         LoadNewLevel();
         CountCoins();
@@ -48,6 +58,11 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 			}
 		}
 	}
+
+  private bool NoBombsInPlay()
+  {
+    return BombScript.BombCount <= 0 && BombScript.CloneCount <= 0;
+  }
 
   private static void PublishLevelCompletedEvent()
   {
@@ -59,9 +74,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     if (message.name == GameEvents.bomb_dropped_event.name)
       ++bombs_dropped;
     else if (message.name == GameEvents.coin_hit_event.name)
-    {
       CountCoins();
-    }
   }
 
   private void ResetNewLevelCountdown()
@@ -100,5 +113,16 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
   public bool IsLevelCompleted()
   {
     return level_completed;
+  }
+
+  private void OnReset(ResetType type)
+  {
+    StartCoroutine(SetLevelCompletedAfterReset());
+  }
+
+  private IEnumerator SetLevelCompletedAfterReset()
+  {
+    yield return new WaitForFixedUpdate();
+    level_completed = false;
   }
 }

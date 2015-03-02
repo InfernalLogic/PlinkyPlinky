@@ -16,7 +16,9 @@ public class BombScript : MonoBehaviour
   private PlinkagonUpgrade peg_hunter_upgrader;
 
   private static int bomb_count = 0;
+  public static int BombCount { get { return bomb_count; } }
   private static int clone_count = 0;
+  public static int CloneCount { get { return clone_count; } }
 
   private int coins_hit_by_this_bomb = 0;
   private int bombs_spawned = 0;
@@ -90,18 +92,12 @@ public class BombScript : MonoBehaviour
     GameObject new_bomb = (GameObject)Instantiate(bomb_clone, target_position, transform.rotation);
 
     new_bomb.gameObject.rigidbody2D.AddForce(force_being_added);
-
   }
 
 	void OnBecameInvisible()
 	{
 		Destroy (gameObject);
 	}
-
-  public static int GetBombCount()
-  {
-    return bomb_count;
-  }
 
   public void IncrementCoinsHit()
   {
@@ -110,5 +106,4 @@ public class BombScript : MonoBehaviour
     if (coins_hit_by_this_bomb >= 2)
       GameEvents.Publish(GameEvents.multi_plink_event);
   }
-
 }
