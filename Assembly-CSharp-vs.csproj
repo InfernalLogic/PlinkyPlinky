@@ -191,6 +191,7 @@
      <None Include="Assets\changelogs\v1.03.txt" />
      <None Include="Assets\changelogs\v1.01.txt" />
      <None Include="Assets\UnityTestTools\changelog.txt" />
+     <None Include="Assets\changelogs\v1.03b.txt" />
      <None Include="Assets\changelogs\v1.02.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
