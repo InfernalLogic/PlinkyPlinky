@@ -7,6 +7,16 @@ public class BallsLeftWheel : ObjectWheel
 
   private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
 
+  private void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
   void Awake()
   {
     max_bombs = FindObjectOfType<MaxBombsUpgrader>();
@@ -23,9 +33,8 @@ public class BallsLeftWheel : ObjectWheel
   {
     while (!subscriber.IsEmpty())
     {
-      if (subscriber.ReadNewestMessage() == UpgradeEvents.max_bombs_upgraded || subscriber.ReadNewestMessage() == GameEvents.game_reset_event)
+      if (subscriber.ReadNewestMessage() == UpgradeEvents.max_bombs_upgraded)
       {
-        Debug.Log(subscriber.ReadNewestMessage().name);
         RespawnWheel();
       }
 
@@ -50,4 +59,8 @@ public class BallsLeftWheel : ObjectWheel
     SpawnWheelObjects();
   }
 
+  private void OnReset(ResetType type)
+  {
+    RespawnWheel();
+  }
 }

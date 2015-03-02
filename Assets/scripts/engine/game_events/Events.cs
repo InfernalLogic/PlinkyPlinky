@@ -14,4 +14,14 @@ public class Events : Singleton<Events>
       ResetEvents(type);
   }
   #endregion
+
+  #region PlinkagonRefund
+  public delegate void PlinkagonRefund_();
+  public static event PlinkagonRefund_ PlinkagonRefundEvents;
+  public static void PublishPlinkagonRefund()
+  {
+    if (PlinkagonRefundEvents != null)
+      PlinkagonRefundEvents();
+  }
+  #endregion
 }

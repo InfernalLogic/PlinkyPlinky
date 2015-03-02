@@ -33,7 +33,7 @@ public class BombCooldownTimer : Timer
   {
     while (!subscriber.IsEmpty())
     {
-      if (subscriber.ReadNewestMessage() == UpgradeEvents.bomb_cooldown_upgraded || subscriber.ReadNewestMessage() == GameEvents.game_reset_event)
+      if (subscriber.ReadNewestMessage() == UpgradeEvents.bomb_cooldown_upgraded)
       {
         RecalculateDuration();
       }

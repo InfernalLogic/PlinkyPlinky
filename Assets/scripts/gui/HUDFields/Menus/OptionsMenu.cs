@@ -79,21 +79,13 @@ public class OptionsMenu : HUDField
 
   private void SoftReset()
   {
-    UpgradeHandler.Instance.ResetStats();
-    LevelHandler.Instance.LoadRandomLevel();
-
     Events.PublishReset(ResetType.SOFT);
-
     Debug.Log("Game reset");
   }
 
   private void HardResetGame()
   {
-    UpgradeHandler.Instance.HardResetStats();
-    LevelHandler.Instance.LoadRandomLevel();
-
     Events.PublishReset(ResetType.HARD);
-
     Debug.Log("Game hard reset");
   }
 

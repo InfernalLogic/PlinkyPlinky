@@ -60,4 +60,10 @@ abstract public class UpgradeableObject : SavedStat
   {
     return value >= (max_upgrades) || max_upgrades == 0;
   }
+
+  new protected virtual void OnReset(ResetType type)
+  {
+    base.OnReset(type);
+    RecalculateUpgradeCost();
+  }
 }

@@ -20,11 +20,19 @@ public class Plinker : MonoBehaviour
 
   private Vector3 starting_position;
 
-  private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
-
-  void Awake()
+  private void OnEnable()
   {
-    GameEvents.AddSubscriber(subscriber);
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
+  private void OnReset(ResetType type)
+  {
+    transform.position = starting_position;
   }
 
   void Start()
@@ -46,14 +54,6 @@ public class Plinker : MonoBehaviour
       renderer.material.color = bomb_ready_color;
     else
       renderer.material.color = bomb_cooling_down_color;
-
-    if (!subscriber.IsEmpty())
-    {
-      if (subscriber.ReadNewestMessage() == GameEvents.game_reset_event)
-        transform.position = starting_position;
-
-      subscriber.DeleteNewestMessage();
-    }
 	}
 
   private IEnumerator OutOfBoundsCheck()

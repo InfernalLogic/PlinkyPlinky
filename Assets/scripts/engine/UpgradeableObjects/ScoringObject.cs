@@ -17,11 +17,11 @@ abstract public class ScoringObjectUpgrade : UpgradeableObject
     RecalculatePointValue();
   }
 
-	new public virtual void Reset()
-	{
-    base.Reset();
-		RecalculateUpgradeCost();
-	}
+  new protected virtual void OnReset(ResetType type)
+  {
+    base.OnReset(type);
+    RecalculatePointValue();
+  }
 
 	public override void Upgrade()
 	{

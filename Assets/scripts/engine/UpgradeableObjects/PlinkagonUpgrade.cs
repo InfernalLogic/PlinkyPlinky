@@ -6,6 +6,16 @@ public class PlinkagonUpgrade : UpgradeableObject
   [SerializeField]
   private float percent_chance_per_level = 2.0f;
 
+  private void OnEnable()
+  {
+    Events.PlinkagonRefundEvents += OnPlinkagonRefund;
+  }
+
+  private void OnDisable()
+  {
+    Events.PlinkagonRefundEvents -= OnPlinkagonRefund;
+  }
+
   new void Awake()
   {
     base.Awake();
@@ -45,5 +55,11 @@ public class PlinkagonUpgrade : UpgradeableObject
   private bool ProcRolled(int procs)
   {
     return Random.Range(0.0f, 100.0f) < GetChanceToProc() - ((float)(procs) * 100.0);
+  }
+
+  private void OnPlinkagonRefund()
+  {
+    MoneyTracker.Instance.AddPlinkagonPoints(value);
+    value = 0;
   }
 }

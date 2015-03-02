@@ -106,18 +106,4 @@ public class MoneyTracker : Singleton<MoneyTracker>
     else
       return -1;
   }
-
-  public void ResetPlinkagonPoints()
-  {
-    int points_spent = 0;
-    PlinkagonUpgrade[] upgrades = FindObjectsOfType<PlinkagonUpgrade>();
-
-    foreach (PlinkagonUpgrade upgrade in upgrades)
-    {
-      points_spent += upgrade.GetValue();
-      upgrade.HardReset();
-    }
-
-    AddPlinkagonPoints(points_spent);
-  }
 }

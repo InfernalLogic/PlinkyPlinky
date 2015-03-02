@@ -14,6 +14,16 @@ public class LevelHandler : Singleton<LevelHandler>
 	private GameObject loader;
 	private int current_level;
 
+  private void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
 	void Start()
 	{
     CheckForDuplicates();
@@ -35,12 +45,12 @@ public class LevelHandler : Singleton<LevelHandler>
 
 	public void LoadRandomLevel()
 	{
-		if (!disable_level_loading)
-		{
-      current_level = PickNewLevel();
-      LoadLevel(current_level);
-      PublishLevelLoadedMessage();
-		}
+    if (disable_level_loading)
+      return;
+
+    current_level = PickNewLevel();
+    LoadLevel(current_level);
+    PublishLevelLoadedMessage();
 	}
 
   public void LoadLevel(int target_level)
@@ -123,4 +133,17 @@ public class LevelHandler : Singleton<LevelHandler>
 	{
 		return current_level;
 	}
+
+  private void OnReset(ResetType type)
+  {
+    StartCoroutine(ResetNextFrame());
+  }
+
+  private IEnumerator ResetNextFrame()
+  {
+    //wait a frame so that all the savedstats can reset themselves properly
+    yield return new WaitForFixedUpdate();
+    UpdateUnlockedLevels();
+    LoadRandomLevel();
+  }
 }

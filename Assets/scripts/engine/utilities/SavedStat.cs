@@ -10,11 +10,21 @@ public class SavedStat : MonoBehaviour
   [SerializeField]
   protected int default_value_on_reset;
   [SerializeField]
-  private bool ignore_reset = false;
+  private bool ignore_soft_reset = false;
   [SerializeField]
   private bool ignore_hard_reset = false;
 
   private int loaded_value;
+
+  private void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
 
   protected void Awake()
   {
@@ -52,18 +62,12 @@ public class SavedStat : MonoBehaviour
     this.name = name;
   }
 
-  public virtual void Reset()
+  protected virtual void OnReset(ResetType type)
   {
-    if (!ignore_reset)
-      value = default_value_on_reset;
-  }
-
-  public virtual void HardReset()
-  {
-    if (!ignore_hard_reset)
+    if ((type == ResetType.SOFT && !ignore_soft_reset) ||
+        (type == ResetType.HARD && !ignore_hard_reset))
     {
       value = default_value_on_reset;
-      Debug.Log(GetKey() + " hard reset");
     }
   }
 

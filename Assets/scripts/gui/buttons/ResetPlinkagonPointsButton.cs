@@ -6,9 +6,8 @@ public class ResetPlinkagonPointsButton : Button
   public override void Display()
   {
     if (GUI.Button(display_rect.GetRect(), "", button_style))
-    {
-      MoneyTracker.Instance.ResetPlinkagonPoints();
-    }
+      Events.PublishPlinkagonRefund();
+
     DisplayTextLabel();
   }
 

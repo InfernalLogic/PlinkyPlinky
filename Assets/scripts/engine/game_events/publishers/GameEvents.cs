@@ -10,7 +10,6 @@ public static class GameEvents
   public static GameEvent level_loaded_event = new GameEvent("level_loaded_event");
   public static GameEvent level_completed_event = new GameEvent("level_completed_event");
   public static GameEvent multi_plink_event = new GameEvent("double_plink_event");
-  public static GameEvent game_reset_event = new GameEvent("game_reset_event");
 
   private static Publisher<GameEvent> publisher = new Publisher<GameEvent>();
 
