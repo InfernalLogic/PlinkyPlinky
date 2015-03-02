@@ -54,7 +54,7 @@ public class LevelCompletionBonusTracker : Singleton<LevelCompletionBonusTracker
 
   private void AnnounceBonus(int bonus)
   {
-    AchievementFloatingTextFactory.Instance.Announce("Level Complete Bonus\n(" +
+    AchievementFloatingTextFactory.Instance.AddAnnouncement("Level Complete Bonus\n(" +
       total_levels_unlocked.GetValue() + "%): " + bonus);
   }
 

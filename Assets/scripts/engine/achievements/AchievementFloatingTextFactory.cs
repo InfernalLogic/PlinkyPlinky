@@ -10,6 +10,7 @@ public class AchievementFloatingTextFactory : Singleton<AchievementFloatingTextF
   private FloatingText plinkagon_floating_text;
 
   private Subscriber<AchievementUnlocked> achievement_listener = new Subscriber<AchievementUnlocked>();
+  private static Queue<string> announcements = new Queue<string>();
 
   new void Awake()
   {
@@ -19,19 +20,30 @@ public class AchievementFloatingTextFactory : Singleton<AchievementFloatingTextF
 
   void Update()
   {
-    if (!achievement_listener.IsEmpty() && popup_display_timer.IsExpired())
+    if (!achievement_listener.IsEmpty())
     {
       AchievementPopupInfo popup_info = achievement_listener.ReadNewestMessage().popup_info;
 
-      Announce(GeneratePopupText(popup_info));
+      AddAnnouncement(GeneratePopupText(popup_info));
 
       PublishPlinkagonPointEarnedEvent();
       achievement_listener.DeleteNewestMessage();
+    }
+
+    if (announcements.Count > 0 && popup_display_timer.IsExpired())
+    {
+      DisplayAnnouncement(announcements.Peek());
       popup_display_timer.Reset();
+      announcements.Dequeue();
     }
   }
 
-  public void Announce(string text)
+  public void AddAnnouncement(string text)
+  {
+    announcements.Enqueue(text);
+  }
+
+  private void DisplayAnnouncement(string text)
   {
     FloatingText new_text = (FloatingText)Instantiate(plinkagon_floating_text, Vector3.zero, transform.rotation);
     new_text.SetText(text);
