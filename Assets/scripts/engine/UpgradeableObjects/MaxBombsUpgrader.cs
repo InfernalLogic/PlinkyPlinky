@@ -14,7 +14,7 @@ public class MaxBombsUpgrader : UpgradeableObject
   {
     if (PlayerHasEnoughCurrency() && UpgradesNotMaxedOut())
     {
-      MoneyTracker.Instance().SpendMoney(upgrade_cost);
+      MoneyTracker.Instance.SpendMoney(upgrade_cost);
       ++value;
       RecalculateUpgradeCost();
       UpgradeEvents.Publish(UpgradeEvents.max_bombs_upgraded);

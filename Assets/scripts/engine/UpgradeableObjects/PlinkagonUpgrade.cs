@@ -16,7 +16,7 @@ public class PlinkagonUpgrade : UpgradeableObject
   {
     if (PlayerHasEnoughCurrency() && UpgradesNotMaxedOut())
     {
-      MoneyTracker.Instance().SpendPlinkagonPoints(upgrade_cost);
+      MoneyTracker.Instance.SpendPlinkagonPoints(upgrade_cost);
       ++value;
       UpgradeEvents.Publish(UpgradeEvents.clone_balls_upgraded);
     }

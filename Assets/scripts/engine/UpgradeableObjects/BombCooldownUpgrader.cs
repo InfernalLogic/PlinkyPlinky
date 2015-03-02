@@ -15,7 +15,7 @@ public class BombCooldownUpgrader : UpgradeableObject
   {
     if (PlayerHasEnoughCurrency() && UpgradesNotMaxedOut())
     {
-      MoneyTracker.Instance().SpendMoney(upgrade_cost);
+      MoneyTracker.Instance.SpendMoney(upgrade_cost);
       ++value;
       RecalculateUpgradeCost();
       UpgradeEvents.Publish(UpgradeEvents.bomb_cooldown_upgraded);

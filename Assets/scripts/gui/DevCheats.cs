@@ -15,16 +15,16 @@ public class DevCheats : MonoBehaviour
 	void Update () 
   {
 	  if (Input.GetKeyDown(KeyCode.C))
-      MoneyTracker.Instance().AddMoney(10000);
+      MoneyTracker.Instance.AddMoney(10000);
 
     if (Input.GetKeyDown(KeyCode.R))
-      LevelHandler.Instance().LoadRandomLevel();
+      LevelHandler.Instance.LoadRandomLevel();
 
     if (Input.GetKeyDown(KeyCode.U))
       FindObjectOfType<LevelUnlocker>().UnlockAllLevels();
 
     if (Input.GetKeyDown(KeyCode.P))
-      MoneyTracker.Instance().AddPlinkagonPoints(5);
+      MoneyTracker.Instance.AddPlinkagonPoints(5);
 	}
 
   void OnGUI()

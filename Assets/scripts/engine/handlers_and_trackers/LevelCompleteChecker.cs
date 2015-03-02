@@ -72,7 +72,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
   private void LoadNewLevel()
   {
     level_completed = false;
-    LevelHandler.Instance().LoadRandomLevel();
+    LevelHandler.Instance.LoadRandomLevel();
   }
 
   private bool NewLevelCountdownCooledDown()

@@ -8,8 +8,6 @@ public class PegScript : MonoBehaviour
   [SerializeField]
   private GameEvent peg_hit_event;
   [SerializeField]
-	private int hit_points = 1;
-  [SerializeField]
   private ParticleSystem collision_emitter;
 
 	void OnCollisionEnter2D(Collision2D collision)

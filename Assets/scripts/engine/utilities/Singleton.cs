@@ -2,6 +2,7 @@
 
 public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
 {
+  public static T Instance { get { return SafeInstance(); } }
   private static T instance;
 
   protected void Awake()
@@ -9,14 +10,14 @@ public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
     CheckForDuplicates();
   }
 
-  public static T Instance()
+  private static T SafeInstance()
   {
-    if (instance == null)
+    if (!instance)
     {
       instance = FindObjectOfType<T>();
-      if (instance == null)
+      if (!instance)
       {
-        Debug.LogError("No instance of " + typeof(T).ToString() + " was found. Instantiating a new singleton.");
+        Debug.LogWarning("No instance of " + typeof(T).ToString() + " was found. Creating new instance...");
         GameObject new_instance = new GameObject();
 
         new_instance.AddComponent<T>();

@@ -53,7 +53,7 @@ public class LevelHandler : Singleton<LevelHandler>
                                     levels[current_level].transform.position,
                                     levels[current_level].transform.rotation) as GameObject;
 
-    LevelCompleteChecker.Instance().CountCoins();
+    LevelCompleteChecker.Instance.CountCoins();
   }
 
   private static void PublishLevelLoadedMessage()
@@ -63,7 +63,7 @@ public class LevelHandler : Singleton<LevelHandler>
 
   private void ClearLevel()
   {
-    LevelCompleteChecker.Instance().SetCoinsLeftToZero();
+    LevelCompleteChecker.Instance.SetCoinsLeftToZero();
     DestroyAllWithTag("bomb");
     DestroyAllWithTag("bumper");
     DestroyAllWithTag("peg");

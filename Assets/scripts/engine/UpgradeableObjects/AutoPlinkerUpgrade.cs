@@ -5,7 +5,7 @@ public class AutoPlinkerUpgrade : UpgradeableObject
 {
   AutoPlinker auto_plinker;
 
-  private void Start()
+  new private void Start()
   {
     base.Start();
     auto_plinker = FindObjectOfType<AutoPlinker>();
@@ -20,7 +20,7 @@ public class AutoPlinkerUpgrade : UpgradeableObject
   {
     if (PlayerHasEnoughCurrency() && UpgradesNotMaxedOut())
     {
-      MoneyTracker.Instance().SpendMoney(upgrade_cost);
+      MoneyTracker.Instance.SpendMoney(upgrade_cost);
       if (value == 0)
         auto_plinker.StartInitialCooldown();
 

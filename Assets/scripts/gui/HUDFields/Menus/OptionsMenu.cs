@@ -77,17 +77,23 @@ public class OptionsMenu : HUDField
     }
   }
 
-  private void ResetGame()
+  private void SoftReset()
   {
-    UpgradeHandler.Instance().ResetStats();
-    LevelHandler.Instance().LoadRandomLevel();
+    UpgradeHandler.Instance.ResetStats();
+    LevelHandler.Instance.LoadRandomLevel();
+
+    Events.PublishReset(ResetType.SOFT);
+
     Debug.Log("Game reset");
   }
 
   private void HardResetGame()
   {
-    UpgradeHandler.Instance().HardResetStats();
-    LevelHandler.Instance().LoadRandomLevel();
+    UpgradeHandler.Instance.HardResetStats();
+    LevelHandler.Instance.LoadRandomLevel();
+
+    Events.PublishReset(ResetType.HARD);
+
     Debug.Log("Game hard reset");
   }
 
@@ -121,7 +127,7 @@ public class OptionsMenu : HUDField
   {
     if (YesButtonIsPressed())
     {
-      ResetGame();
+      SoftReset();
       display_reset_confirmation_window = false;
     }
     if (NoButtonIsPressed())
@@ -161,7 +167,7 @@ public class OptionsMenu : HUDField
   {
     if (MuteSoundEffectsButtonIsPressed())
     {
-      if (AudioHandler.Instance().mute_sfx.IsTrue())
+      if (AudioHandler.Instance.mute_sfx.IsTrue())
         UnmuteSoundEffects();
       else
         MuteSoundEffects();
@@ -172,7 +178,7 @@ public class OptionsMenu : HUDField
   {
     if (MuteMusicButtonIsPressed())
     {
-      if (AudioHandler.Instance().mute_bgm.IsTrue())
+      if (AudioHandler.Instance.mute_bgm.IsTrue())
         UnmuteMusic();
       else
         MuteMusic();
@@ -181,27 +187,27 @@ public class OptionsMenu : HUDField
 
   private void MuteSoundEffects()
   {
-    AudioHandler.Instance().MuteSFX();
+    AudioHandler.Instance.MuteSFX();
   }
 
   private void UnmuteSoundEffects()
   {
-    AudioHandler.Instance().UnmuteSFX();
+    AudioHandler.Instance.UnmuteSFX();
   }
 
   private void MuteMusic()
   {
-    AudioHandler.Instance().MuteBGM();
+    AudioHandler.Instance.MuteBGM();
   }
 
   private void UnmuteMusic()
   {
-    AudioHandler.Instance().UnmuteBGM();
+    AudioHandler.Instance.UnmuteBGM();
   }
 
   private bool MuteSoundEffectsButtonIsPressed()
   {
-    if (AudioHandler.Instance().mute_sfx.IsTrue())
+    if (AudioHandler.Instance.mute_sfx.IsTrue())
       return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Unmute sounds", button_style);
     else
       return GUI.Button(mute_sound_effects_button_rect.GetRect(), "Mute sounds", button_style);
@@ -209,7 +215,7 @@ public class OptionsMenu : HUDField
 
   private bool MuteMusicButtonIsPressed()
   {
-    if (AudioHandler.Instance().mute_bgm.IsTrue())
+    if (AudioHandler.Instance.mute_bgm.IsTrue())
       return GUI.Button(mute_music_button_rect.GetRect(), "Unmute music", button_style);
     else
       return GUI.Button(mute_music_button_rect.GetRect(), "Mute music", button_style);
@@ -218,7 +224,7 @@ public class OptionsMenu : HUDField
   void DisplayCurrentLevel()
   {
     GUI.Label(current_level_display_rect.GetRect(),
-               "Playing stage: " + LevelHandler.Instance().GetCurrentLevel(), label_style);
+               "Playing stage: " + LevelHandler.Instance.GetCurrentLevel(), label_style);
   }
 
 }

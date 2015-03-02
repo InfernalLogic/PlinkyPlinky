@@ -69,6 +69,7 @@
      <Compile Include="Assets\scripts\engine\achievements\AchievementFloatingTextFactory.cs" />
      <Compile Include="Assets\scripts\engine\achievements\AchievementPopupInfo.cs" />
      <Compile Include="Assets\scripts\engine\achievements\TotalMoneyEarnedAchievementChain.cs" />
+     <Compile Include="Assets\scripts\engine\game_events\Events.cs" />
      <Compile Include="Assets\scripts\engine\game_events\Subscriber.cs" />
      <Compile Include="Assets\scripts\engine\game_events\event_classes\AchievementUnlocked.cs" />
      <Compile Include="Assets\scripts\engine\game_events\event_classes\CoinHitEvent.cs" />
@@ -143,6 +144,7 @@
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\projectiles\BumperProjectile.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\projectiles\ObjectLauncher.cs" />
      <Compile Include="Assets\scripts\in_game_objects\set_pieces\projectiles\PegProjectile.cs" />
+     <None Include="Assets\changelogs\v1.03a.txt" />
      <None Include="Assets\fonts\Liberation\Red Hat Liberation License.txt" />
      <None Include="Assets\thumbnails\htmlshit.txt" />
      <None Include="Assets\changelogs\v1.03.txt" />

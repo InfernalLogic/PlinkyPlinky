@@ -52,7 +52,7 @@ public class PlinkagonMenu : HUDField
     GUI.Label(plinkagon_point_display_rect.GetRect(), "Plinkagon Points: ", label_style);
 
     label_style.alignment = TextAnchor.MiddleRight;
-    GUI.Label(plinkagon_point_display_rect.GetRect(), MoneyTracker.Instance().GetCurrentPlinkagonPoints().ToString(), label_style);
+    GUI.Label(plinkagon_point_display_rect.GetRect(), MoneyTracker.Instance.GetCurrentPlinkagonPoints().ToString(), label_style);
     label_style.alignment = original_alignment;
   }
 

@@ -8,18 +8,28 @@ public class BombCooldownTimer : Timer
 
   private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
 
-  void Awake()
+  private void Awake()
   {
     UpgradeEvents.AddSubscriber(subscriber);
     GameEvents.AddSubscriber(subscriber);
   }
 
-  void Start()
+  private void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents -= OnReset;
+  }
+
+  private void Start()
   {
     RecalculateDuration();
   }
 
-  void Update()
+  private void Update()
   {
     while (!subscriber.IsEmpty())
     {
@@ -40,5 +50,16 @@ public class BombCooldownTimer : Timer
   public float GetDuration()
   {
     return duration;
+  }
+
+  private void OnReset(ResetType type)
+  {
+    StartCoroutine(RecalculateDurationNextFrame());
+  }
+
+  private IEnumerator RecalculateDurationNextFrame()
+  {
+    yield return new WaitForFixedUpdate();
+    RecalculateDuration();
   }
 }

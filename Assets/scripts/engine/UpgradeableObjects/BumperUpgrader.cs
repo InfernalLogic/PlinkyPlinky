@@ -12,4 +12,9 @@ public class BumperUpgrader : ScoringObjectUpgrade
   {
     point_value = value * 2;
   }
+
+  public override int GetNextPointValue()
+  {
+    return point_value + 2;
+  }
 }

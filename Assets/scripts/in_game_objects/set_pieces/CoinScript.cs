@@ -32,7 +32,7 @@ public class CoinScript : MonoBehaviour
 
     if (multiplier > 1)
     {
-      CoinMultiplierFloatingTextFactory.Instance().GenerateMultiplierPopup(multiplier, transform.position);
+      CoinMultiplierFloatingTextFactory.Instance.GenerateMultiplierPopup(multiplier, transform.position);
     }
 
     Destroy(gameObject);

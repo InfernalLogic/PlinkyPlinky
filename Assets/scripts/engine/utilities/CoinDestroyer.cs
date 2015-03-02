@@ -31,7 +31,7 @@ public class CoinDestroyer : MonoBehaviour
         else
         {
           destruction_in_progress = false;
-          LevelCompleteChecker.Instance().CountCoins();
+          LevelCompleteChecker.Instance.CountCoins();
         }
       }
     }

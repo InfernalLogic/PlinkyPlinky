@@ -44,7 +44,7 @@ public class BombIsReadyChecker : Singleton<BombIsReadyChecker>
 
   private bool LevelNotCompleted()
   {
-    return !LevelCompleteChecker.Instance().IsLevelCompleted();
+    return !LevelCompleteChecker.Instance.IsLevelCompleted();
   }
 
   private bool MaxBombsNotExceeded()

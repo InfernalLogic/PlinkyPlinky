@@ -26,14 +26,14 @@ public class MoneyTracker : Singleton<MoneyTracker>
       {
         CoinHitEvent coin_event = (CoinHitEvent)game_event_listener.ReadNewestMessage();
 
-        int money_to_add = coin_event.GetMultiplier() * UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue();
+        int money_to_add = coin_event.GetMultiplier() * UpgradeHandler.Instance.FindScoringObjectByKey(CurrentEventKey()).GetPointValue();
 
         AddMoney(money_to_add);
         PublishMoneyEarnedEvent(money_to_add);
       }
-      else if (UpgradeHandler.Instance().ContainsKey(CurrentEventKey()))
+      else if (UpgradeHandler.Instance.ContainsKey(CurrentEventKey()))
       {
-        int money_to_add = UpgradeHandler.Instance().FindScoringObjectByKey(CurrentEventKey()).GetPointValue();
+        int money_to_add = UpgradeHandler.Instance.FindScoringObjectByKey(CurrentEventKey()).GetPointValue();
         AddMoney(money_to_add);
         PublishMoneyEarnedEvent(money_to_add);
       }

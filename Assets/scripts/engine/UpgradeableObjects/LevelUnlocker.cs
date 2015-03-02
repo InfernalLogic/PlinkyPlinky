@@ -13,26 +13,26 @@ public class LevelUnlocker : UpgradeableObject
       
       GetComponentInChildren<CoinDestroyer>().DestroyAllCoins();
 
-      LevelHandler.Instance().load_newest_level_next = true;
-      LevelCompleteChecker.Instance().CountCoins();
+      LevelHandler.Instance.load_newest_level_next = true;
+      LevelCompleteChecker.Instance.CountCoins();
       UpdateUnlockedLevels();
-      LevelCompletionBonusTracker.Instance().AddUnlockedLevel();
+      LevelCompletionBonusTracker.Instance.AddUnlockedLevel();
     }
   }
 
   private static void UpdateUnlockedLevels()
   {
-    LevelHandler.Instance().UpdateUnlockedLevels();
+    LevelHandler.Instance.UpdateUnlockedLevels();
   }
 
   private void SpendUpgradeCost()
   {
-    MoneyTracker.Instance().SpendMoney(upgrade_cost);
+    MoneyTracker.Instance.SpendMoney(upgrade_cost);
   }
 
   private void LoadNewlyUnlockedLevel()
   {
-    LevelHandler.Instance().LoadLevel(value - 1);
+    LevelHandler.Instance.LoadLevel(value - 1);
   }
 
   public override void RecalculateUpgradeCost()

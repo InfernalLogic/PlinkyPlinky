@@ -64,7 +64,7 @@ public class UpgradeHandler : Singleton<UpgradeHandler>
     RecalculateUpgradeCosts();
     RecalculateScoringObjectPointValues();
 
-    LevelHandler.Instance().UpdateUnlockedLevels();
+    LevelHandler.Instance.UpdateUnlockedLevels();
   }
 
   private static void RecalculateScoringObjectPointValues()

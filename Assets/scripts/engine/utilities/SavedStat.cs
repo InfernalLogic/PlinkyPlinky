@@ -55,10 +55,7 @@ public class SavedStat : MonoBehaviour
   public virtual void Reset()
   {
     if (!ignore_reset)
-    {
       value = default_value_on_reset;
-      Debug.Log(GetKey() + " reset");
-    }
   }
 
   public virtual void HardReset()

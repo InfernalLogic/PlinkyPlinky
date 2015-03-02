@@ -21,27 +21,41 @@ public class LevelCompletionBonusTracker : Singleton<LevelCompletionBonusTracker
       total_levels_unlocked.AddValue(current_levels_unlocked);
   }
 
+  private void OnEnable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
+  private void OnDisable()
+  {
+    Events.ResetEvents += OnReset;
+  }
+
   private void Update()
   {
     while (!subscriber.IsEmpty())
     {
       if (CurrentEventKey() == "money_earned_event")
-      {
         temp_storage += ((MoneyEarnedGameEvent)subscriber.ReadNewestMessage()).value;
-      }
       
       if (CurrentEventKey() == GameEvents.level_completed_event.name)
       {
         int bonus = CalculateBonus();
 
         if (bonus > 0)
-          AchievementFloatingTextFactory.Instance().Announce("Level Complete\nBonus: " + bonus);
+          AnnounceBonus(bonus);
 
-        MoneyTracker.Instance().AddMoney(bonus);
+        MoneyTracker.Instance.AddMoney(bonus);
       }
 
       subscriber.DeleteNewestMessage();
     }
+  }
+
+  private void AnnounceBonus(int bonus)
+  {
+    AchievementFloatingTextFactory.Instance.Announce("Level Complete Bonus\n(" +
+      total_levels_unlocked.GetValue() + "%): " + bonus);
   }
 
   private IEnumerator DumpTempStorage()
@@ -57,6 +71,8 @@ public class LevelCompletionBonusTracker : Singleton<LevelCompletionBonusTracker
   {
     yield return new WaitForSeconds(30.0f);
     stored_cash -= value;
+    if (stored_cash < 0)
+      stored_cash = 0;
   }
 
   private string CurrentEventKey()
@@ -72,5 +88,11 @@ public class LevelCompletionBonusTracker : Singleton<LevelCompletionBonusTracker
   public void AddUnlockedLevel()
   {
     total_levels_unlocked.AddValue(1);
+  }
+
+  private void OnReset(ResetType type)
+  {
+    stored_cash = 0;
+    temp_storage = 0;
   }
 }

@@ -39,13 +39,13 @@ public class PegHunter : MonoBehaviour
     yield return new WaitForSeconds(0.5f);
     acceleration *= 1.2f;
     StartCoroutine(IncreaseAcceleration());
-  }
+  }//
 
   public void FindNewTarget()
   {
     RaycastHit2D closest_popper = Physics2D.CircleCast(transform.position, 100.0f, Vector2.zero, 1.0f, popper_layer);
 
-    if (closest_popper == null)
+    if (closest_popper.collider == null)
       Destroy(this.gameObject);
 
     target = closest_popper.collider.gameObject;

@@ -7,7 +7,7 @@ public class ResetPlinkagonPointsButton : Button
   {
     if (GUI.Button(display_rect.GetRect(), "", button_style))
     {
-      MoneyTracker.Instance().ResetPlinkagonPoints();
+      MoneyTracker.Instance.ResetPlinkagonPoints();
     }
     DisplayTextLabel();
   }

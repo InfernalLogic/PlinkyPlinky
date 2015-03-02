@@ -28,7 +28,7 @@ abstract public class ScoringObjectUpgrade : UpgradeableObject
 		if (PlayerHasEnoughCurrency())
 		{
       ++value;
-			MoneyTracker.Instance().SpendMoney(upgrade_cost);
+			MoneyTracker.Instance.SpendMoney(upgrade_cost);
       RecalculatePointValue();
 			RecalculateUpgradeCost();
 		}

@@ -19,7 +19,6 @@ public class Plinker : MonoBehaviour
   private Color bomb_ready_color;
 
   private Vector3 starting_position;
-  private AutoPlinker auto_plinker;
 
   private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
 
@@ -35,7 +34,6 @@ public class Plinker : MonoBehaviour
     InitializeCooldownColors();
 
     starting_position = transform.position;
-    auto_plinker = FindObjectOfType<AutoPlinker>();
 
     StartCoroutine(OutOfBoundsCheck());
   }
@@ -44,7 +42,7 @@ public class Plinker : MonoBehaviour
 	{
     MovePlinker();
 
-    if (BombIsReadyChecker.Instance().BombIsReady())
+    if (BombIsReadyChecker.Instance.BombIsReady())
       renderer.material.color = bomb_ready_color;
     else
       renderer.material.color = bomb_cooling_down_color;
@@ -52,9 +50,8 @@ public class Plinker : MonoBehaviour
     if (!subscriber.IsEmpty())
     {
       if (subscriber.ReadNewestMessage() == GameEvents.game_reset_event)
-      {
         transform.position = starting_position;
-      }
+
       subscriber.DeleteNewestMessage();
     }
 	}
@@ -90,9 +87,7 @@ public class Plinker : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D trigger)
 	{
 		if (trigger.tag == "plinker_reverse_trigger")
-		{
 			ReverseDirection ();
-		}
 	}
 
   void ReverseDirection()
@@ -111,16 +106,12 @@ public class Plinker : MonoBehaviour
 
   public void AutoDrop()
   {
-    if (BombIsReady())
-    {
-      Instantiate(selected_bomb, transform.position, transform.rotation);
-      PublishBombDroppedEvent();
-    }
+    DropBall();
   }
 
   private bool BombIsReady()
   {
-    return BombIsReadyChecker.Instance().BombIsReady();
+    return BombIsReadyChecker.Instance.BombIsReady();
   }
     
   private void PublishBombDroppedEvent()

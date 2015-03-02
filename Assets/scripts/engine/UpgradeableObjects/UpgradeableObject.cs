@@ -36,9 +36,9 @@ abstract public class UpgradeableObject : SavedStat
 	public virtual bool PlayerHasEnoughCurrency()
 	{
     if (!is_plinkagon_upgrade)
-      return (MoneyTracker.Instance().GetCurrentMoney() >= upgrade_cost);
+      return (MoneyTracker.Instance.GetCurrentMoney() >= upgrade_cost);
     else
-      return (MoneyTracker.Instance().GetCurrentPlinkagonPoints() >= upgrade_cost);
+      return (MoneyTracker.Instance.GetCurrentPlinkagonPoints() >= upgrade_cost);
 	}
 
   public int GetUpgradesOnReset()

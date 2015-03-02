@@ -37,7 +37,7 @@ public class ScoreTicker : HUDField
     GUI.Label(money_display_rect.GetRect(), "$: ", label_style);
 
     label_style.alignment = TextAnchor.MiddleRight;
-    GUI.Label(money_display_rect.GetRect(), MoneyTracker.Instance().GetCurrentMoney().ToString(), label_style);
+    GUI.Label(money_display_rect.GetRect(), MoneyTracker.Instance.GetCurrentMoney().ToString(), label_style);
     label_style.alignment = original_alignment;
 	}
 
