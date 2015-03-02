@@ -30,7 +30,9 @@ public class LevelHandler : Singleton<LevelHandler>
     FindObjectOfType<LevelUnlocker>().SetMaxUpgrades(levels.Length);
 
     LoadUnlockedLevels(PlayerPrefs.GetInt(LevelUnlockerPlayerPrefsKey(), 3));
-		LoadRandomLevel();
+
+    if (!disable_level_loading)
+		  LoadRandomLevel();
 	}
 
   private int DefaultLevelsToUnlockOnReset()
@@ -45,9 +47,6 @@ public class LevelHandler : Singleton<LevelHandler>
 
 	public void LoadRandomLevel()
 	{
-    if (disable_level_loading)
-      return;
-
     current_level = PickNewLevel();
     LoadLevel(current_level);
     PublishLevelLoadedMessage();
