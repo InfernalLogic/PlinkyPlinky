@@ -10,15 +10,10 @@ public class ObjectWheel : GeometricSpawner
   [SerializeField]
   protected float wheel_radius = 1.0f;
   [SerializeField]
-  protected GameObject object_on_wheel;
-  [SerializeField]
   protected float rotation_speed = 0.0f;
   [SerializeField]
   protected float starting_rotation = 0.0f;
 
-  protected List<GameObject> children = new List<GameObject>();
-
-  private GameObject new_object;
   private Vector3 wheel_rotator = Vector3.zero;
 
   void Update()
@@ -31,50 +26,28 @@ public class ObjectWheel : GeometricSpawner
     transform.Rotate(wheel_rotator * Time.deltaTime);
   }
 
-  protected bool OutdatedChildrenFound()
-  {
-    return transform.childCount > 0;
-  }
-
   protected override void SpawnObjects()
   {
-    double degrees_between_objects = 360.0 / object_count;
-    double current_object_rotation = degrees_between_objects;
-
-    Vector3 rotator = Vector3.zero;
-    rotator.z = (float)current_object_rotation;
-
     for (int i = 0; i < object_count; ++i)
-    {
-      new_object = AddObjectToWheel();
-      MakeObjectAChild(new_object);
-      SetObjectRotation(new_object, rotator);
-      MoveObjectToPerimeterOfCircle(new_object);
-
-      current_object_rotation += degrees_between_objects;
-
-      rotator.z = (float)current_object_rotation;
-
-      children.Add(new_object);
-    }
+      AddObjectNumber(i);
 
     wheel_rotator.z = rotation_speed;
   }
 
-  protected void MoveObjectToPerimeterOfCircle(GameObject target_object)
+  private void AddObjectNumber(int number)
   {
-    target_object.transform.position = transform.TransformPoint(wheel_radius * target_object.transform.right);
+    Vector3 new_position = Vector3.up * wheel_radius;
+    float coefficient = (float)number / (float)object_count;
+    float rotation = 360.0f * coefficient + starting_rotation;
+
+    new_position = RotateVector(new_position, rotation);
+    SpawnNewObjectAt(new_position);
+    SetObjectRotation(new_object, rotation);
   }
 
-  protected void SetObjectRotation(GameObject target_object, Vector3 rotation)
+  protected void SetObjectRotation(GameObject target_object, float rotation)
   {
-    Vector3 adjusted_rotation = new Vector3(rotation.x, rotation.y, rotation.z + starting_rotation);
+    Vector3 adjusted_rotation = new Vector3(0.0f, 0.0f, rotation);
     target_object.transform.Rotate(adjusted_rotation);
-  }
-
-  protected GameObject AddObjectToWheel()
-  {
-  return GameObject.Instantiate(object_on_wheel, transform.TransformPoint(transform.position),
-                                transform.rotation) as GameObject;
   }
 }

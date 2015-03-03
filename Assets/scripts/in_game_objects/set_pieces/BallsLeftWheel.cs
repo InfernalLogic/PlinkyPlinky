@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BallsLeftWheel : ObjectWheel 
 {
   private MaxBombsUpgrader max_bombs;
-
   private Subscriber<GameEvent> subscriber = new Subscriber<GameEvent>();
+  private List<GameObject> children = new List<GameObject>();
 
   private void OnEnable()
   {
@@ -17,8 +18,9 @@ public class BallsLeftWheel : ObjectWheel
     Events.ResetEvents -= OnReset;
   }
 
-  void Awake()
+  protected override void Awake()
   {
+    base.Awake();
     max_bombs = FindObjectOfType<MaxBombsUpgrader>();
     UpgradeEvents.AddSubscriber(subscriber);
     GameEvents.AddSubscriber(subscriber);
@@ -27,6 +29,9 @@ public class BallsLeftWheel : ObjectWheel
   void Start()
   {
     RespawnWheel();
+
+    foreach (Transform child in transform)
+      children.Add(child.gameObject);
   }
 
   void Update()
@@ -34,9 +39,7 @@ public class BallsLeftWheel : ObjectWheel
     while (!subscriber.IsEmpty())
     {
       if (subscriber.ReadNewestMessage() == UpgradeEvents.max_bombs_upgraded)
-      {
         RespawnWheel();
-      }
 
       subscriber.DeleteNewestMessage();
     }
@@ -48,7 +51,7 @@ public class BallsLeftWheel : ObjectWheel
       else
         children[i].transform.renderer.enabled = true;
     }
-
+     
     RotateWheel();
   }
 

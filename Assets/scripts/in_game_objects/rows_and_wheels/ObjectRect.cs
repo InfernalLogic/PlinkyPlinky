@@ -11,12 +11,8 @@ public class ObjectRect : GeometricSpawner
   private float width = 3.0f;
   [SerializeField]
   private int objects_on_width = 1;
-  [SerializeField]
-  private GameObject object_on_rect;
 
   private Vector2[] corners = new Vector2[4]; //counter-clockwise from top right
-
-  private GameObject new_object;
 
   protected override void SpawnObjects()
   {
@@ -34,6 +30,7 @@ public class ObjectRect : GeometricSpawner
     for (int i = 0; i < corners.GetLength(0); ++i)
     {
       corners[i] = RotateVector(offset, (float)(90 * i));
+      print(i + ": " + corners[i] + "(was) " + offset);
       SpawnNewObjectAt(corners[i]);
     }
   }
@@ -44,22 +41,5 @@ public class ObjectRect : GeometricSpawner
 
     for (int i = 1; i <= object_count; ++i)
       SpawnNewObjectAt(starting_corner + side * ((float)i / (float)(object_count + 1)));
-  }
-
-  protected void SpawnNewObjectAt(Vector3 target)
-  {
-    new_object = GameObject.Instantiate(object_on_rect, transform.TransformPoint(transform.position),
-                                  transform.rotation) as GameObject;
-
-    new_object.transform.position = transform.TransformPoint(target);
-
-    MakeObjectAChild(new_object);
-  }
-
-  private Vector3 RotateVector(Vector3 vector, float angle)
-  {
-    vector.x = Mathf.Cos(Mathf.Deg2Rad * angle) * vector.x - Mathf.Sin(Mathf.Deg2Rad * angle) * vector.x;
-    vector.y = Mathf.Cos(Mathf.Deg2Rad * angle) * vector.y + Mathf.Sin(Mathf.Deg2Rad * angle) * vector.y;
-    return vector;
   }
 }
