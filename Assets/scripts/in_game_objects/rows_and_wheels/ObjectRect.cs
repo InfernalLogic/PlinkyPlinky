@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class ObjectRect : MonoBehaviour 
+public class ObjectRect : GeometricSpawner 
 {
   [SerializeField]
   private float height = 3.0f;
@@ -14,19 +14,11 @@ public class ObjectRect : MonoBehaviour
   [SerializeField]
   private GameObject object_on_rect;
 
-  private Vector2[] corners = new Vector2[4]; //clockwise from top right
+  private Vector2[] corners = new Vector2[4]; //counter-clockwise from top right
 
   private GameObject new_object;
 
-  void Awake()
-  {
-    if (OutdatedChildrenFound())
-      DestroyAllChildren();
-
-    SpawnRectObjects();
-  }
-
-  private void SpawnRectObjects()
+  protected override void SpawnObjects()
   {
     SpawnCornerObjects();
     SpawnSideObjects(corners[0], corners[1], objects_on_width);
@@ -54,22 +46,6 @@ public class ObjectRect : MonoBehaviour
       SpawnNewObjectAt(starting_corner + side * ((float)i / (float)(object_count + 1)));
   }
 
-  protected bool OutdatedChildrenFound()
-  {
-    return transform.childCount > 0;
-  }
-
-  protected void DestroyAllChildren()
-  {
-    List<GameObject> children = new List<GameObject>();
-
-    foreach (Transform child in transform)
-      children.Add(child.gameObject);
-
-    foreach (GameObject child in children)
-      DestroyImmediate(child);
-  }
-
   protected void SpawnNewObjectAt(Vector3 target)
   {
     new_object = GameObject.Instantiate(object_on_rect, transform.TransformPoint(transform.position),
@@ -77,7 +53,7 @@ public class ObjectRect : MonoBehaviour
 
     new_object.transform.position = transform.TransformPoint(target);
 
-    new_object.transform.parent = gameObject.transform;
+    MakeObjectAChild(new_object);
   }
 
   private Vector3 RotateVector(Vector3 vector, float angle)

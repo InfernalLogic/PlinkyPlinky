@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [ExecuteInEditMode]
-public class ObjectWheel : MonoBehaviour
+public class ObjectWheel : GeometricSpawner
 {
   [SerializeField]
   protected int object_count = 1;
@@ -21,15 +21,6 @@ public class ObjectWheel : MonoBehaviour
   private GameObject new_object;
   private Vector3 wheel_rotator = Vector3.zero;
 
-  void Awake()
-  {
-    if (OutdatedChildrenFound())
-      DestroyAllChildren();
-
-    SpawnWheelObjects();
-  }
-
-
   void Update()
   {
     RotateWheel();
@@ -40,27 +31,12 @@ public class ObjectWheel : MonoBehaviour
     transform.Rotate(wheel_rotator * Time.deltaTime);
   }
 
-  protected void DestroyAllChildren()
-  {
-    foreach (Transform child in transform)
-    {
-      children.Add(child.gameObject);
-    }
-
-    foreach (GameObject child in children)
-    {
-      DestroyImmediate(child);
-    }
-
-    children.Clear();
-  }
-
   protected bool OutdatedChildrenFound()
   {
     return transform.childCount > 0;
   }
 
-  protected virtual void SpawnWheelObjects()
+  protected override void SpawnObjects()
   {
     double degrees_between_objects = 360.0 / object_count;
     double current_object_rotation = degrees_between_objects;
@@ -83,7 +59,6 @@ public class ObjectWheel : MonoBehaviour
     }
 
     wheel_rotator.z = rotation_speed;
-
   }
 
   protected void MoveObjectToPerimeterOfCircle(GameObject target_object)
@@ -95,11 +70,6 @@ public class ObjectWheel : MonoBehaviour
   {
     Vector3 adjusted_rotation = new Vector3(rotation.x, rotation.y, rotation.z + starting_rotation);
     target_object.transform.Rotate(adjusted_rotation);
-  }
-
-  protected void MakeObjectAChild(GameObject target_object)
-  {
-    target_object.transform.parent = gameObject.transform;
   }
 
   protected GameObject AddObjectToWheel()

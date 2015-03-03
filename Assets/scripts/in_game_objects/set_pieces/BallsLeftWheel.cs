@@ -56,7 +56,7 @@ public class BallsLeftWheel : ObjectWheel
   {
     object_count = max_bombs.GetValue();
     DestroyAllChildren();
-    SpawnWheelObjects();
+    SpawnObjects();
   }
 
   private void OnReset(ResetType type)
