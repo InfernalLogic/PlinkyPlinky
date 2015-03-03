@@ -45,6 +45,7 @@ public class ChildScaler : MonoBehaviour
         else
           target = child.StartingPosition;
 
+        target = RotateVector(target, transform.rotation.z);
         MoveChild(child, target);
         CheckForDirectionChange(target, child);
       }
@@ -57,7 +58,6 @@ public class ChildScaler : MonoBehaviour
 
   private void MoveChild(ChildScalerTarget child, Vector3 target)
   {
-    target = RotateVector(target, transform.rotation.z);
     child.Target.transform.localPosition = Vector3.Slerp(child.Target.transform.localPosition,
                                                          target,
                                                          smoothing * Time.deltaTime);
