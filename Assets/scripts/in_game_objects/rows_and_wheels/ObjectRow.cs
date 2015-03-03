@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class ObjectRow : MonoBehaviour 
 {
   [SerializeField]
@@ -12,10 +11,12 @@ public class ObjectRow : MonoBehaviour
   private GameObject object_in_row;
   [SerializeField]
   private Vector3 slope = Vector3.right;
+  [SerializeField]
+  private bool is_centered = false;
 
 	private GameObject new_object;
 
-	void Start()
+	void Awake()
 	{
 		SpawnRow ();
 	}
@@ -47,10 +48,13 @@ public class ObjectRow : MonoBehaviour
                                          transform.rotation) as GameObject;
   }
 
-  private Vector3 CalculateObjectPosition(int object_count)
+  private Vector3 CalculateObjectPosition(int index)
   {
-
-    return (slope.normalized * distance_between_objects) * (float)object_count;
+    if (!is_centered)
+      return (slope.normalized * distance_between_objects) * (float)index;
+    else
+      return (slope.normalized * distance_between_objects) * 
+             (float)(-1 + (index % 2) * 2) * ((index + 1) / 2);
   }
 
   public void SetObjectCount(int object_count)
