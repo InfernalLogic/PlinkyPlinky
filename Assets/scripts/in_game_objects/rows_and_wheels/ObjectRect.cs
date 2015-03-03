@@ -27,12 +27,13 @@ public class ObjectRect : GeometricSpawner
   {
     Vector3 offset = new Vector3(width, height);
 
+    corners[0] = offset;
+    corners[1] = new Vector3(-offset.x, offset.y, 0.0f);
+    corners[2] = new Vector3(-offset.x, -offset.y, 0.0f);
+    corners[3] = new Vector3(offset.x, -offset.y, 0.0f);
+
     for (int i = 0; i < corners.GetLength(0); ++i)
-    {
-      corners[i] = RotateVector(offset, (float)(90 * i));
-      print(i + ": " + corners[i] + "(was) " + offset);
       SpawnNewObjectAt(corners[i]);
-    }
   }
 
   private void SpawnSideObjects(Vector3 starting_corner, Vector3 ending_corner, int object_count)
