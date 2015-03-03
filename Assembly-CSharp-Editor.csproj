@@ -100,6 +100,7 @@
      <Compile Include="Assets\UnityTestTools\UnitTesting\Editor\UnityUnitTest.cs" />
      <None Include="Assets\UnityTestTools\LICENSE.txt" />
      <None Include="Assets\changelogs\v1.03a.txt" />
+     <None Include="Assets\changelogs\v1.04.txt" />
      <None Include="Assets\fonts\Liberation\Red Hat Liberation License.txt" />
      <None Include="Assets\thumbnails\htmlshit.txt" />
      <None Include="Assets\changelogs\v1.03.txt" />
