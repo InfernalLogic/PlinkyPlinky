@@ -29,9 +29,6 @@ public class BallsLeftWheel : ObjectWheel
   void Start()
   {
     RespawnWheel();
-
-    foreach (Transform child in transform)
-      children.Add(child.gameObject);
   }
 
   void Update()
@@ -51,7 +48,6 @@ public class BallsLeftWheel : ObjectWheel
       else
         children[i].transform.renderer.enabled = true;
     }
-     
     RotateWheel();
   }
 
@@ -60,6 +56,11 @@ public class BallsLeftWheel : ObjectWheel
     object_count = max_bombs.GetValue();
     DestroyAllChildren();
     SpawnObjects();
+
+    children.Clear();
+
+    foreach (Transform child in transform)
+      children.Add(child.gameObject);
   }
 
   private void OnReset(ResetType type)

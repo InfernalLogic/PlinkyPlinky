@@ -156,6 +156,7 @@
      <Compile Include="Assets\scripts\gui\buttons\CheatButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\MaxBombsUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\PlinkagonUpgradeButton.cs" />
+     <Compile Include="Assets\scripts\gui\buttons\PrestigeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\ResetPlinkagonPointsButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\ScoringObjectUpgradeButton.cs" />
      <Compile Include="Assets\scripts\gui\buttons\UpgradeButton.cs" />

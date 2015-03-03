@@ -24,12 +24,19 @@ public class OptionsMenu : HUDField
   [SerializeField]
   private ScalingRect hard_reset_button_rect;
 
-  void Awake()
+  private LevelUnlocker level_unlocker;
+
+  private void Awake()
   {
     ResizeText();
   }
 
-  void OnEnable()
+  private void Start()
+  {
+    level_unlocker = FindObjectOfType<LevelUnlocker>();
+  }
+
+  private void OnEnable()
   {
     HUDEvents.OnScreenResize += ResizeText;
   }
@@ -61,11 +68,25 @@ public class OptionsMenu : HUDField
 
   private void DisplayResetGameButton()
   {
-    if (ResetButtonIsPressed())
+    if (level_unlocker.UpgradesMaxedOut())
     {
-      display_reset_confirmation_window = true;
-      LoadResetConfirmationWindow();
+      if (GUI.Button(reset_button_rect.GetRect(), "Prestige", button_style))
+      {
+        display_reset_confirmation_window = true;
+        LoadResetConfirmationWindow();
+      }
     }
+    else 
+    {
+      DisplayPrestigeDisabledMask();
+      if (GUI.Button(reset_button_rect.GetRect(), "Unlock all levels to Prestige!", button_style))
+        return;
+    }
+  }
+
+  private void DisplayPrestigeDisabledMask()
+  {
+
   }
 
   private void DisplayHardResetGameButton()
@@ -89,11 +110,6 @@ public class OptionsMenu : HUDField
     Debug.Log("Game hard reset");
   }
 
-  private bool ResetButtonIsPressed()
-  {
-    return GUI.Button(reset_button_rect.GetRect(), "Reset game", button_style);
-  }
-
   private bool HardResetButtonIsPressed()
   {
     return GUI.Button(hard_reset_button_rect.GetRect(), "Delete all game data", button_style);
@@ -102,7 +118,7 @@ public class OptionsMenu : HUDField
   private void LoadResetConfirmationWindow()
   {
     GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height), 
-              "Restart the game from the beginning? You'll still have your plinkagon points.", label_style);
+              "Restart the game from the beginning? You'll still have your plinkagon points and level completion bonus.", label_style);
 
     reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadResetConfirmationButtons, "", GUIStyle.none));
   }

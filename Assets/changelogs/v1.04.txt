@@ -1,0 +1,4 @@
+UPDATE 1.04
+  -Six new levels have been added!
+  -The order in which old levels get unlocked has been adjusted
+  -"Reset" has been replaced with "Prestige" and will only unlock after all levels have been purchased
