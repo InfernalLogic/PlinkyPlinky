@@ -3,6 +3,7 @@ using System.Collections;
 
 public class DevCheats : MonoBehaviour 
 {
+  private int target_level = 0;
 
 	// Use this for initialization
 	void Start () 
@@ -25,6 +26,15 @@ public class DevCheats : MonoBehaviour
 
     if (Input.GetKeyDown(KeyCode.P))
       MoneyTracker.Instance.AddPlinkagonPoints(5);
+
+    if (Input.GetKeyDown(KeyCode.N))
+    {
+      LevelHandler.Instance.LoadLevel(target_level++);
+
+      if (target_level >= LevelHandler.Instance.levels.GetLength(0))
+        target_level = 0;
+    }
+      
 	}
 
   void OnGUI()
