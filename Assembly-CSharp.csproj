@@ -131,9 +131,11 @@
      <Compile Include="Assets\scripts\engine\utilities\BombCooldownTimer.cs" />
      <Compile Include="Assets\scripts\engine\utilities\BombIsReadyChecker.cs" />
      <Compile Include="Assets\scripts\engine\utilities\CoinDestroyer.cs" />
+     <Compile Include="Assets\scripts\engine\utilities\ISaveable.cs" />
      <Compile Include="Assets\scripts\engine\utilities\PrefabLinker.cs" />
      <Compile Include="Assets\scripts\engine\utilities\SavedBool.cs" />
      <Compile Include="Assets\scripts\engine\utilities\SavedStat.cs" />
+     <Compile Include="Assets\scripts\engine\utilities\SavedULong.cs" />
      <Compile Include="Assets\scripts\engine\utilities\Singleton.cs" />
      <Compile Include="Assets\scripts\engine\utilities\Timer.cs" />
      <Compile Include="Assets\scripts\gui\DevCheats.cs" />

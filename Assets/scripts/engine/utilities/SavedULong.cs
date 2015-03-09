@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 
-public class SavedStat : MonoBehaviour, ISaveable
+public class SavedUlong : MonoBehaviour, ISaveable
 {
-  protected int value;
+  protected ulong value;
 
   [SerializeField]
   protected string key = "";
   [SerializeField]
-  protected int default_value_on_reset;
+  protected string default_value_on_reset = "0";
   [SerializeField]
   private bool ignore_soft_reset = false;
   [SerializeField]
@@ -44,8 +46,9 @@ public class SavedStat : MonoBehaviour, ISaveable
   {
     if (!IsClone())
     {
-      loaded_value = PlayerPrefs.GetInt(key, default_value_on_reset);
-      value = loaded_value;
+      string loaded_value = PlayerPrefs.GetString(key, default_value_on_reset);
+     
+      value = Convert.ToUInt64(loaded_value);
     }
   }
 
@@ -53,7 +56,7 @@ public class SavedStat : MonoBehaviour, ISaveable
   {
     if (!IsClone())
     {
-      PlayerPrefs.SetInt(GetKey(), value);
+      PlayerPrefs.SetString(GetKey(), value.ToString());
     }
   }
 
@@ -67,11 +70,11 @@ public class SavedStat : MonoBehaviour, ISaveable
     if ((type == ResetType.SOFT && !ignore_soft_reset) ||
         (type == ResetType.HARD && !ignore_hard_reset))
     {
-      value = default_value_on_reset;
+      value = Convert.ToUInt64(loaded_value);
     }
   }
 
-  public int GetValue()
+  public ulong GetValue()
   {
     return value;
   }
@@ -89,12 +92,7 @@ public class SavedStat : MonoBehaviour, ISaveable
 
   public void AddValue(int value)
   {
-    this.value += value;
-  }
-
-  public int GetDefaultValueOnReset()
-  {
-    return default_value_on_reset;
+    this.value += (ulong)value;
   }
 
   private bool IsClone()
