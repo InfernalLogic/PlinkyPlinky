@@ -23,6 +23,8 @@ public class OptionsMenu : HUDField
   private ScalingRect reset_confirmation_window_rect;
   [SerializeField]
   private ScalingRect hard_reset_button_rect;
+  [SerializeField]
+  private ScalingRect show_exponents_button_rect;
 
   private LevelUnlocker level_unlocker;
 
@@ -55,6 +57,7 @@ public class OptionsMenu : HUDField
       DisplayMuteSoundEffectsButton();
       DisplayMuteMusicButton();
       DisplayCurrentLevel();
+      DisplayExponentialButton();
     }
     else if (display_reset_confirmation_window)
     {
@@ -76,12 +79,18 @@ public class OptionsMenu : HUDField
         LoadResetConfirmationWindow();
       }
     }
-    else 
+    else
     {
       DisplayPrestigeDisabledMask();
       if (GUI.Button(reset_button_rect.GetRect(), "Unlock all levels to Prestige!", button_style))
         return;
     }
+  }
+
+  private void DisplayExponentialButton()
+  {
+    if (GUI.Button(show_exponents_button_rect.GetRect(), "Exponential Notation", button_style))
+      FindObjectOfType<ScoreTicker>().ToggleExponents();
   }
 
   private void DisplayPrestigeDisabledMask()
@@ -117,7 +126,7 @@ public class OptionsMenu : HUDField
 
   private void LoadResetConfirmationWindow()
   {
-    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height), 
+    GUI.Label(new Rect(0, 0, reset_confirmation_window_rect.GetRect().width, reset_confirmation_window_rect.GetRect().height),
               "Restart the game from the beginning? You'll still have your plinkagon points and level completion bonus.", label_style);
 
     reset_confirmation_window_rect.SetRect(GUI.Window(0, reset_confirmation_window_rect.GetRect(), LoadResetConfirmationButtons, "", GUIStyle.none));
@@ -160,14 +169,14 @@ public class OptionsMenu : HUDField
   private bool YesButtonIsPressed()
   {
     return GUI.Button(new Rect(10, 10,
-                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)), 
+                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)),
                                "YES", button_style);
   }
 
   private bool NoButtonIsPressed()
   {
     return GUI.Button(new Rect((reset_confirmation_window_rect.GetRect().width / 2) + 10, 10,
-                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)), 
+                               ((reset_confirmation_window_rect.GetRect().width / 2) - 20), ((reset_confirmation_window_rect.GetRect().height / 2) - 20)),
                                "NO", button_style);
   }
 
