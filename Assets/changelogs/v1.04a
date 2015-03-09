@@ -1,6 +1,7 @@
-UPDATE 1.04a
+UPDATE 1.04a **RELEASED**
   -Added a toggle for exponential notation in the options menu
   -Added hotkeys for purchasing multiple of upgrades. Hold the SHIFT key while clicking on a button for x10, and the ALT key for x100. Toggle buttons would be better, but would take me about x100 as much time, so for now it's just these.
   -Really big numbers are now supported. I've done my best to test to make sure it won't brick old saves. I apologize if it causes problems for anyone.
   -Once you get really big numbers, the Total Money Earned stat will roll back to 0 but your achievements/plinkagon points will not be affected. Fixing this would require a rework of a significant portion of the achievements section, so I can't say if/when it will get changed.
   -Clone balls no longer keep the level from changing.
+  -The bumpers in the center of level_14 should now be less cantankerous
