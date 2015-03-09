@@ -16,7 +16,7 @@ public class DevCheats : MonoBehaviour
 	void Update () 
   {
 	  if (Input.GetKeyDown(KeyCode.C))
-      MoneyTracker.Instance.AddMoney(10000);
+      MoneyTracker.Instance.AddMoney(10000000);
 
     if (Input.GetKeyDown(KeyCode.R))
       LevelHandler.Instance.LoadRandomLevel();

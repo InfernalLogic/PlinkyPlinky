@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 
-public class UpgradeButton : Button 
+public class UpgradeButton : Button
 {
   [SerializeField]
   protected UpgradeableObject target_upgrade;
@@ -16,7 +16,19 @@ public class UpgradeButton : Button
       {
         if (ButtonIsPressed())
         {
-          target_upgrade.Upgrade();
+          int attempts = 1;
+
+          if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            attempts = 10;
+
+          if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+            attempts = 100;
+
+          for (int i = 0; i < attempts; ++i)
+          {
+            if (target_upgrade.PlayerHasEnoughCurrency())
+              target_upgrade.Upgrade();
+          }
         }
         DisplayTextLabel();
       }
@@ -61,7 +73,7 @@ public class UpgradeButton : Button
 
   protected virtual void DisplayTextLabel()
   {
-    GUI.Label(label_display_rect.GetRect(), button_text + "\nCost: " + 
+    GUI.Label(label_display_rect.GetRect(), button_text + "\nCost: " +
               target_upgrade.GetUpgradeCost(), label_style);
   }
 }

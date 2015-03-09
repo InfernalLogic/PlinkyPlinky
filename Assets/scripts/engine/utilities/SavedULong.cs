@@ -52,12 +52,20 @@ public class SavedULong : MonoBehaviour, ISaveable
     if (!IsClone())
     {
       if (PlayerPrefs.GetInt(key, -1) == -1)
-        Debug.Log("No old save found");
-      else
       {
+        Debug.Log("No old save found");
         string loaded_value = PlayerPrefs.GetString(key, default_value_on_reset);
 
         value = Convert.ToUInt64(loaded_value);
+      }
+      else
+      {
+        Debug.Log("old save found");
+        int loaded_value = PlayerPrefs.GetInt(key, 0);
+
+        value = (ulong)loaded_value;
+
+        PlayerPrefs.DeleteKey(key);
       }
     }
   }

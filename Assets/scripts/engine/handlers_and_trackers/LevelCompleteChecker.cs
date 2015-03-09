@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 
-public class LevelCompleteChecker : Singleton<LevelCompleteChecker> 
+public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
 {
   [SerializeField]
-	private float load_new_level_delay = 0f;
+  private float load_new_level_delay = 0f;
 
-	private int coins_left = 1;
-	private int bombs_dropped = 0;
+  private int coins_left = 1;
+  private int bombs_dropped = 0;
 
-	private float load_new_level_countdown;
-	private bool level_completed = false;
+  private float load_new_level_countdown;
+  private bool level_completed = false;
 
   private Subscriber<GameEvent> game_event_subscriber = new Subscriber<GameEvent>();
-  
+
   new void Awake()
   {
     base.Awake();
@@ -30,8 +30,8 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     Events.ResetEvents -= OnReset;
   }
 
-	void Update()
-	{
+  void Update()
+  {
     if (!game_event_subscriber.IsEmpty())
     {
       HandleMessage(game_event_subscriber.ReadNewestMessage());
@@ -39,7 +39,7 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     }
 
     if (AllCoinsHit())
-		{
+    {
       if (!level_completed)
       {
         if (coins_left == 0 && bombs_dropped > 0)
@@ -49,19 +49,19 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
         Debug.Log("Level completed with " + bombs_dropped + " bombs dropped");
 
         ResetNewLevelCountdown();
-      } 
+      }
       else if (level_completed && NewLevelCountdownCooledDown() && NoBombsInPlay())
-			{
+      {
         LoadNewLevel();
         CountCoins();
         bombs_dropped = 0;
-			}
-		}
-	}
+      }
+    }
+  }
 
   private bool NoBombsInPlay()
   {
-    return BombScript.BombCount <= 0 && BombScript.CloneCount <= 0;
+    return BombScript.BombCount <= 0;
   }
 
   private static void PublishLevelCompletedEvent()
@@ -98,17 +98,17 @@ public class LevelCompleteChecker : Singleton<LevelCompleteChecker>
     return coins_left <= 0;
   }
 
-	public void CountCoins()
-	{
-		GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("coin");
-		coins_left = goal_counter.Length;
+  public void CountCoins()
+  {
+    GameObject[] goal_counter = GameObject.FindGameObjectsWithTag("coin");
+    coins_left = goal_counter.Length;
     Debug.Log("LevelCompleteChecker.CountCoins(): " + coins_left);
-	}
-	
-	public void SetCoinsLeftToZero()
-	{
-		coins_left = 0;
-	}
+  }
+
+  public void SetCoinsLeftToZero()
+  {
+    coins_left = 0;
+  }
 
   public bool IsLevelCompleted()
   {
