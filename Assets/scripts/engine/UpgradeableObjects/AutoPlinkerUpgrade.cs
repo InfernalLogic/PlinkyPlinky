@@ -13,7 +13,7 @@ public class AutoPlinkerUpgrade : UpgradeableObject
 
   public override void RecalculateUpgradeCost()
   {
-    upgrade_cost = (int)((Mathf.Pow((float)(value), 1.5f) * 2000)) + 2500;
+    upgrade_cost = (ulong)((Mathf.Pow((float)(value), 1.5f) * 2000)) + 2500;
   }
 
   public override void Upgrade()

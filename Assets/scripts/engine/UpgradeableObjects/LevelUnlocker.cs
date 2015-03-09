@@ -37,7 +37,7 @@ public class LevelUnlocker : UpgradeableObject
 
   public override void RecalculateUpgradeCost()
   {
-    upgrade_cost = (int)(300.0f * Mathf.Pow((float)(value - GetLevelsToUnlockOnReset()), 1.2f)) + 200;
+    upgrade_cost = (ulong)(300.0f * Mathf.Pow((float)(value - GetLevelsToUnlockOnReset()), 1.2f)) + 200;
   }
 
   public int GetTotalUnlockedLevels()

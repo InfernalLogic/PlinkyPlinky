@@ -21,6 +21,6 @@ public class PlinkagonPointBuyer : UpgradeableObject
 
   public override void RecalculateUpgradeCost()
   {
-    upgrade_cost = 10000 + (int)((Mathf.Pow((float)(value + 1), 1.3f) * 500));
+    upgrade_cost = 10000 + (ulong)((Mathf.Pow((float)(value + 1), 1.3f) * 500));
   }
 }

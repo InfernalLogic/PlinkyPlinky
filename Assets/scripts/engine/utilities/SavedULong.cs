@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SavedUlong : MonoBehaviour, ISaveable
+public class SavedULong : MonoBehaviour, ISaveable
 {
   protected ulong value;
 
@@ -17,6 +17,11 @@ public class SavedUlong : MonoBehaviour, ISaveable
   private bool ignore_hard_reset = false;
 
   private int loaded_value;
+
+  public void ReduceValue(ulong value)
+  {
+    this.value -= value;
+  }
 
   protected virtual void OnEnable()
   {
@@ -46,9 +51,14 @@ public class SavedUlong : MonoBehaviour, ISaveable
   {
     if (!IsClone())
     {
-      string loaded_value = PlayerPrefs.GetString(key, default_value_on_reset);
-     
-      value = Convert.ToUInt64(loaded_value);
+      if (PlayerPrefs.GetInt(key, -1) == -1)
+        Debug.Log("No old save found");
+      else
+      {
+        string loaded_value = PlayerPrefs.GetString(key, default_value_on_reset);
+
+        value = Convert.ToUInt64(loaded_value);
+      }
     }
   }
 
@@ -90,9 +100,9 @@ public class SavedUlong : MonoBehaviour, ISaveable
     }
   }
 
-  public void AddValue(int value)
+  public void AddValue(ulong value)
   {
-    this.value += (ulong)value;
+    this.value += value;
   }
 
   private bool IsClone()

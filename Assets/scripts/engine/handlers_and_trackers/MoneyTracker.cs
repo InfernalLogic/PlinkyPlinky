@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoneyTracker : Singleton<MoneyTracker> 
+public class MoneyTracker : Singleton<MoneyTracker>
 {
   [SerializeField]
-  private SavedStat current_money;
+  private SavedULong current_money;
   [SerializeField]
-  private SavedStat current_plinkagon_points;
+  private SavedULong current_plinkagon_points;
 
   private Subscriber<GameEvent> game_event_listener = new Subscriber<GameEvent>();
   private Subscriber<AchievementUnlocked> achievement_listener = new Subscriber<AchievementUnlocked>();
@@ -73,37 +73,31 @@ public class MoneyTracker : Singleton<MoneyTracker>
 
   public void AddMoney(int income)
   {
-    current_money.AddValue(income);
+    current_money.AddValue((uint)income);
   }
 
   public void AddPlinkagonPoints(int income)
   {
-    current_plinkagon_points.AddValue(income);
+    current_plinkagon_points.AddValue((uint)income);
   }
 
-  public void SpendPlinkagonPoints(int price)
+  public void SpendPlinkagonPoints(ulong price)
   {
-    current_plinkagon_points.AddValue(-price);
+    current_plinkagon_points.ReduceValue(price);
   }
 
-  public void SpendMoney(int price)
+  public void SpendMoney(ulong price)
   {
-    current_money.AddValue(-price);
+    current_money.ReduceValue(price);
   }
 
-  public int GetCurrentMoney()
+  public ulong GetCurrentMoney()
   {
-    if (current_money != null)
-      return current_money.GetValue();
-    else
-      return -1;
+    return current_money.GetValue();
   }
 
-  public int GetCurrentPlinkagonPoints()
+  public ulong GetCurrentPlinkagonPoints()
   {
-    if (current_plinkagon_points != null)
-      return current_plinkagon_points.GetValue();
-    else
-      return -1;
+    return current_plinkagon_points.GetValue();
   }
 }
