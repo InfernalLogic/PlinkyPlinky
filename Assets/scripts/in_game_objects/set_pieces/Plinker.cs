@@ -51,9 +51,9 @@ public class Plinker : MonoBehaviour
     MovePlinker();
 
     if (BombIsReadyChecker.Instance.BombIsReady())
-      renderer.material.color = bomb_ready_color;
+      GetComponent<Renderer>().material.color = bomb_ready_color;
     else
-      renderer.material.color = bomb_cooling_down_color;
+      GetComponent<Renderer>().material.color = bomb_cooling_down_color;
 	}
 
   private IEnumerator OutOfBoundsCheck()
@@ -74,8 +74,8 @@ public class Plinker : MonoBehaviour
 
   private void InitializeCooldownColors()
   {
-    bomb_ready_color = renderer.material.color;
-    bomb_cooling_down_color = renderer.material.color;
+    bomb_ready_color = GetComponent<Renderer>().material.color;
+    bomb_cooling_down_color = GetComponent<Renderer>().material.color;
     bomb_cooling_down_color.a = bomb_cooling_down_alpha;
   }
 

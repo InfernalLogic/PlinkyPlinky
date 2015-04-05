@@ -28,7 +28,21 @@ public class BuyPlinkagonPointButton : UpgradeButton
       if (target_upgrade.PlayerHasEnoughCurrency())
       {
         if (ButtonIsPressed())
-          target_upgrade.Upgrade();
+        {
+          int attempts = 1;
+
+          if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            attempts = 10;
+
+          if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+            attempts = 100;
+
+          for (int i = 0; i < attempts; ++i)
+          {
+            if (target_upgrade.PlayerHasEnoughCurrency())
+              target_upgrade.Upgrade();
+          }
+        }
 
         DisplayTextLabel();
       }

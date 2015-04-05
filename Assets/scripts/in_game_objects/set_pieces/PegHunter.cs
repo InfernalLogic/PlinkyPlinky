@@ -13,10 +13,12 @@ public class PegHunter : MonoBehaviour
   private GameObject target;
   private Vector2 vector_to_target;
 
-  private static int popper_layer = 1 << LayerMask.NameToLayer("3_pegs");
+  private int popper_layer;
 
   void Start()
   {
+    popper_layer = 1 << LayerMask.NameToLayer("3_pegs");
+
     if (!target)
       FindNewTarget();
 
@@ -31,7 +33,7 @@ public class PegHunter : MonoBehaviour
       FindNewTarget();
 
     SetTargetDirection();
-    rigidbody2D.AddForce(vector_to_target.normalized * acceleration);
+    GetComponent<Rigidbody2D>().AddForce(vector_to_target.normalized * acceleration);
   }
 
   private IEnumerator IncreaseAcceleration()
@@ -54,7 +56,7 @@ public class PegHunter : MonoBehaviour
   private void SetTargetDirection()
   {
     vector_to_target = target.transform.position - this.transform.position;
-    this.rigidbody2D.velocity += (vector_to_target - this.rigidbody2D.velocity).normalized * vector_adjustment_factor;
+    this.GetComponent<Rigidbody2D>().velocity += (vector_to_target - this.GetComponent<Rigidbody2D>().velocity).normalized * vector_adjustment_factor;
   }
 
   private void ApplyOrthogonalBumpForce()
@@ -63,7 +65,7 @@ public class PegHunter : MonoBehaviour
     bump_direction.x = -vector_to_target.y;
     bump_direction.y = vector_to_target.x;
 
-    this.rigidbody2D.AddForce(bump_direction.normalized * initial_bump_strength);
+    this.GetComponent<Rigidbody2D>().AddForce(bump_direction.normalized * initial_bump_strength);
   }
 
   private void DestroyIfNoTargetFound()

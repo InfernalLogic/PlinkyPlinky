@@ -44,9 +44,9 @@ public class BallsLeftWheel : ObjectWheel
     for (int i = 0; i < max_bombs.GetValue(); ++i)
     {
       if (i < BombScript.BombCount)
-        children[i].transform.renderer.enabled = false;
+        children[i].transform.GetComponent<Renderer>().enabled = false;
       else
-        children[i].transform.renderer.enabled = true;
+        children[i].transform.GetComponent<Renderer>().enabled = true;
     }
     RotateWheel();
   }

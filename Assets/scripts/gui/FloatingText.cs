@@ -12,7 +12,7 @@ public class FloatingText : MonoBehaviour
 
   void Awake()
   {
-    gameObject.renderer.sortingLayerName = target_layer;
+    gameObject.GetComponent<Renderer>().sortingLayerName = target_layer;
   }
 
   public void DestroyText()

@@ -8,11 +8,13 @@ public class PlinkagonUpgrade : UpgradeableObject
 
   new protected virtual void OnEnable()
   {
+    base.OnEnable();
     Events.PlinkagonRefundEvents += OnPlinkagonRefund;
   }
 
   new protected virtual void OnDisable()
   {
+    base.OnDisable();
     Events.PlinkagonRefundEvents -= OnPlinkagonRefund;
   }
 

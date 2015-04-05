@@ -80,7 +80,7 @@ public class BombScript : MonoBehaviour
 
   private void SpawnNewBomb()
   {
-    Vector2 force_being_added = rigidbody2D.velocity;
+    Vector2 force_being_added = GetComponent<Rigidbody2D>().velocity;
     force_being_added *= clone_launch_force_multiplier;
     force_being_added.x *= -1.0f;
 
@@ -91,7 +91,7 @@ public class BombScript : MonoBehaviour
 
     GameObject new_bomb = (GameObject)Instantiate(bomb_clone, target_position, transform.rotation);
 
-    new_bomb.gameObject.rigidbody2D.AddForce(force_being_added);
+    new_bomb.gameObject.GetComponent<Rigidbody2D>().AddForce(force_being_added);
   }
 
 	void OnBecameInvisible()

@@ -24,4 +24,12 @@ public class Events : Singleton<Events>
       PlinkagonRefundEvents();
   }
   #endregion
+
+  public delegate void SerializationEvent_();
+  public static event SerializationEvent_ SerializationEvents;
+  public static void PublishSerializationEvent()
+  {
+    if (SerializationEvents != null)
+      SerializationEvents();
+  }
 }

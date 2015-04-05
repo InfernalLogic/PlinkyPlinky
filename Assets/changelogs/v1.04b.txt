@@ -1,0 +1,4 @@
+UPDATE 1.04b 
+  -Rebuilt the game with Unity 5.0. Hopefully this will get rid of the issues people were having with the dev console showing up.
+  -Reworked game saving. I've been unable to reproduce the saving issues everyone has been having, but this may work.
+  -Fixed an issue with Plinkagon Points not resetting properly on hard reset.

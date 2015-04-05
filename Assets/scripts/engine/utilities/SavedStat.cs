@@ -19,19 +19,19 @@ public class SavedStat : MonoBehaviour, ISaveable
   protected virtual void OnEnable()
   {
     Events.ResetEvents += OnReset;
+    Events.SerializationEvents += OnSerializationEvent;
   }
 
   protected virtual void OnDisable()
   {
     Events.ResetEvents -= OnReset;
+    Events.SerializationEvents -= OnSerializationEvent;
   }
 
   protected void Awake()
   {
     AssignKey();
     Load();
-
-    FindObjectOfType<AutoSaver>().Add(this);
   }
 
   private void AssignKey()
@@ -52,9 +52,7 @@ public class SavedStat : MonoBehaviour, ISaveable
   public virtual void Save()
   {
     if (!IsClone())
-    {
       PlayerPrefs.SetInt(GetKey(), value);
-    }
   }
 
   public void SetName(string name)
@@ -69,6 +67,11 @@ public class SavedStat : MonoBehaviour, ISaveable
     {
       value = default_value_on_reset;
     }
+  }
+
+  public virtual void OnSerializationEvent()
+  {
+    AutoSaver.Add(this);
   }
 
   public int GetValue()

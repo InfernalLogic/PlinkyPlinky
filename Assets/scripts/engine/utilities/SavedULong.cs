@@ -37,8 +37,6 @@ public class SavedULong : MonoBehaviour, ISaveable
   {
     AssignKey();
     Load();
-
-    FindObjectOfType<AutoSaver>().Add(this);
   }
 
   private void AssignKey()
@@ -76,6 +74,11 @@ public class SavedULong : MonoBehaviour, ISaveable
     {
       PlayerPrefs.SetString(GetKey(), value.ToString());
     }
+  }
+
+  public virtual void OnSerializationEvent()
+  {
+    AutoSaver.Add(this);
   }
 
   public void SetName(string name)

@@ -8,13 +8,13 @@ public class BGWallpaper : MonoBehaviour
 
 	void Awake()
 	{
-		color_changer = transform.renderer.material.color;
+		color_changer = transform.GetComponent<Renderer>().material.color;
 		SetAlpha ();
 	}
 
 	public void SetAlpha()
 	{
 		color_changer.a = alpha;
-		transform.renderer.material.color = color_changer;
+		transform.GetComponent<Renderer>().material.color = color_changer;
 	}
 }

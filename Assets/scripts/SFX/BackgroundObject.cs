@@ -25,7 +25,7 @@ public class BackgroundObject : MonoBehaviour
 
   void Awake()
   {
-    gameObject.renderer.sortingLayerName = target_layer;
+    gameObject.GetComponent<Renderer>().sortingLayerName = target_layer;
     sprite_transform = GetComponent<Transform>();
     coefficient = Random.Range(0.0f, 1.0f);
 
