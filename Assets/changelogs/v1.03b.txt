@@ -1,4 +1,0 @@
-UPDATE 1.03b **RELEASED**
-  -The way the game handles resets internally has been improved - if there is any unexpected behaviour from soft or hard resets, please let me know. I apologize in advance to anyone who may have problems from this, but refactoring my old-ass code is important if I'm ever going to add content in a timely manner.
-  -Clone balls should now correctly keep the level from changing while still in play (thanks fwund and some others)
-  -Fixed a bug where the plinker was getting disabled when the reset button was pressed while a level was loading (thanks to everyone who reported this - forgot to log who it was)

@@ -1,6 +1,0 @@
-UPDATE 1.03a **RELEASED**
-  -Level Completion Bonus message now displays your current bonus percentage
-  -Fixed a bug where bonus cash was carrying through between resets (thanks Unchayned)
-  -Next level value for bumper upgrades now show the correct value (thanks TeoB3)
-  -Fixed a bug where the Plink Faster! upgrade was not resetting properly after resets (thanks /u/Bacon_Isnt_France and some others)
-  -Fixed a bug where Level Completion Bonus message was overlapping with Achievement announcements
