@@ -1,2 +1,0 @@
-UPDATE 1.02
-  -The game now continuously saves itself to prevent players from losing their data between sessions

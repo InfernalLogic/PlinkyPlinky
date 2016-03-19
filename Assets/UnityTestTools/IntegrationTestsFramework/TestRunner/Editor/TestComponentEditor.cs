@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using UnityEditor.SceneManagement;
 
 namespace UnityTest
 {
@@ -45,12 +46,17 @@ namespace UnityTest
         {
             var component = (TestComponent)target;
 
-            if (component.dynamic && GUILayout.Button("Reload dynamic tests"))
+            if (component.dynamic)
             {
-                TestComponent.DestroyAllDynamicTests();
-                Selection.objects = new Object[0];
-                IntegrationTestsRunnerWindow.selectedInHierarchy = false;
-                return;
+				if(GUILayout.Button("Reload dynamic tests"))
+				{
+					TestComponent.DestroyAllDynamicTests();
+	                Selection.objects = new Object[0];
+	                IntegrationTestsRunnerWindow.selectedInHierarchy = false;
+	                GUIUtility.ExitGUI();
+	                return;
+				}
+				EditorGUILayout.HelpBox("This is a test generated from code. No changes in the component will be persisted.", MessageType.Info);
             }
 
             if (component.IsTestGroup())
@@ -94,7 +100,10 @@ namespace UnityTest
             EditorGUILayout.PropertyField(m_SucceedWhenExceptionIsThrown, m_GUISucceedWhenExceptionIsThrown);
             EditorGUI.EndDisabledGroup();
 
-            if (!component.dynamic) serializedObject.ApplyModifiedProperties();
+            if (!component.dynamic)
+                serializedObject.ApplyModifiedProperties();
+            if (GUI.changed)
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
         private string[] GetListOfIgnoredPlatforms(string[] enumList, int flags)

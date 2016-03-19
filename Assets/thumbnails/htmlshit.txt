@@ -1,3 +1,0 @@
-		<title>PlinkyPlinky!</title>
-                <link href="image_src" rel="http://infernallogic.net/wp-content/uploads/2014/07/level_13_thumbnail.png" />
-                <meta property="og:image" content="http://infernallogic.net/wp-content/uploads/2014/07/level_13_thumbnail.png"/>
