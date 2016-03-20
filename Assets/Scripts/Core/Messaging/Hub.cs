@@ -9,7 +9,14 @@
     public ListenerMethodInfo Listener { get; set; }
   }
 
-  public class Hub
+  public interface IMessageHub
+  {
+    void Send(Message message);
+    void Attach(System.Object registrant);
+    void Detach(System.Object registrant);
+  }
+
+  public class Hub : IMessageHub
   {
     private Dictionary<Type, List<ListenerMethodInfo>> Streams = new Dictionary<Type, List<ListenerMethodInfo>>();
 

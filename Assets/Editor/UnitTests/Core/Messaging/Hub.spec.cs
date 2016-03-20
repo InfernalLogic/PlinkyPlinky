@@ -1,7 +1,6 @@
 ﻿namespace Messaging
 {
   using NUnit.Framework;
-  using System.Runtime.InteropServices;
   [TestFixture]
   public class HubTests
   {
@@ -16,7 +15,7 @@
     }
 
     [Test]
-    public void Hub_Attach()
+    public void Attach()
     {
       hub.Attach(listener);
       hub.Send(new TestMessage());
@@ -25,7 +24,7 @@
     }
 
     [Test]
-    public void Hub_Attach_Repeated()
+    public void Attach_Repeated()
     {
       hub.Attach(listener);
       hub.Attach(listener);
@@ -36,7 +35,7 @@
     }
 
     [Test]
-    public void Hub_Detach()
+    public void Detach()
     {
       hub.Attach(listener);
       hub.Send(new TestMessage());
@@ -47,7 +46,7 @@
     }
 
     [Test]
-    public void Hub_Detach_Repeated()
+    public void Detach_Repeated()
     {
       hub.Attach(listener);
       hub.Send(new TestMessage());
@@ -60,7 +59,7 @@
     }
 
     [Test]
-    public void Hub_Detach_BeforeAttach()
+    public void Detach_BeforeAttach()
     {
       hub.Detach(listener);
       hub.Send(new TestMessage());
@@ -69,7 +68,7 @@
     }
 
     [Test]
-    public void Hub_Send_RoutesInheritedTypesToInheritedTypeOnly()
+    public void Send_RoutesInheritedTypesToInheritedTypeOnly()
     {
       hub.Attach(listener);
       hub.Send(new TestMessage());
@@ -79,7 +78,7 @@
     }
 
     [Test]
-    public void Hub_Send_IgnoresNullComponents()
+    public void Send_IgnoresNullComponents()
     {
       hub.Attach(listener);
       hub.Send(new TestMessage());
@@ -89,7 +88,7 @@
     }
 
     [Test]
-    public void Hub_Send_SendsComponentMessages()
+    public void Send_SendsComponentMessages()
     {
       hub.Attach(listener);
       hub.Send(new TestMessage());
@@ -101,7 +100,7 @@
     }
 
     [Test]
-    public void Hub_Attach_AttachesMultipleInstancesOfSameType()
+    public void Attach_AttachesMultipleInstancesOfSameType()
     {
       var second_listener = new TestListener();
       hub.Attach(listener);
@@ -114,14 +113,15 @@
 
     [Test]
     [ExpectedException(typeof(CannotRegisterType))]
-    public void Hub_Attach_ThrowsExceptionWhenCannotRegisterType()
+    public void Attach_ThrowsExceptionWhenCannotRegisterType()
     {
       hub.Attach(new UnregisterableListener());
     }
 
     [Test]
     [Timeout(60000)]
-    public void Hub_StressTest_Basic()
+    [Ignore]
+    public void StressTest_Basic()
     {
       uint count = 1000000;
       hub.Attach(listener);
@@ -133,8 +133,9 @@
     }
 
     [Test]
+    [Ignore]
     [Timeout(60000)]
-    public void Hub_StressTest_Component()
+    public void StressTest_Component()
     {
       uint count = 1000000;
       hub.Attach(listener);
@@ -151,8 +152,9 @@
     }
 
     [Test]
+    [Ignore]
     [Timeout(60000)]
-    public void Hub_StressTest_Derived()
+    public void StressTest_Derived()
     {
       uint count = 1000000;
       hub.Attach(listener);

@@ -17,7 +17,6 @@ namespace Messaging
 
     private static bool TryRegisterListener(Type type)
     {
-      var message_type = typeof(Message);
       bool registration_success = false;
 
       foreach (var method in type.GetMethods())
@@ -48,7 +47,7 @@ namespace Messaging
           String.Format(
             "Messenger cannot register {0}! No valid methods detected. "
             + "\nValid methods are public, return void, and have one parameter that inherits from Messaging.Message",
-            message_type.ToString()
+            typeof(Message).ToString()
         ));
     }
 
