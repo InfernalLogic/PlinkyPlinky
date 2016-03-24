@@ -6,12 +6,21 @@ using System.Runtime.Serialization;
 namespace Persistence
 {
   [Serializable]
-  public class PersistentDictionary<TKey, TValue> : ISerializable, IDictionary<TKey, TValue>
+  public class PersistentDictionary<TKey, TValue> : 
+    ISerializable, 
+    ILoadFromJson,
+    IDictionary<TKey, TValue>
+
   {
     private Dictionary<TKey, TValue> data = new Dictionary<TKey, TValue>();
 
     public PersistentDictionary()
     {
+    }
+
+    public void LoadFromJson(string JsonFilePath)
+    {
+      data = DefaultLoader.DeserializeFromFile<Dictionary<TKey, TValue>>(JsonFilePath);
     }
 
     protected PersistentDictionary(SerializationInfo info, StreamingContext context)

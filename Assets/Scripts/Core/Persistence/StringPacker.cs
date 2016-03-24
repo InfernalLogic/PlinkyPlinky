@@ -5,9 +5,9 @@
   using System;
   using System.Runtime.Serialization;
 
-  public class StringPacker
+  public static class StringPacker
   {
-    public string Pack(ISerializable directory)
+    public static string Pack(ISerializable directory)
     {
       using (MemoryStream save_stream = new MemoryStream())
       {
@@ -20,7 +20,7 @@
       }
     }
 
-    public T Unpack<T>(string packed) where T: ISerializable
+    public static T Unpack<T>(string packed) where T: ISerializable
     {
       using (MemoryStream load_stream = new MemoryStream(Convert.FromBase64String(packed)))
       {

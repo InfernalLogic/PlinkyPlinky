@@ -6,13 +6,21 @@ using System.Runtime.Serialization;
 namespace Persistence
 {
   [Serializable]
-  public class PersistentList<T> : ISerializable, IList<T>
+  public class PersistentList<T> : 
+    ISerializable, 
+    ILoadFromJson,
+    IList<T>
   {
     private List<T> data = new List<T>();
 
     public PersistentList()
     {
 
+    }
+
+    public void LoadFromJson(string JsonFilePath)
+    {
+      data = DefaultLoader.DeserializeFromFile<List<T>>(JsonFilePath);
     }
 
     public PersistentList(SerializationInfo info, StreamingContext context)
